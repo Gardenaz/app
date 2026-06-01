@@ -1,23 +1,96 @@
+import { ArrowRight, BookOpenText, CheckCircle2, CircleDollarSign, LockKeyhole, Route, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MetricPill } from "@/components/base/metric-pill";
+import { SystemStatus } from "@/components/base/system-status";
 
 export function HeroEnergy() {
   return (
-    <section className="grid gap-8 rounded-3xl border border-[var(--border)] bg-white p-6 md:grid-cols-2 md:p-10 shadow-xl shadow-emerald-100/40">
-      <div className="space-y-5">
-        <p className="inline-flex rounded-full bg-[var(--bg-soft)] px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-[var(--primary-strong)]">Gardena</p>
-        <h1 className="text-4xl md:text-6xl font-black leading-tight text-[var(--text)]">Green Energy for Your DeFi Journey</h1>
-        <p className="text-[var(--text-muted)] text-base md:text-lg">Pick strategy like planting crops. AI handles execution with transparent policy guardrails and clean user control.</p>
-        <div className="flex flex-wrap gap-3">
-          <Button>Connect Wallet</Button>
-          <Button variant="secondary">View Agent Diary</Button>
+    <section className="relative grid gap-8 rounded-[2rem] border border-white/80 bg-white/82 p-5 shadow-[var(--shadow)] backdrop-blur md:grid-cols-[1.05fr_0.95fr] md:p-8 lg:p-10">
+      <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[var(--mint)] to-transparent" />
+      <div className="flex flex-col justify-between gap-8">
+        <div className="max-w-3xl space-y-6">
+          <p className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg-soft)] px-3 py-1 text-xs font-black uppercase text-[var(--primary-strong)]">
+            <Sparkles className="size-3.5" aria-hidden="true" />
+            Beginner-friendly DeFi farming
+          </p>
+          <div className="space-y-4">
+            <h1 className="max-w-4xl text-4xl font-black leading-[1.02] tracking-tight text-[var(--text)] sm:text-5xl lg:text-6xl">
+              Grow yield with an AI agent that shows its work.
+            </h1>
+            <p className="max-w-2xl text-base leading-7 text-[var(--text-muted)] md:text-lg">
+              Gardena turns DeFi strategy into a guided farming flow: choose a risk lane, set guardrails, and watch the agent explain every move before your garden grows.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Button type="button">
+              Start farming
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Button>
+            <Button type="button" variant="secondary">
+              <BookOpenText className="size-4" aria-hidden="true" />
+              Read agent notes
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-3">
+          <MetricPill label="Setup time" value="< 2 min" />
+          <MetricPill label="Guardrails" value="Policy-led" />
+          <MetricPill label="Logs" value="Readable" />
         </div>
       </div>
 
-      <div className="grid gap-3 md:pl-8">
-        <MetricPill label="Avg. setup time" value="< 2 min" />
-        <MetricPill label="Policy blocked risk" value="Realtime" />
-        <MetricPill label="Decision logs" value="Verifiable" />
+      <div className="rounded-[1.5rem] border border-[var(--border)] bg-[var(--bg)] p-4 shadow-inner">
+        <div className="rounded-[1.25rem] border border-white bg-white p-4 shadow-sm">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <div className="text-xs font-black uppercase text-[var(--text-muted)]">Strategy console</div>
+              <div className="mt-1 text-lg font-black text-[var(--text)]">Steady Field</div>
+            </div>
+            <div className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-black text-[var(--primary-strong)]">
+              LOW RISK
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-3">
+            {[
+              { icon: CircleDollarSign, label: "Deposit lane", value: "Mantle lending pool" },
+              { icon: LockKeyhole, label: "Policy limit", value: "No high volatility route" },
+              { icon: Route, label: "Agent action", value: "Rebalance only after approval" },
+            ].map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <div
+                  className="flex items-center gap-3 rounded-2xl border border-[var(--border)] bg-white px-3 py-3 transition hover:border-[var(--border-strong)] hover:bg-[var(--bg-soft)]"
+                  key={item.label}
+                >
+                  <div className="grid size-9 shrink-0 place-items-center rounded-xl bg-[var(--primary-soft)] text-[var(--primary-strong)]">
+                    <Icon className="size-4" aria-hidden="true" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs font-bold uppercase text-[var(--text-muted)]">{item.label}</div>
+                    <div className="truncate text-sm font-black text-[var(--text)]">{item.value}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-5 rounded-2xl bg-[var(--text)] p-4 text-white shadow-lg shadow-emerald-950/10">
+            <div className="flex items-center gap-2 text-xs font-black uppercase text-emerald-100">
+              <CheckCircle2 className="size-4" aria-hidden="true" />
+              Agent note
+            </div>
+            <p className="mt-3 text-sm leading-6 text-emerald-50/90">
+              This route keeps your first harvest conservative. I will pause before changing pools or raising exposure.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <SystemStatus />
+        </div>
       </div>
     </section>
   );
