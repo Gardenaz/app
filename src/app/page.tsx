@@ -1,6 +1,7 @@
 import { SystemStatus } from "@/components/base/system-status";
 import { CropGridSection } from "@/components/sections/crop-grid";
 import { AgentPlannerSection } from "@/components/sections/agent-planner";
+import { AgentHistorySection } from "@/components/sections/agent-history";
 import { HeroEnergy } from "@/components/sections/hero-energy";
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
         <HeroEnergy />
         <CropGridSection />
         <AgentPlannerSection />
+        <AgentHistorySection />
       </div>
     </main>
   );

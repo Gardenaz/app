@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { runAgent } from "@gardena/agent";
+import { maybeAnchorDecision } from "@/lib/agent/anchor";
+import { saveDecision } from "@/lib/agent/store";
 
 export async function POST(req: Request) {
   try {
@@ -11,7 +13,10 @@ export async function POST(req: Request) {
       riskPreference: Number(body.riskPreference) as 1 | 2 | 3,
     });
 
-    return NextResponse.json({ ok: true, decision });
+    const anchor = await maybeAnchorDecision(decision);
+    await saveDecision({ ...decision, anchorTxHash: anchor.txHash });
+
+    return NextResponse.json({ ok: true, decision: { ...decision, anchorTxHash: anchor.txHash }, anchor });
   } catch (error) {
     return NextResponse.json({ ok: false, error: error instanceof Error ? error.message : "invalid request" }, { status: 400 });
   }

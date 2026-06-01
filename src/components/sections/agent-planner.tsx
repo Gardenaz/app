@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useAccount } from "wagmi";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAgentPlan } from "@/hooks/use-agent-plan";
@@ -16,12 +17,24 @@ export function AgentPlannerSection() {
   const [crop, setCrop] = useState<CropId>("steady");
   const [amount, setAmount] = useState("1000");
   const [risk, setRisk] = useState<RiskLevel>(2);
+  const [manualAddress, setManualAddress] = useState("0x1111111111111111111111111111111111111111");
+  const { address } = useAccount();
   const mutation = useAgentPlan();
+
+  const userAddress = useMemo(
+    () => (address ?? manualAddress) as `0x${string}`,
+    [address, manualAddress],
+  );
 
   return (
     <section className="grid gap-5 md:grid-cols-2">
       <Card className="space-y-4">
-        <h3 className="text-xl font-black">Plan with Agent v1</h3>
+        <h3 className="text-xl font-black">Plan with Agent v1.1</h3>
+        <div className="space-y-2">
+          <label className="text-sm font-semibold">Wallet Address</label>
+          <input className="w-full rounded-xl border border-[var(--border)] px-3 py-2" value={userAddress} onChange={(e) => setManualAddress(e.target.value)} disabled={Boolean(address)} />
+          <p className="text-xs text-[var(--text-muted)]">{address ? "Connected wallet detected from wagmi." : "Connect wallet or input address manually."}</p>
+        </div>
         <div className="space-y-2">
           <label className="text-sm font-semibold">Crop</label>
           <select className="w-full rounded-xl border border-[var(--border)] bg-white px-3 py-2" value={crop} onChange={(e) => setCrop(e.target.value as CropId)}>
@@ -40,7 +53,7 @@ export function AgentPlannerSection() {
             <option value={3}>3 - Aggressive</option>
           </select>
         </div>
-        <Button onClick={() => mutation.mutate({ user: "0x1111111111111111111111111111111111111111", crop, amount, riskPreference: risk })}>
+        <Button onClick={() => mutation.mutate({ user: userAddress, crop, amount, riskPreference: risk })}>
           {mutation.isPending ? "Planning..." : "Generate Plan"}
         </Button>
       </Card>
