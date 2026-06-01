@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+:root {
+  --color-garden-green: #4ade80;
+  --color-garden-gold: #facc15;
+  --color-garden-red: #ef4444;
+  --color-garden-dark: #0a1a0a;
+  --color-garden-card: #112211;
+  --color-mantle-blue: #627eea;
+}
+
+body {
+  background: var(--color-garden-dark);
+  color: white;
+}
