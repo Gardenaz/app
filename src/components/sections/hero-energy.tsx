@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { MetricPill } from "@/components/molecules/metric-pill";
+import { MetricPill } from "@/components/base/metric-pill";
 
 export function HeroEnergy() {
   return (

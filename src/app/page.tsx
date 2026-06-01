@@ -1,5 +1,5 @@
 import { SystemStatus } from "@/components/agent/system-status";
-import { HeroEnergy } from "@/components/organisms/hero-energy";
+import { HeroEnergy } from "@/components/sections/hero-energy";
 import { CropGridSection } from "@/components/sections/crop-grid";
 
 export default function Home() {
