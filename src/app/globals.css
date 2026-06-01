@@ -1,15 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --color-garden-green: #4ade80;
-  --color-garden-gold: #facc15;
-  --color-garden-red: #ef4444;
-  --color-garden-dark: #0a1a0a;
-  --color-garden-card: #112211;
-  --color-mantle-blue: #627eea;
+  --bg: #f8fcf8;
+  --bg-soft: #eef8ef;
+  --card: #ffffff;
+  --text: #102315;
+  --text-muted: #49604e;
+  --primary: #22c55e;
+  --primary-strong: #16a34a;
+  --ring: #86efac;
+  --border: #d9eee0;
 }
 
 body {
-  background: var(--color-garden-dark);
-  color: white;
+  background: radial-gradient(circle at 10% 0%, #f0fbf2 0%, var(--bg) 45%);
+  color: var(--text);
 }

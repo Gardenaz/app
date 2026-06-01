@@ -11,12 +11,12 @@ export function CropCard({ name, icon, risk, apy, description, accent }: CropCar
         <span className={`rounded-full px-3 py-1 text-xs font-bold ${accent}`}>{risk}</span>
       </div>
       <div>
-        <h3 className="text-xl font-bold text-white">{name}</h3>
-        <p className="mt-1 text-sm text-white/60">{description}</p>
+        <h3 className="text-xl font-bold text-[var(--text)]">{name}</h3>
+        <p className="mt-1 text-sm text-[var(--text-muted)]">{description}</p>
       </div>
       <div className="flex items-center justify-between">
-        <span className="text-sm text-white/50">Target APY</span>
-        <span className="text-lg font-black text-emerald-300">{apy}</span>
+        <span className="text-sm text-[var(--text-muted)]">Target APY</span>
+        <span className="text-lg font-black text-[var(--primary-strong)]">{apy}</span>
       </div>
       <Button className="w-full">Plant Strategy</Button>
     </Card>
