@@ -83,14 +83,6 @@ function Hero() {
             verifiable proof trail.
           </motion.p>
 
-          {/* CTAs — stack on very small screens, row on sm+ */}
-          <motion.div variants={staggerItem} className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link href="/app" className="btn-primary">
-              Start farming <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-            <PrivyConnectButton />
-          </motion.div>
-
           {/* Stat chips */}
           <motion.div variants={staggerItem} className="grid grid-cols-3 gap-2 pt-1 sm:gap-3">
             <StatBox value="USDY"   label="RWA lane" />
