@@ -13,6 +13,9 @@ export type AgentDecision = {
     expectedApy: string;
     steps: string[];
     explanation: string;
+    consumerTheme?: string;
+    shareLabel?: string;
+    trackFit?: string;
   };
   policy: { allow: boolean; status: "approved" | "blocked"; reason: string; checks: Array<{ label: string; pass: boolean; detail: string }> };
   decisionHash: `0x${string}`;

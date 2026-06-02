@@ -8,9 +8,9 @@ import { useAgentPlan } from "@/hooks/use-agent-plan";
 import type { CropId, RiskLevel } from "@/lib/agent/types";
 
 const crops: Array<{ id: CropId; label: string }> = [
-  { id: "steady", label: "Steady Field" },
-  { id: "growth", label: "Growth Row" },
-  { id: "boost", label: "Boost Plot" },
+  { id: "steady", label: "Rice / Safe Harvest (USDY)" },
+  { id: "growth", label: "Corn / Growth Field (mETH)" },
+  { id: "boost", label: "Chili / Boost Farm (USDY/mETH)" },
 ];
 
 export function AgentPlannerSection() {
@@ -29,7 +29,7 @@ export function AgentPlannerSection() {
   return (
     <section className="grid gap-5 md:grid-cols-2">
       <Card className="space-y-4">
-        <h3 className="text-xl font-black">Plan with Agent v1.1</h3>
+        <h3 className="text-xl font-black">Plan with AI x RWA Agent</h3>
         <div className="space-y-2">
           <label className="text-sm font-semibold">Wallet Address</label>
           <input className="w-full rounded-xl border border-[var(--border)] px-3 py-2" value={userAddress} onChange={(e) => setManualAddress(e.target.value)} disabled={Boolean(address)} />
@@ -42,7 +42,7 @@ export function AgentPlannerSection() {
           </select>
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-semibold">Amount (USDC)</label>
+          <label className="text-sm font-semibold">Amount (USDY/mETH route units)</label>
           <input className="w-full rounded-xl border border-[var(--border)] px-3 py-2" value={amount} onChange={(e) => setAmount(e.target.value)} />
         </div>
         <div className="space-y-2">
@@ -64,6 +64,8 @@ export function AgentPlannerSection() {
           <div className="space-y-3 text-sm">
             <p><b>Status:</b> {mutation.data.policy.status.toUpperCase()}</p>
             <p><b>Strategy:</b> {mutation.data.plan.title} ({mutation.data.plan.expectedApy})</p>
+            <p><b>Asset:</b> {mutation.data.plan.asset} · {mutation.data.plan.protocol}</p>
+            {mutation.data.plan.shareLabel ? <p><b>Share:</b> {mutation.data.plan.shareLabel}</p> : null}
             <p><b>Reason:</b> {mutation.data.policy.reason}</p>
             <p><b>Summary:</b> {mutation.data.summary}</p>
             <p><b>Decision Hash:</b> <span className="break-all">{mutation.data.decisionHash}</span></p>

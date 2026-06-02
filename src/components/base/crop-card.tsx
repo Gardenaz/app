@@ -7,6 +7,9 @@ type CropCardProps = {
   name: string;
   risk: string;
   apy: string;
+  asset: string;
+  protocol: string;
+  shareLabel: string;
   description: string;
   accent: string;
   tone: "steady" | "balanced" | "bold";
@@ -18,7 +21,7 @@ const cropIcons = {
   bold: Flame,
 };
 
-export function CropCard({ name, risk, apy, description, accent, tone }: CropCardProps) {
+export function CropCard({ name, risk, apy, asset, protocol, shareLabel, description, accent, tone }: CropCardProps) {
   const Icon = cropIcons[tone];
 
   return (
@@ -43,6 +46,11 @@ export function CropCard({ name, risk, apy, description, accent, tone }: CropCar
             <div className="mt-1 text-3xl font-black tracking-tight text-[var(--primary-strong)]">{apy}</div>
           </div>
           <Leaf className="size-5 text-[var(--gold)]" aria-hidden="true" />
+        </div>
+        <div className="mt-4 grid gap-2 text-xs font-bold text-[var(--text-muted)]">
+          <div className="flex items-center justify-between gap-3"><span>Asset</span><span className="text-[var(--text)]">{asset}</span></div>
+          <div className="flex items-center justify-between gap-3"><span>Route</span><span className="max-w-[170px] truncate text-[var(--text)]">{protocol}</span></div>
+          <div className="rounded-xl border border-[var(--border)] bg-white px-3 py-2 text-[var(--primary-strong)]">{shareLabel}</div>
         </div>
       </div>
 

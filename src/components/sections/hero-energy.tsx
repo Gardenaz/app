@@ -11,14 +11,14 @@ export function HeroEnergy() {
         <div className="max-w-3xl space-y-6">
           <p className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg-soft)] px-3 py-1 text-xs font-black uppercase text-[var(--primary-strong)]">
             <Sparkles className="size-3.5" aria-hidden="true" />
-            Beginner-friendly DeFi farming
+AI x RWA farming on Mantle
           </p>
           <div className="space-y-4">
             <h1 className="max-w-4xl text-4xl font-black leading-[1.02] tracking-tight text-[var(--text)] sm:text-5xl lg:text-6xl">
-              Grow yield with an AI agent that shows its work.
+              Grow USDY and mETH yield with an AI agent that shows its work.
             </h1>
             <p className="max-w-2xl text-base leading-7 text-[var(--text-muted)] md:text-lg">
-              Gardena turns DeFi strategy into a guided farming flow: choose a risk lane, set guardrails, and watch the agent explain every move before your garden grows.
+              Gardena turns Mantle RWA strategies into a guided farming flow: choose a crop lane, set guardrails, and watch every agent decision become a verifiable benchmark trail.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -34,9 +34,9 @@ export function HeroEnergy() {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-3">
-          <MetricPill label="Setup time" value="< 2 min" />
-          <MetricPill label="Guardrails" value="Policy-led" />
-          <MetricPill label="Logs" value="Readable" />
+          <MetricPill label="Primary track" value="AI x RWA" />
+          <MetricPill label="Assets" value="USDY/mETH" />
+          <MetricPill label="Proof" value="On-chain" />
         </div>
       </div>
 
@@ -45,7 +45,7 @@ export function HeroEnergy() {
           <div className="flex items-center justify-between gap-4">
             <div>
               <div className="text-xs font-black uppercase text-[var(--text-muted)]">Strategy console</div>
-              <div className="mt-1 text-lg font-black text-[var(--text)]">Steady Field</div>
+              <div className="mt-1 text-lg font-black text-[var(--text)]">Rice / Safe Harvest</div>
             </div>
             <div className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-black text-[var(--primary-strong)]">
               LOW RISK
@@ -54,9 +54,9 @@ export function HeroEnergy() {
 
           <div className="mt-5 grid gap-3">
             {[
-              { icon: CircleDollarSign, label: "Deposit lane", value: "Mantle lending pool" },
-              { icon: LockKeyhole, label: "Policy limit", value: "No high volatility route" },
-              { icon: Route, label: "Agent action", value: "Rebalance only after approval" },
+              { icon: CircleDollarSign, label: "RWA asset", value: "USDY on Mantle" },
+              { icon: LockKeyhole, label: "Policy limit", value: "No high-risk rebalance" },
+              { icon: Route, label: "Agent action", value: "Log decision before move" },
             ].map((item) => {
               const Icon = item.icon;
 
@@ -83,7 +83,7 @@ export function HeroEnergy() {
               Agent note
             </div>
             <p className="mt-3 text-sm leading-6 text-emerald-50/90">
-              This route keeps your first harvest conservative. I will pause before changing pools or raising exposure.
+              This USDY route keeps the first harvest conservative. I log policy checks and benchmark outcome before any future execution.
             </p>
           </div>
         </div>

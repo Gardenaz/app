@@ -1,60 +1,64 @@
 # Gardena App
 
-Standalone App project for Gardena.
+Consumer web app for **Gardena**, an AI x RWA yield garden on Mantle.
 
-Current local path: `apps/web`
+Current local path: `/root/projects/Gardenaz/app`
 
-Target standalone repo: `gardena-app`
+Standalone repo: `Gardenaz/app`
 
-Gardena App is the user-facing web product. It lets users connect a wallet, choose DeFi crops by risk/return profile, request an agent strategy plan, view decision history, and optionally anchor decisions on-chain through Gardena Contracts.
+Gardena App is the user-facing product layer. It turns Mantle RWA and mETH yield strategies into a friendly crop interface: users pick Rice, Corn, or Chili, set risk preference, request an agent plan, view the AI Farmer Diary, and see decision hashes that can be anchored on-chain.
+
+## Track fit
+
+- Primary: **AI x RWA** — dynamic yield strategy UX for USDY and mETH on Mantle.
+- Secondary: **Consumer & Viral DApps** — gamified crop selection, proof diary, shareable harvest framing.
+- Supporting: **Agentic Wallets & Economy** — bounded agent decision flow with wallet and policy context.
 
 ## Project boundary
 
-This repo owns only App concerns:
+This repo owns App concerns only:
 
-- product UI.
-- wallet connection.
-- crop selection UX.
+- product UI and interaction flow.
+- wallet connection via RainbowKit/wagmi.
+- crop strategy UX for USDY, mETH, and dynamic USDY/mETH routes.
 - agent planning API integration.
-- decision history display.
-- on-chain anchor UI/trigger.
+- local decision persistence and history display.
+- on-chain anchor trigger/read helpers.
 
-It should not own:
+It does not own:
 
-- agent planning internals.
-- LangGraph orchestration.
-- smart contract source code.
+- LangGraph orchestration internals — see `Gardenaz/agent`.
+- Solidity contracts — see `Gardenaz/contracts`.
 - contract deployment scripts.
-
-Those belong to:
-
-- `gardena-agent` / current `apps/agent`
-- `gardena-contracts` / current `contracts`
+- live protocol execution adapters.
 
 ## Stack
 
 - Next.js 16
 - React 19
-- Tailwind v4
+- Tailwind CSS v4
 - RainbowKit
 - wagmi
 - viem
 - Framer Motion
 - Lucide React
+- `@gardena/agent` from `github:Gardenaz/agent`
 
 ## Architecture
 
 ```mermaid
 flowchart TD
-    User[User] --> UI[Gardena App UI]
+    User[User] --> UI[Gardena App]
     UI --> Wallet[RainbowKit wallet]
-    UI --> Crops[Crop selection]
+    UI --> Crops[Crop strategy UI]
     Crops --> PlanAPI[/api/agent/plan]
     PlanAPI --> Agent[Gardena Agent]
-    Agent --> Decision[AgentDecision]
-    Decision --> History[/api/agent/history]
+    Agent --> LangGraph[LangGraph decision pipeline]
+    LangGraph --> Decision[AgentDecision + decisionHash]
+    Decision --> Store[Local decision store]
+    Decision --> Diary[AI Farmer Diary]
     Decision --> Anchor[On-chain anchor helper]
-    Anchor --> Contracts[Gardena Contracts]
+    Anchor --> Contracts[DecisionLog on Mantle]
 ```
 
 <details>
@@ -64,42 +68,77 @@ flowchart TD
 User
   |
   v
-Gardena App UI
-  |-- Wallet connection
-  |-- Crop selection
-  |-- /api/agent/plan --> Gardena Agent
-  |-- /api/agent/history
-  |-- anchor helper --> Gardena Contracts
+Gardena App
+  |-- wallet connection
+  |-- crop strategy UI: Rice / Corn / Chili
+  |-- /api/agent/plan ---> Gardena Agent LangGraph
+  |                         |
+  |                         v
+  |                    AgentDecision + hash
+  |
+  |-- local history / AI Farmer Diary
+  |-- optional anchor helper ---> DecisionLog on Mantle
 ```
 </details>
 
+## User journey
+
+```mermaid
+flowchart LR
+    A[Pick crop] --> B[Set amount and risk]
+    B --> C[Agent plan]
+    C --> D[Policy check]
+    D --> E[Decision hash]
+    E --> F[Diary card]
+    F --> G[Optional Mantle proof]
+```
+
+## Crop strategies
+
+- Rice / Safe Harvest
+  - asset: `USDY`
+  - route: `Mantle RWA USDY Route`
+  - risk: low
+  - consumer framing: calm harvest proof
+- Corn / Growth Field
+  - asset: `mETH`
+  - route: `Mantle mETH Yield Route`
+  - risk: medium
+  - consumer framing: growth streak
+- Chili / Boost Farm
+  - asset: `USDY/mETH`
+  - route: `Mantle Dynamic RWA Route`
+  - risk: higher
+  - consumer framing: spicy rebalance
+
+## API routes
+
+- `POST /api/agent/plan`
+  - calls `runAgent()` from `@gardena/agent`.
+  - saves returned decision.
+  - attempts optional anchor via `maybeAnchorDecision()`.
+- `GET /api/agent/history`
+  - returns stored agent decisions.
+- `GET /api/health`
+  - returns app health/config readiness.
+
 ## Key files
 
-- `src/app/page.tsx`: main app page.
-- `src/app/layout.tsx`: root layout.
-- `src/app/globals.css`: global theme/styles.
-- `src/app/api/agent/plan/route.ts`: agent planning API route.
-- `src/app/api/agent/history/route.ts`: agent decision history API route.
-- `src/app/api/health/route.ts`: health route.
-- `src/components/sections/hero-energy.tsx`: hero section.
-- `src/components/sections/crop-grid.tsx`: crop cards/grid.
-- `src/components/sections/agent-planner.tsx`: planner UX.
-- `src/components/sections/agent-history.tsx`: decision history UX.
-- `src/lib/agent/*`: agent integration, persistence, and anchor helpers.
-- `src/lib/wagmi.ts`: wallet client config.
+- `src/app/page.tsx` — landing/app console prototype with AI x RWA and proof-diary copy.
+- `src/components/sections/hero-energy.tsx` — production hero section.
+- `src/components/sections/crop-grid.tsx` — crop strategy section.
+- `src/components/base/crop-card.tsx` — RWA strategy cards.
+- `src/components/sections/agent-planner.tsx` — planner form and decision display.
+- `src/components/sections/agent-history.tsx` — decision history UI.
+- `src/lib/crops/data.ts` — USDY/mETH strategy metadata.
+- `src/lib/agent/types.ts` — app-local AgentDecision types.
+- `src/lib/agent/anchor.ts` — on-chain anchor helper.
+- `src/lib/agent/store.ts` — decision store.
+- `src/lib/wagmi.ts` — wallet and Mantle client config.
 
-## Integration contracts
+## App -> Agent contract
 
-### App -> Agent
-
-Current local integration imports `@gardena/agent` as a workspace package.
-
-In standalone repo mode, choose one:
-
-- package integration: install/publish `@gardena/agent`.
-- service integration: call hosted Agent API.
-
-Input payload:
+Request:
 
 ```ts
 type AgentIntent = {
@@ -110,29 +149,36 @@ type AgentIntent = {
 };
 ```
 
-Expected response:
+Response:
 
 ```ts
 type AgentDecision = {
   intent: AgentIntent;
-  plan: AgentPlan;
-  policy: PolicyDecision;
+  plan: {
+    strategyId: string;
+    title: string;
+    riskLevel: 1 | 2 | 3;
+    protocol: string;
+    action: string;
+    asset: string;
+    expectedApy: string;
+    steps: string[];
+    explanation: string;
+    consumerTheme?: string;
+    shareLabel?: string;
+    trackFit?: string;
+  };
+  policy: {
+    allow: boolean;
+    status: "approved" | "blocked";
+    reason: string;
+    checks: Array<{ label: string; pass: boolean; detail: string }>;
+  };
   decisionHash: `0x${string}`;
   summary: string;
   createdAt: string;
-  deployment?: DeploymentConfig;
 };
 ```
-
-### App -> Contracts
-
-App uses contract addresses from env or agent deployment config to anchor/read decision proofs.
-
-Expected contracts:
-
-- `AgentIdentity`
-- `RiskPolicy`
-- `DecisionLog`
 
 ## Environment
 
@@ -141,35 +187,22 @@ NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=
 NEXT_PUBLIC_MANTLE_RPC_URL=
 ```
 
+Optional server/on-chain values may be provided through Agent/Contracts deployment config when anchor execution is enabled.
+
 ## Development
-
-From current system root:
-
-```bash
-pnpm --filter web dev
-```
-
-From standalone repo root after split:
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-## Build
+Dev server uses port `3000`.
 
-From current system root:
-
-```bash
-pnpm --filter web build
-pnpm --filter web typecheck
-```
-
-From standalone repo root after split:
+## Verification
 
 ```bash
-pnpm build
 pnpm typecheck
+pnpm build
 ```
 
 ## Package scripts
@@ -184,12 +217,12 @@ pnpm typecheck
 }
 ```
 
-## Standalone split notes
+## Current execution status
 
-When this folder becomes its own repo:
-
-1. Move contents of `apps/web/*` to repo root.
-2. Keep `src/`, `public/` if present, `package.json`, `tsconfig.json`, `next.config.ts`, `postcss.config.mjs`, and `components.json` at root.
-3. Replace workspace-only imports with package or HTTP service integration.
-4. Keep this README as App-only docs.
-5. Do not include Agent or Contracts implementation files in this repo.
+- UI: implemented for AI x RWA + Consumer & Viral DApps framing.
+- Agent plan API: implemented through `@gardena/agent`.
+- Decision hash display: implemented.
+- Local history: implemented.
+- On-chain anchor helper: present.
+- Real fund movement: not enabled in App MVP.
+- Bybit/CEX trading: not used in App MVP; architecture remains Mantle-native for AI x RWA.
