@@ -45,6 +45,44 @@ button { cursor: pointer; }
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
   mix-blend-mode: multiply;
   opacity: .24;
+  z-index: 1;
+}
+.gardena-shell > * { position: relative; z-index: 2; }
+.vanta-aura {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.vanta-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(18px);
+  opacity: .55;
+}
+.vanta-orb-a {
+  left: -6rem;
+  top: 8rem;
+  width: 24rem;
+  height: 24rem;
+  background: radial-gradient(circle at 35% 35%, rgba(20,184,166,.62), rgba(20,184,166,.05) 68%, transparent 72%);
+}
+.vanta-orb-b {
+  right: -5rem;
+  top: 2rem;
+  width: 30rem;
+  height: 30rem;
+  background: radial-gradient(circle at 40% 42%, rgba(210,171,96,.4), rgba(210,171,96,.04) 70%, transparent 74%);
+}
+.vanta-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(15,118,110,.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,118,110,.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.72), transparent 82%);
 }
 
 .font-display { font-family: "Newsreader", Georgia, serif; }
