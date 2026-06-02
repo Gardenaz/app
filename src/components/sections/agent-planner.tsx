@@ -137,6 +137,17 @@ export function AgentPlannerSection() {
               <p><b>Reason:</b> {mutation.data.policy.reason}</p>
               <p><b>Summary:</b> {mutation.data.summary}</p>
             </div>
+            {mutation.data.aiAdvisor ? (
+              <div className="rounded-2xl border border-emerald-100 bg-emerald-50/70 p-4">
+                <p className="text-xs font-black uppercase text-emerald-700">LLM Advisor · {mutation.data.aiAdvisor.provider} · {mutation.data.aiAdvisor.model}</p>
+                <p className="mt-2 font-semibold text-[var(--text)]">{mutation.data.aiAdvisor.marketSummary}</p>
+                <p className="mt-2 text-xs text-[var(--text-muted)]"><b>Recommended:</b> {mutation.data.aiAdvisor.recommendedStrategyId}</p>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-[var(--text-muted)]">
+                  {mutation.data.aiAdvisor.riskNotes.map((note) => <li key={note}>{note}</li>)}
+                </ul>
+                <p className="mt-2 text-xs text-[var(--text-muted)]">{mutation.data.aiAdvisor.confidenceReason}</p>
+              </div>
+            ) : null}
             {proof ? (
               <div className="rounded-2xl bg-[var(--text)] p-4 text-white">
                 <p className="text-xs font-black uppercase text-emerald-100">{proof.track}</p>
