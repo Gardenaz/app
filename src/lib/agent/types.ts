@@ -21,4 +21,5 @@ export type AgentDecision = {
   decisionHash: `0x${string}`;
   summary: string;
   createdAt: string;
+  anchorTxHash?: string;
 };

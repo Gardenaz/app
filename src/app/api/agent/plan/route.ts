@@ -14,9 +14,10 @@ export async function POST(req: Request) {
     });
 
     const anchor = await maybeAnchorDecision(decision);
-    await saveDecision({ ...decision, anchorTxHash: anchor.txHash });
+    const anchorTxHash = anchor.txHash ?? undefined;
+    await saveDecision({ ...decision, anchorTxHash });
 
-    return NextResponse.json({ ok: true, decision: { ...decision, anchorTxHash: anchor.txHash }, anchor });
+    return NextResponse.json({ ok: true, decision: { ...decision, anchorTxHash }, anchor });
   } catch (error) {
     return NextResponse.json({ ok: false, error: error instanceof Error ? error.message : "invalid request" }, { status: 400 });
   }
