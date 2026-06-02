@@ -13,6 +13,7 @@ type AgentServiceResponse = {
 
 export async function requestAgentPlan(payload: PlanPayload): Promise<{ decision: AgentDecision; anchor: AgentServiceResponse["anchor"]; source: "agent-service" | "local-fallback" }> {
   const agentUrl = process.env.AGENT_SERVICE_URL;
+  console.log("Agent", agentUrl)
   if (agentUrl) {
     const res = await fetch(`${agentUrl.replace(/\/$/, "")}/autopilot/plan`, {
       method: "POST",
@@ -21,6 +22,7 @@ export async function requestAgentPlan(payload: PlanPayload): Promise<{ decision
     });
     const json = (await res.json()) as AgentServiceResponse;
     if (!res.ok || !json.ok || !json.decision) throw new Error(json.error ?? `agent service HTTP ${res.status}`);
+    // console.log(json)
     return { decision: json.decision, anchor: json.anchor, source: "agent-service" };
   }
 

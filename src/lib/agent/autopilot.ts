@@ -88,18 +88,26 @@ export function buildAutopilotPolicy(input: AutopilotPolicyInput): AutopilotPoli
 
 export function buildProofCard(input: { decision: AgentDecision; anchorTxHash?: string | null }): ProofCard {
   const { decision, anchorTxHash } = input;
+
+  // Guard against malformed decision shapes (e.g. version mismatch from @gardena/agent)
+  const policyReason = decision.policy?.reason ?? "policy check unavailable";
+  const policyStatus = decision.policy?.status ?? "unknown";
+  const planTitle = decision.plan?.title ?? "Garden Strategy";
+  const planAsset = decision.plan?.asset ?? "USDY";
+  const decisionHash = decision.decisionHash ?? "0x0";
+
   const proofItems = [
-    { label: "Decision Hash", value: decision.decisionHash },
+    { label: "Decision Hash", value: decisionHash },
     { label: "Mantle Tx", value: anchorTxHash ?? "dry-run proof pending" },
-    { label: "Policy", value: decision.policy.reason },
+    { label: "Policy", value: policyReason },
   ];
 
   return {
-    title: `${decision.plan.title} Proof`,
-    asset: decision.plan.asset,
+    title: `${planTitle} Proof`,
+    asset: planAsset,
     track: "AI x RWA + Consumer & Viral DApps",
-    status: decision.policy.status.toUpperCase(),
-    shareText: `${decision.plan.title} used ${decision.plan.asset} with ${decision.policy.status} policy status. ${decision.plan.shareLabel ?? "Shareable harvest proof"}.`,
+    status: policyStatus.toUpperCase(),
+    shareText: `${planTitle} used ${planAsset} with ${policyStatus} policy status. ${decision.plan?.shareLabel ?? "Shareable harvest proof"}.`,
     proofItems,
   };
 }

@@ -12,10 +12,20 @@ export function PrivyConnectButton({ compact = false }: { compact?: boolean }) {
       type="button"
       onClick={() => (authenticated ? logout() : login())}
       disabled={!ready}
-      className="group inline-flex items-center justify-center gap-2 rounded-full border border-teal-500/30 bg-teal-500 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_14px_35px_rgba(20,184,166,0.22)] transition duration-300 hover:-translate-y-0.5 hover:bg-teal-600 disabled:pointer-events-none disabled:opacity-60"
+      className="btn-secondary disabled:pointer-events-none disabled:opacity-50"
     >
-      {authenticated ? <LogOut className="size-4" /> : <Wallet className="size-4" />}
-      <span>{authenticated ? getPrivyAddressLabel(address) : compact ? "Connect" : "Connect wallet"}</span>
+      {authenticated ? (
+        <LogOut className="size-4 text-[var(--text-muted)]" />
+      ) : (
+        <Wallet className="size-4 text-teal-600" />
+      )}
+      <span>
+        {authenticated
+          ? getPrivyAddressLabel(address)
+          : compact
+            ? "Connect"
+            : "Connect wallet"}
+      </span>
     </button>
   );
 }
