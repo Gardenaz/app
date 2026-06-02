@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Bot, Coins, Leaf, ShieldCheck, Wallet } from "lucide-react";
+import { ArrowLeft, ArrowRight, Bot, Coins, Leaf, ShieldCheck } from "lucide-react";
 import { pageSwap, staggerContainer, staggerItem } from "@/lib/motion";
 
 const seeds = [
@@ -62,7 +62,7 @@ export default function Home() {
           <motion.section key="app" variants={pageSwap} initial="initial" animate="animate" exit="exit" className="mx-auto flex min-h-screen w-full max-w-[1480px] flex-col gap-4 px-4 py-4 sm:px-6">
             <header className="paper-card flex items-center justify-between px-4 py-3">
               <div className="flex items-center gap-3"><button onClick={() => setView("landing")} className="paper-btn-ghost !p-2"><ArrowLeft className="size-4" /></button><div><p className="paper-label">AI x RWA Console</p><p className="font-extrabold">My Garden</p></div></div>
-              <div className="flex items-center gap-2 rounded-xl border border-[#d6d3cd] bg-white px-3 py-2"><Wallet className="size-4" /><span className="text-sm font-semibold">0x7A...9F21</span></div>
+              <div className="flex items-center gap-2 rounded-xl border border-[#d6d3cd] bg-white px-3 py-2"><span className="text-sm font-semibold">Privy wallet</span></div>
             </header>
 
             <div className="grid flex-1 gap-4 lg:grid-cols-[1fr_390px]">

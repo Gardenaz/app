@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useAccount } from "wagmi";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAgentPlan } from "@/hooks/use-agent-plan";
+import { usePrivyWalletAddress } from "@/hooks/use-privy-wallet-address";
 import { buildAutopilotPolicy, buildProofCard, cropToAutopilotDefaults } from "@/lib/agent/autopilot";
 import type { CropId, RiskLevel } from "@/lib/agent/types";
 
@@ -24,7 +24,7 @@ export function AgentPlannerSection() {
   const [rebalanceIntervalHours, setRebalanceIntervalHours] = useState(24);
   const [selectedProtocols, setSelectedProtocols] = useState<string[]>(["Mantle RWA USDY Route"]);
   const [manualAddress, setManualAddress] = useState("0x1111111111111111111111111111111111111111");
-  const { address } = useAccount();
+  const { ready, authenticated, login, logout, address } = usePrivyWalletAddress();
   const mutation = useAgentPlan();
 
   const userAddress = useMemo(
@@ -55,9 +55,14 @@ export function AgentPlannerSection() {
           <h3 className="text-xl font-black">Plan with bounded agent wallet policy</h3>
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-semibold">Wallet Address</label>
-          <input className="w-full rounded-xl border border-[var(--border)] px-3 py-2" value={userAddress} onChange={(e) => setManualAddress(e.target.value)} disabled={Boolean(address)} />
-          <p className="text-xs text-[var(--text-muted)]">{address ? "Connected wallet detected from wagmi." : "Connect wallet or input address manually."}</p>
+          <label className="text-sm font-semibold">Privy Wallet Address</label>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <input className="w-full rounded-xl border border-[var(--border)] px-3 py-2" value={userAddress} onChange={(e) => setManualAddress(e.target.value)} disabled={Boolean(address)} />
+            <Button type="button" variant="secondary" onClick={() => authenticated ? logout() : login()} disabled={!ready}>
+              {authenticated ? "Logout" : "Login"}
+            </Button>
+          </div>
+          <p className="text-xs text-[var(--text-muted)]">{address ? "Privy wallet connected." : "Login with Privy or input address manually for demo mode."}</p>
         </div>
         <div className="grid gap-3 md:grid-cols-2">
           <div className="space-y-2">

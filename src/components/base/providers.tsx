@@ -1,12 +1,10 @@
 "use client";
 
-import "@rainbow-me/rainbowkit/styles.css";
+import { PrivyProvider } from "@privy-io/react-auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { WagmiProvider } from "wagmi";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { wagmiConfig } from "@/lib/wagmi";
+import { privyAppId, privyClientId, privySupportedChains } from "@/lib/privy";
 
 function makeQueryClient() {
   return new QueryClient({
@@ -22,11 +20,28 @@ function makeQueryClient() {
 
 export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(makeQueryClient);
+
   return (
-    <WagmiProvider config={wagmiConfig}>
-      <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>{children}</RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+    <PrivyProvider
+      appId={privyAppId}
+      clientId={privyClientId}
+      config={{
+        defaultChain: privySupportedChains[0],
+        supportedChains: [...privySupportedChains],
+        loginMethods: ["email", "wallet"],
+        appearance: {
+          theme: "light",
+          accentColor: "#16A34A",
+          logo: undefined,
+        },
+        embeddedWallets: {
+          ethereum: {
+            createOnLogin: "users-without-wallets",
+          },
+        },
+      }}
+    >
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </PrivyProvider>
   );
 }
