@@ -7,15 +7,13 @@ import { ArrowLeft, CheckCircle2, Fingerprint, Play, ShieldCheck, Wallet } from 
 import { AgentPlannerSection } from "@/components/sections/agent-planner";
 import { Logo } from "@/components/base/logo";
 import { PrivyConnectButton } from "@/components/base/privy-connect-button";
-import { VantaAura } from "@/components/base/vanta-aura";
 import { proofRows, strategies } from "@/lib/gardena-content";
 import { pageSwap, staggerItem } from "@/lib/motion";
 
 export default function LaunchAppPage() {
   return (
     <motion.main key="app" variants={pageSwap} initial="initial" animate="animate" className="gardena-shell mx-auto min-h-screen w-full max-w-[1500px] px-4 py-4 sm:px-6">
-      <VantaAura />
-      <header className="glass-card relative z-10 flex flex-wrap items-center justify-between gap-4 px-4 py-3 sm:px-5">
+      <header className="glass-nav sticky top-4 z-50 flex flex-wrap items-center justify-between gap-4 rounded-full px-4 py-3 sm:px-5">
         <div className="flex items-center gap-3">
           <Link href="/" className="ghost-btn !p-3"><ArrowLeft className="size-4" /></Link>
           <Logo />
