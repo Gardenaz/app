@@ -3,8 +3,8 @@ import "./globals.css";
 import { Providers } from "@/components/base/providers";
 
 export const metadata: Metadata = {
-  title: "Gardena - AI DeFi Farming",
-  description: "Gamified DeFi farming for beginners on Mantle. Grow crops, earn yield, let AI manage your strategy.",
+  title: "Gardenaz - AI x RWA Farming",
+  description: "Beginner-friendly AI x RWA farming on Mantle. Grow crops, follow live oracle prices, and let AI manage your strategy.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

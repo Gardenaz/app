@@ -5,7 +5,7 @@ import { mantleSepoliaContracts } from "@/lib/contracts/config";
 const events = [
   {
     title: "ERC-8004 identity minted",
-    detail: "Gardena Autopilot Agent registered as agentId 1 with an ERC-721 identity NFT.",
+    detail: "Gardenaz Autopilot Agent registered as agentId 1 with an ERC-721 identity NFT.",
     status: "verified",
     icon: Fingerprint,
   },
@@ -103,7 +103,7 @@ export default function LiveTransparencyPage() {
           <aside className="space-y-4">
             <div className="card-lg p-5">
               <p className="kicker">ERC-8004 agent</p>
-              <h2 className="mt-2 text-xl font-black">Gardena Autopilot Agent</h2>
+              <h2 className="mt-2 text-xl font-black">Gardenaz Autopilot Agent</h2>
               <dl className="mt-4 space-y-3 text-sm">
                 <div>
                   <dt className="text-[var(--text-muted)]">Agent ID</dt>

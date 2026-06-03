@@ -117,7 +117,7 @@ function Hero() {
             variants={staggerItem}
             className="mx-auto mt-5 max-w-xl text-base leading-7 text-[var(--text-muted)]"
           >
-            Gardena turns USDY and mETH strategies into an autonomous garden — plan with AI,
+            Gardenaz turns USDY and mETH strategies into an autonomous garden — plan with AI,
             enforce policy gates, execute guarded routes, and prove every move on Mantle.
           </motion.p>
 
@@ -194,7 +194,7 @@ function GardenMap() {
           <div className="absolute bottom-10 left-1/2 flex -translate-x-1/2 items-center gap-2.5 rounded-2xl border border-white/70 bg-white/85 px-4 py-2.5 shadow-[var(--shadow-md)] backdrop-blur">
             <Sprout className="size-4 text-[var(--primary)] shrink-0" />
             <div className="text-left">
-              <p className="text-[10px] font-black uppercase tracking-[.14em] text-[var(--primary)]">Gardena Agent</p>
+              <p className="text-[10px] font-black uppercase tracking-[.14em] text-[var(--primary)]">Gardenaz Agent</p>
               <p className="text-sm font-bold text-[var(--text)]">plan → gate → prove</p>
             </div>
           </div>
@@ -232,10 +232,10 @@ function GardenMap() {
 
 function StackSection() {
   return (
-    <section id="what-is-gardena" className="divider bg-white">
+    <section id="what-is-gardenaz" className="divider bg-white">
       <div className="container-page py-14 sm:py-20">
         <SectionHeader
-          kicker="What is Gardena?"
+          kicker="What is Gardenaz?"
           title="A transparent AI yield agent with a garden interface."
           text="The user sees crops and harvests. Underneath, a strict agent stack separates LLM reasoning, deterministic policy, execution, and on-chain proof."
         />
@@ -360,7 +360,7 @@ function ProblemSection() {
               </p>
             </div>
             <div className="mt-3 rounded-2xl border border-emerald-200 bg-white p-5">
-              <p className="kicker">Gardena fix</p>
+              <p className="kicker">Gardenaz fix</p>
               <div className="mt-3 grid gap-2">
                 {["LLM rationale", "deterministic gate", "Mantle decision log", "execution outcome"].map((x) => (
                   <div key={x} className="flex items-center gap-2.5 text-sm font-bold text-[var(--text)]">
@@ -377,7 +377,7 @@ function ProblemSection() {
             </div>
             <div className="rounded-2xl border border-emerald-200 bg-white p-4 shadow-[var(--shadow-sm)]">
               <p className="kicker">after</p>
-              <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">Gardena shows rationale, gate result, and proof trail.</p>
+              <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">Gardenaz shows rationale, gate result, and proof trail.</p>
             </div>
           </div>
         </div>
@@ -393,7 +393,7 @@ function SolutionSection() {
         <SectionHeader
           kicker="Solution · bounded autonomy"
           title="Plan, gate, execute, and prove."
-          text="Gardena combines a LangGraph AI advisor, deterministic policy checks, guarded Mantle execution, and on-chain outcome benchmarks into one transparent agent loop."
+          text="Gardenaz combines a LangGraph AI advisor, deterministic policy checks, guarded Mantle execution, and on-chain outcome benchmarks into one transparent agent loop."
         />
         <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map(([num, title, text]) => (
@@ -455,7 +455,7 @@ function WorkflowSection() {
           </div>
 
           <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-6 text-[var(--text-muted)]">
-            Gardena gives users the engagement of a garden and the proof of an on-chain benchmark system.
+            Gardenaz gives users the engagement of a garden and the proof of an on-chain benchmark system.
           </p>
         </div>
       </div>

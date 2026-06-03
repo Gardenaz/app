@@ -1,12 +1,14 @@
 import { Bot, DatabaseZap, Sparkles } from "lucide-react";
 
-export const navItems = ["Product", "What is Gardena?", "Solution", "How it works", "Proof"];
+export const navItems = ["Product", "What is Gardenaz?", "Solution", "How it works", "Proof"];
 
 export const strategies = [
   {
     name: "Rice / Safe Harvest",
     risk: "Low risk",
     apy: "4-6%",
+    price: "100 gUSD",
+    returnLabel: "≈ 4-6%",
     asset: "USDY",
     route: "Mantle RWA USDY Route",
     desc: "Conservative USDY lane for stable RWA yield and clean policy proof.",
@@ -15,6 +17,8 @@ export const strategies = [
     name: "Corn / Growth Field",
     risk: "Medium risk",
     apy: "7-11%",
+    price: "250 gUSD",
+    returnLabel: "≈ 7-11%",
     asset: "mETH",
     route: "Mantle mETH Yield Route",
     desc: "mETH route for measured compounding with volatility guardrails.",
@@ -23,6 +27,8 @@ export const strategies = [
     name: "Chili / Boost Farm",
     risk: "High risk",
     apy: "12-20%",
+    price: "500 gUSD",
+    returnLabel: "≈ 12-20%",
     asset: "USDY/mETH",
     route: "Mantle Dynamic RWA Route",
     desc: "Dynamic allocation with stricter preflight checks before any rebalance.",
@@ -62,7 +68,7 @@ export const proofRows = [
 ] as const;
 
 export const faq = [
-  ["Is Gardena a Bybit trading bot?", "No. Current MVP focuses AI x RWA on Mantle with USDY/mETH strategies. Bybit/CEX adapter can be future extension, not core."],
+  ["Is Gardenaz a Bybit trading bot?", "No. Current MVP focuses AI x RWA on Mantle with USDY/mETH strategies. Bybit/CEX adapter can be future extension, not core."],
   ["Can agent move funds freely?", "No. Policy fences define max amount, risk level, allowed routes, rebalance interval, and emergency pause."],
   ["Why crops?", "Crops make yield strategy understandable and shareable for consumer users without hiding benchmark proof."],
 ] as const;

@@ -86,7 +86,7 @@ export function buildAutopilotPolicy(input: AutopilotPolicyInput): AutopilotPoli
   };
 }
 
-export function buildProofCard(input: { decision: AgentDecision; anchorTxHash?: string | null }): ProofCard {
+export function buildProofCard(input: { decision: AgentDecision; anchorTxHash?: `0x${string}` | null }): ProofCard {
   const { decision, anchorTxHash } = input;
 
   // Guard against malformed decision shapes (e.g. version mismatch from @gardena/agent)

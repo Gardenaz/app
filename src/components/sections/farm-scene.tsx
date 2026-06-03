@@ -30,7 +30,7 @@ export const CROP_OPTIONS = [
     apy: "4–6%",
     risk: "Low",
     riskColor: "text-emerald-700 bg-emerald-50 border-emerald-200",
-    desc: "Stabil, RWA-backed. Cocok untuk pemula atau bear market.",
+    desc: "Stable, RWA-backed. Best for beginners or bearish markets.",
     recommended: (weather: WeatherMood) => weather === "rainy" || weather === "stormy",
   },
   {
@@ -41,7 +41,7 @@ export const CROP_OPTIONS = [
     apy: "7–11%",
     risk: "Medium",
     riskColor: "text-amber-700 bg-amber-50 border-amber-200",
-    desc: "Liquid staking yield. Bagus saat market cloudy atau bullish.",
+    desc: "Liquid staking yield. Strong when the market is cloudy or bullish.",
     recommended: (weather: WeatherMood) => weather === "cloudy",
   },
   {
@@ -52,7 +52,7 @@ export const CROP_OPTIONS = [
     apy: "12–20%",
     risk: "High",
     riskColor: "text-red-700 bg-red-50 border-red-200",
-    desc: "Dynamic rebalance, return tinggi. Ideal saat bull market.",
+    desc: "Dynamic rebalance, higher return. Best when the market is bullish.",
     recommended: (weather: WeatherMood) => weather === "sunny",
   },
 ] as const;
@@ -80,37 +80,37 @@ const weatherTheme: Record<WeatherMood, {
     sky: "linear-gradient(180deg,#7dd3fc 0%,#bae6fd 45%,#d1fae5 80%,#a7f3d0 100%)",
     ground: "linear-gradient(180deg,#86efac 0%,#4ade80 40%,#16a34a 100%)",
     filter: "",
-    label: "Cerah", marketLabel: "🐂 Bull Market", emoji: "☀️",
+    label: "Clear", marketLabel: "🐂 Bull Market", emoji: "☀️",
     cloudOpacity: 0.15, cloudColor: "#fff",
     sunVisible: true, rainVisible: false,
-    tip: "Pasar bullish — semua crop bisa tumbuh! Chili paling optimal.",
+    tip: "Bullish market: every crop can grow. Chili is the most aggressive lane.",
   },
   cloudy: {
     sky: "linear-gradient(180deg,#94a3b8 0%,#cbd5e1 45%,#e2e8f0 80%,#d4ede0 100%)",
     ground: "linear-gradient(180deg,#86efac 0%,#4ade80 40%,#22c55e 100%)",
     filter: "brightness-95",
-    label: "Berawan", marketLabel: "😐 Neutral", emoji: "⛅",
+    label: "Cloudy", marketLabel: "😐 Neutral", emoji: "⛅",
     cloudOpacity: 0.75, cloudColor: "#e2e8f0",
     sunVisible: true, rainVisible: false,
-    tip: "Pasar sideways — tanam Corn atau Rice yang aman.",
+    tip: "Sideways market: Corn or Rice is the safer move.",
   },
   rainy: {
     sky: "linear-gradient(180deg,#475569 0%,#64748b 45%,#94a3b8 80%,#b8d4c8 100%)",
     ground: "linear-gradient(180deg,#6ee7b7 0%,#34d399 40%,#059669 100%)",
     filter: "brightness-85 saturate-75",
-    label: "Hujan", marketLabel: "🐻 Bear Market", emoji: "🌧️",
+    label: "Rainy", marketLabel: "🐻 Bear Market", emoji: "🌧️",
     cloudOpacity: 0.92, cloudColor: "#94a3b8",
     sunVisible: false, rainVisible: true,
-    tip: "Bear market — Rice paling aman. Jangan FOMO ke Chili.",
+    tip: "Bear market: Rice is the safest lane. Skip Chili for now.",
   },
   stormy: {
     sky: "linear-gradient(180deg,#1e293b 0%,#334155 45%,#475569 80%,#7f9e8f 100%)",
     ground: "linear-gradient(180deg,#4ade80 0%,#16a34a 40%,#15803d 100%)",
     filter: "brightness-75 saturate-50",
-    label: "Badai", marketLabel: "🔴 Crash", emoji: "⛈️",
+    label: "Storm", marketLabel: "🔴 Crash", emoji: "⛈️",
     cloudOpacity: 1, cloudColor: "#334155",
     sunVisible: false, rainVisible: true,
-    tip: "Crash! Tahan posisi, agent aktif lindungi pot kamu.",
+    tip: "Crash mode. Hold positions and let the agent protect the garden.",
   },
 };
 
@@ -196,12 +196,12 @@ function CropPicker({
       {/* header */}
       <div className="mb-3 flex items-center justify-between">
         <div>
-          <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Pilih tanaman</p>
-          <p className="text-sm font-black text-gray-800">Mau tanam apa di pot ini?</p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Select seed</p>
+          <p className="text-sm font-black text-gray-800">What should we plant in this pot?</p>
         </div>
         <button type="button" onClick={onClose}
           className="flex size-7 items-center justify-center rounded-full text-gray-400 transition hover:bg-gray-100 hover:text-gray-600"
-          aria-label="Tutup">
+          aria-label="Close">
           <X className="size-4" />
         </button>
       </div>
@@ -225,7 +225,7 @@ function CropPicker({
             >
               {isRec && (
                 <span className="absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-teal-500 px-1.5 py-px text-[8px] font-black text-white">
-                  Rekomendasi
+                  Recommended
                 </span>
               )}
               <span className="text-2xl leading-none">{opt.emoji}</span>
@@ -346,15 +346,15 @@ function GardenPot({
       {/* Label chip */}
       <div className="rounded-lg border border-white/70 bg-white/88 px-2 py-0.5 shadow-sm backdrop-blur-sm">
         {isEmpty ? (
-          <p className="text-[9px] font-black text-gray-400 leading-tight">Kosong</p>
-        ) : (
-          <>
-            <p className="text-[10px] font-black text-gray-800 leading-tight">{slot.crop}</p>
-            <p className="text-[9px] font-bold leading-tight text-emerald-600">
-              {slot.state === "ready" ? "Panen! 🌾" : slot.state === "growing" ? "Tumbuh 🌱" : "Baru tanam"}
-            </p>
-          </>
-        )}
+            <p className="text-[9px] font-black text-gray-400 leading-tight">Empty</p>
+          ) : (
+            <>
+              <p className="text-[10px] font-black text-gray-800 leading-tight">{slot.crop}</p>
+              <p className="text-[9px] font-bold leading-tight text-emerald-600">
+              {slot.state === "ready" ? "Ready to harvest" : slot.state === "growing" ? "Growing" : "Just planted"}
+              </p>
+            </>
+          )}
       </div>
     </motion.button>
   );
@@ -452,7 +452,7 @@ export function FarmScene({
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <div className="flex flex-col items-center gap-3 rounded-2xl border border-white/60 bg-white/92 px-6 py-4 shadow-xl backdrop-blur-md">
               <Loader2 className="size-8 animate-spin text-teal-600" />
-              <p className="text-sm font-black text-gray-700">Petani lagi analisa pasar…</p>
+              <p className="text-sm font-black text-gray-700">Agent is analyzing the market…</p>
             </div>
           </motion.div>
         )}

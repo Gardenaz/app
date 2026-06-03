@@ -8,7 +8,7 @@ import { navItems } from "@/lib/gardena-content";
 
 const navTargets: Record<string, string> = {
   Product: "product",
-  "What is Gardena?": "what-is-gardena",
+  "What is Gardenaz?": "what-is-gardenaz",
   Solution: "solution",
   "How it works": "how-it-works",
   Proof: "proof",

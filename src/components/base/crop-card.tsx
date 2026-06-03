@@ -1,10 +1,13 @@
 import { ArrowUpRight, Flame, ShieldCheck, Sprout } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 type CropCardProps = {
   name: string;
   risk: string;
   apy: string;
+  price: string;
+  returnLabel: string;
   asset: string;
   protocol: string;
   shareLabel: string;
@@ -25,7 +28,7 @@ const toneBar = {
   bold: "bg-red-400",
 };
 
-export function CropCard({ name, risk, apy, asset, protocol, shareLabel, description, accent, tone }: CropCardProps) {
+export function CropCard({ name, risk, apy, price, returnLabel, asset, protocol, shareLabel, description, accent, tone }: CropCardProps) {
   const Icon = cropIcons[tone];
 
   return (
@@ -49,8 +52,12 @@ export function CropCard({ name, risk, apy, asset, protocol, shareLabel, descrip
         <div className="mt-5 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
           <div className="flex items-end justify-between gap-3">
             <div>
-              <span className="text-xs font-bold uppercase text-[var(--text-muted)]">Target APY</span>
-              <div className="mt-0.5 text-2xl font-black text-[var(--primary)]">{apy}</div>
+              <span className="text-xs font-bold uppercase text-[var(--text-muted)]">Seed price</span>
+              <div className="mt-0.5 text-2xl font-black text-[var(--primary)]">{price}</div>
+            </div>
+            <div className="text-right">
+              <span className="text-xs font-bold uppercase text-[var(--text-muted)]">Expected return</span>
+              <div className="mt-0.5 text-2xl font-black text-[var(--text)]">{returnLabel}</div>
             </div>
           </div>
           <div className="mt-3 space-y-1.5 text-xs">
@@ -63,16 +70,16 @@ export function CropCard({ name, risk, apy, asset, protocol, shareLabel, descrip
             <div className="rounded-lg border border-[var(--border)] bg-white px-3 py-2 font-bold text-[var(--primary)]">
               {shareLabel}
             </div>
+            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 font-bold text-[var(--text)]">
+              APY {apy}
+            </div>
           </div>
         </div>
 
-        <button
-          type="button"
-          className="btn-primary mt-4 w-full justify-between"
-        >
-          Plant strategy
+        <Button type="button" className="mt-4 w-full justify-between" variant="primary">
+          Plant seed
           <ArrowUpRight className="size-4" aria-hidden="true" />
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
         <Leaf className="size-4" />
       </div>
       <div>
-        <p className="font-display text-xl font-semibold tracking-tight text-[var(--text)]">Gardena</p>
+        <p className="font-display text-xl font-semibold tracking-tight text-[var(--text)]">Gardenaz</p>
         {!compact && (
           <p className="hidden text-xs text-[var(--text-muted)] sm:block">AI × RWA on Mantle</p>
         )}

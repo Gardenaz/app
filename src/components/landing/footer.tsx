@@ -16,7 +16,7 @@ const footerLinks = [
     links: [
       { label: "USDY route", href: "#solution" },
       { label: "mETH route", href: "#solution" },
-      { label: "Policy gate", href: "#what-is-gardena" },
+      { label: "Policy gate", href: "#what-is-gardenaz" },
     ],
   },
   {
@@ -70,7 +70,7 @@ export function LandingFooter() {
       {/* Bottom bar */}
       <div className="divider">
         <div className="container-page flex flex-col items-start justify-between gap-2 py-4 sm:flex-row sm:items-center">
-          <p className="text-xs text-[var(--text-subtle)]">© 2025 Gardena · Built on Mantle</p>
+          <p className="text-xs text-[var(--text-subtle)]">© 2025 Gardenaz · Built on Mantle</p>
           <div className="flex items-center gap-1 text-xs text-[var(--text-subtle)]">
             <Leaf className="size-3 text-[var(--primary)]" />
             <span>AI × RWA · Powered by LangGraph</span>

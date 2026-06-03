@@ -31,5 +31,22 @@ export type AgentDecision = {
   decisionHash: `0x${string}`;
   summary: string;
   createdAt: string;
-  anchorTxHash?: string;
+  anchorTxHash?: `0x${string}` | null;
+};
+
+export type AgentHistoryRow = {
+  decisionId: number;
+  strategyId: string;
+  strategyTitle: string;
+  asset: string;
+  protocol: string;
+  amount: string;
+  riskLevel: RiskLevel;
+  outcome: "logged" | "success" | "failed";
+  statusLabel: string;
+  summary: string;
+  decisionHash: `0x${string}`;
+  anchorTxHash?: `0x${string}` | null;
+  createdAt: string;
+  source: "onchain" | "local";
 };

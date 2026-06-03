@@ -1,19 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useMemo, useCallback, type ReactNode } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ArrowLeft,
-  CheckCircle2,
-  ChevronRight,
-  Fingerprint,
-  Loader2,
-  Play,
-  ShieldCheck,
-  Wallet,
-} from "lucide-react";
-import { AgentPlannerSection } from "@/components/sections/agent-planner";
+import { useCallback, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft, Fingerprint, Sprout, ShieldCheck } from "lucide-react";
+import { CropGridSection } from "@/components/sections/crop-grid";
+import { AgentHistorySection } from "@/components/sections/agent-history";
 import {
   FarmScene,
   INITIAL_SLOTS,
@@ -21,29 +13,38 @@ import {
   type PotSlot,
   type WeatherMood,
 } from "@/components/sections/farm-scene";
-import { FarmerCompanion } from "@/components/base/farmer-companion";
+import { FarmerCompanion, type FarmerCompanionContext } from "@/components/base/farmer-companion";
 import { Logo } from "@/components/base/logo";
 import { PrivyConnectButton } from "@/components/base/privy-connect-button";
+import { GardenRwaVaultSection } from "@/components/sections/garden-rwa-vault";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGardenAgent } from "@/hooks/use-garden-agent";
+import { useGardenRwaVault } from "@/hooks/use-garden-rwa-vault";
 import { usePrivyWalletAddress } from "@/hooks/use-privy-wallet-address";
-import { proofRows, strategies } from "@/lib/gardena-content";
+import { crops } from "@/lib/crops/data";
+import { proofRows } from "@/lib/gardena-content";
 import type { RiskLevel } from "@/lib/agent/types";
+import type { GardenRwaCropKey } from "@/lib/contracts/garden-rwa";
 
 /* ── Weather background themes ────────────────────────────────── */
 const pageTheme: Record<WeatherMood, { bg: string; headerBg: string }> = {
-  sunny:  { bg: "bg-gradient-to-br from-sky-50 via-emerald-50 to-teal-50",          headerBg: "bg-white/90 border-emerald-100"  },
-  cloudy: { bg: "bg-gradient-to-br from-slate-100 via-gray-50 to-emerald-50/60",    headerBg: "bg-white/85 border-gray-200"     },
-  rainy:  { bg: "bg-gradient-to-br from-slate-200 via-blue-50 to-teal-100",         headerBg: "bg-white/80 border-slate-200"    },
-  stormy: { bg: "bg-gradient-to-br from-slate-300 via-gray-200 to-emerald-100/60",  headerBg: "bg-white/75 border-gray-300"     },
+  sunny: { bg: "bg-gradient-to-br from-sky-50 via-emerald-50 to-teal-50", headerBg: "bg-white/90 border-emerald-100" },
+  cloudy: { bg: "bg-gradient-to-br from-slate-100 via-gray-50 to-emerald-50/60", headerBg: "bg-white/85 border-gray-200" },
+  rainy: { bg: "bg-gradient-to-br from-slate-200 via-blue-50 to-teal-100", headerBg: "bg-white/80 border-slate-200" },
+  stormy: { bg: "bg-gradient-to-br from-slate-300 via-gray-200 to-emerald-100/60", headerBg: "bg-white/75 border-gray-300" },
 };
 
-/* ── Planted slot summary strip ────────────────────────────────── */
 function PlantedSummary({ slots, onClear }: { slots: PotSlot[]; onClear: (id: string) => void }) {
   const planted = slots.filter((s) => s.state !== "empty");
   if (!planted.length) return null;
+
   return (
-    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="card-lg p-3.5">
-      <p className="kicker mb-2">Pot terisi</p>
+    <Card className="p-3.5">
+      <p className="kicker mb-2">Filled pots</p>
       <div className="flex flex-wrap gap-2">
         {planted.map((s) => (
           <div key={s.id} className="flex items-center gap-1.5 rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-1.5">
@@ -52,44 +53,102 @@ function PlantedSummary({ slots, onClear }: { slots: PotSlot[]; onClear: (id: st
               <p className="text-xs font-black text-emerald-800">{s.crop}</p>
               <p className="text-[9px] font-bold text-emerald-600">{s.apy.toFixed(1)}% · {s.asset}</p>
             </div>
-            <button type="button" onClick={() => onClear(s.id)}
+            <button
+              type="button"
+              onClick={() => onClear(s.id)}
               className="ml-1 rounded-full p-0.5 text-gray-400 transition hover:bg-white hover:text-red-400"
-              aria-label={`Hapus ${s.crop}`}>✕</button>
+              aria-label={`Remove ${s.crop}`}
+            >
+              ✕
+            </button>
           </div>
         ))}
       </div>
-    </motion.div>
+    </Card>
   );
 }
 
-/* ── Page ──────────────────────────────────────────────────────── */
+function toWeatherMood(mood?: "bullish" | "neutral" | "bearish"): WeatherMood {
+  if (mood === "bullish") return "sunny";
+  if (mood === "bearish") return "rainy";
+  return "cloudy";
+}
+
+function marketLabel(weather: WeatherMood) {
+  return weather === "sunny" ? "Bull" : weather === "cloudy" ? "Neutral" : weather === "rainy" ? "Bear" : "Crash";
+}
+
+function marketEmoji(weather: WeatherMood) {
+  return weather === "sunny" ? "☀️" : weather === "cloudy" ? "⛅" : weather === "rainy" ? "🌧️" : "⛈️";
+}
+
 export default function LaunchAppPage() {
-  const [message,    setMessage]    = useState("pemula mau aman, tanam 1000 USDY dulu");
-  const [amount,     setAmount]     = useState("1000");
-  const [risk,       setRisk]       = useState<RiskLevel>(1);
+  const [view, setView] = useState<"canvas" | "shop" | "audit">("canvas");
+  const [message, setMessage] = useState("I want a safe beginner move, plant 1000 gUSD first");
+  const [amount, setAmount] = useState("1000");
+  const [risk, setRisk] = useState<RiskLevel>(1);
   const [manualAddr, setManualAddr] = useState("0x1111111111111111111111111111111111111111");
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [slots,      setSlots]      = useState<PotSlot[]>(INITIAL_SLOTS);
+  const [slots, setSlots] = useState<PotSlot[]>(INITIAL_SLOTS);
 
   const { address } = usePrivyWalletAddress();
-  const garden      = useGardenAgent();
+  const garden = useGardenAgent();
+  const gardenVault = useGardenRwaVault();
 
   const userAddress = useMemo(
     () => (address ?? manualAddr) as `0x${string}`,
     [address, manualAddr],
   );
 
-  const data       = garden.data;
-  const rawWeather = data?.simulation.weather ?? "sunny";
-  const weather: WeatherMood =
-    rawWeather === "rainy"
-      ? data?.marketMood.mood === "bearish" ? "rainy" : "cloudy"
-      : rawWeather === "cloudy" ? "cloudy" : "sunny";
+  const data = garden.data;
+  const onchainPositions = gardenVault.snapshot?.positions ?? [];
+  const portfolioWeather = useMemo(() => {
+    if (!onchainPositions.length) return null;
+    const totalPrincipal = onchainPositions.reduce((sum, position) => sum + Number(position.principal), 0);
+    const totalCurrent = onchainPositions.reduce((sum, position) => sum + Number(position.currentValue), 0);
+    if (!totalPrincipal) return null;
+    const ratio = totalCurrent / totalPrincipal;
+    const weather = ratio > 1.03 ? "sunny" : ratio < 0.98 ? "rainy" : "cloudy";
+    return {
+      weather,
+      label: marketLabel(weather),
+      reason: `Onchain pots are ${((ratio - 1) * 100).toFixed(1)}% vs principal across ${onchainPositions.length} position${onchainPositions.length > 1 ? "s" : ""}.`,
+    } as const;
+  }, [onchainPositions]);
 
-  const theme        = pageTheme[weather];
+  const weather: WeatherMood = portfolioWeather?.weather ?? toWeatherMood(data?.marketMood.mood);
+  const theme = pageTheme[weather];
   const plantedCount = slots.filter((s) => s.state !== "empty").length;
+  const weatherReason = portfolioWeather?.reason ?? data?.marketMood.reason ?? "Live weather waits for a position to grow.";
+  const gUsdBalance = gardenVault.snapshot?.tokenBalance ? Number(gardenVault.snapshot.tokenBalance).toFixed(2) : "0.00";
+  const assistantContext: FarmerCompanionContext = useMemo(() => {
+    const activePositions = onchainPositions.slice(0, 3).map((position) => ({
+      id: position.positionId,
+      title: `${position.cropKey === "steady" ? "Rice" : position.cropKey === "growth" ? "Corn" : "Chili"} #${position.positionId}`,
+      value: `${position.currentValue}/${position.principal}`,
+      status: position.harvested ? "Harvested" : "Growing",
+    }));
 
-  /* Crop pick — fill a pot + fire agent */
+    return {
+      view,
+      marketLabel: marketLabel(weather),
+      weatherReason,
+      gUsdBalance,
+      plantedCount,
+      positionCount: onchainPositions.length,
+      activePositions,
+      latestDecision: data?.decision.summary ?? data?.beginnerExplanation ?? null,
+      proofRows,
+      seedCatalog: crops.map((crop) => ({
+        name: crop.name,
+        price: crop.price,
+        returnLabel: crop.returnLabel,
+        asset: crop.asset,
+        risk: crop.risk,
+      })),
+    };
+  }, [data?.beginnerExplanation, data?.decision.summary, gUsdBalance, onchainPositions, plantedCount, view, weather, weatherReason]);
+
   const handleCropPick = useCallback((slotId: string, cropId: typeof CROP_OPTIONS[number]["id"]) => {
     const opt = CROP_OPTIONS.find((c) => c.id === cropId)!;
     const lvl: RiskLevel = cropId === "steady" ? 1 : cropId === "growth" ? 2 : 3;
@@ -102,9 +161,8 @@ export default function LaunchAppPage() {
     ));
     setSelectedId(null);
 
-    // growing after 900ms
     setTimeout(() => {
-      setSlots((prev) => prev.map((s) => s.id === slotId ? { ...s, state: "growing" } : s));
+      setSlots((prev) => prev.map((s) => (s.id === slotId ? { ...s, state: "growing" } : s)));
     }, 900);
 
     const intent = `tanam ${opt.crop} ${opt.asset} ${amount}`;
@@ -113,23 +171,31 @@ export default function LaunchAppPage() {
     garden.mutate({ user: userAddress, message: intent, amount, riskPreference: lvl, execute: false });
   }, [amount, userAddress, garden]);
 
-  /* Clear pot */
   const handleClearSlot = useCallback((slotId: string) => {
-    setSlots((prev) => prev.map((s) =>
-      s.id === slotId ? { ...INITIAL_SLOTS.find((i) => i.id === slotId)! } : s,
-    ));
+    setSlots((prev) => prev.map((s) => (s.id === slotId ? { ...INITIAL_SLOTS.find((i) => i.id === slotId)! } : s)));
   }, []);
 
-  /* Select / deselect */
   const handleSlotClick = useCallback((slot: PotSlot) => {
-    setSelectedId((prev) => prev === slot.id ? null : slot.id);
+    setSelectedId((prev) => (prev === slot.id ? null : slot.id));
   }, []);
 
   function handleFarmerAction(action: "plant" | "analyze" | "protect" | "harvest") {
-    if (action === "analyze" || action === "plant") {
-      garden.mutate({ user: userAddress, message, amount, riskPreference: risk, execute: false });
+    if (action === "analyze" || action === "plant" || action === "protect") {
+      garden.mutate({ user: userAddress, message, amount, riskPreference: action === "protect" ? 1 : risk, execute: false });
+    }
+    if (action === "plant") {
+      const cropKey = (garden.data?.intent.parsedStrategy ?? "steady") as GardenRwaCropKey;
+      if (!gardenVault.canInteract) return;
+      void gardenVault.plant({ cropKey, amount });
+    }
+    if (action === "harvest" && gardenVault.snapshot?.positions.length) {
+      const nextPosition = gardenVault.snapshot.positions.find((position) => !position.harvested);
+      if (nextPosition) {
+        void gardenVault.harvest(nextPosition.positionId);
+      }
     }
   }
+
   function handleFarmerMessage(msg: string) {
     setMessage(msg);
     garden.mutate({ user: userAddress, message: msg, amount, riskPreference: risk, execute: false });
@@ -137,334 +203,226 @@ export default function LaunchAppPage() {
 
   return (
     <div className={`shell min-h-svh transition-colors duration-700 ${theme.bg}`}>
-      {/* ── Nav ── */}
       <header className={`sticky top-0 z-50 border-b backdrop-blur-lg ${theme.headerBg}`}>
         <div className="mx-auto flex h-13 max-w-screen-xl items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-1.5">
-            <Link href="/" className="btn-ghost !p-2" aria-label="Back to home"><ArrowLeft className="size-4" /></Link>
+            <Link href="/" className="btn-ghost !p-2" aria-label="Back to home">
+              <ArrowLeft className="size-4" />
+            </Link>
             <Logo compact />
           </div>
           <div className="flex items-center gap-2">
-            <AnimatePresence mode="wait">
-              <motion.span key={weather}
-                initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.85 }}
-                className={`hidden items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-black sm:inline-flex ${
-                  weather === "sunny" ? "border-amber-200 bg-amber-50 text-amber-700"
-                  : weather === "cloudy" ? "border-gray-200 bg-gray-100 text-gray-600"
-                  : weather === "rainy" ? "border-blue-200 bg-blue-50 text-blue-700"
-                  : "border-red-200 bg-red-50 text-red-700"}`}>
-                <span>{weather === "sunny" ? "☀️" : weather === "cloudy" ? "⛅" : weather === "rainy" ? "🌧️" : "⛈️"}</span>
-                <span>{weather === "sunny" ? "Bull" : weather === "cloudy" ? "Neutral" : weather === "rainy" ? "Bear" : "Crash"}</span>
-                <span className="text-[10px] opacity-60">· Mantle</span>
-              </motion.span>
-            </AnimatePresence>
+            <motion.span
+              key={weather}
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.85 }}
+              className={`hidden items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-black sm:inline-flex ${
+                weather === "sunny"
+                  ? "border-amber-200 bg-amber-50 text-amber-700"
+                  : weather === "cloudy"
+                    ? "border-gray-200 bg-gray-100 text-gray-600"
+                    : weather === "rainy"
+                      ? "border-blue-200 bg-blue-50 text-blue-700"
+                      : "border-red-200 bg-red-50 text-red-700"
+              }`}
+            >
+              <span>{marketEmoji(weather)}</span>
+              <span>{marketLabel(weather)}</span>
+              <span className="text-[10px] opacity-60">· Mantle</span>
+            </motion.span>
             <PrivyConnectButton compact />
           </div>
         </div>
       </header>
 
-      {/* ── Content ── */}
       <div className="mx-auto max-w-screen-xl px-4 py-4 sm:px-6">
-        {/* Farm scene */}
-        <div className="mb-4">
-          <FarmScene
-            weather={weather}
-            slots={slots}
-            agentData={data}
-            onSlotClick={handleSlotClick}
-            onCropPick={handleCropPick}
-            selectedSlotId={selectedId}
-            isLoading={garden.isPending}
-          />
-        </div>
-
-        {/* Planted summary strip */}
-        <AnimatePresence>
-          {plantedCount > 0 && (
-            <div className="mb-4">
-              <PlantedSummary slots={slots} onClear={handleClearSlot} />
+        <Card className="overflow-hidden p-0">
+          <div className="flex flex-wrap items-start justify-between gap-4 p-4 sm:p-5">
+            <div className="min-w-0">
+              <p className="kicker">Gardenaz Audit Garden</p>
+              <h1 className="mt-0.5 text-xl font-black tracking-tight text-[var(--text)] sm:text-2xl">
+                {view === "canvas" ? "Garden canvas" : view === "shop" ? "Seed ledger" : "Proof room"}
+              </h1>
+              <p className="mt-1 max-w-2xl text-xs leading-5 text-[var(--text-muted)]">
+                {view === "canvas"
+                    ? "Pick a pot, plant a seed, and let Pak Tani work in the background."
+                    : view === "shop"
+                    ? "Compare seed rows by price, expected return, and risk."
+                    : "Review positions, proof, and live onchain history."}
+              </p>
             </div>
-          )}
-        </AnimatePresence>
-
-        {/* Main grid */}
-        <div className="grid gap-4 xl:grid-cols-[1fr_360px]">
-
-          {/* ── Left column ── */}
-          <div className="min-w-0 space-y-4">
-
-            {/* Compact stat bar */}
-            <div className="card-lg p-4 sm:p-5">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="kicker">Garden Console</p>
-                  <h1 className="mt-0.5 text-xl font-black tracking-tight text-[var(--text)] sm:text-2xl">
-                    RWA Farm{" "}
-                    <span className="font-normal text-[var(--text-muted)]">
-                      — {weather === "sunny" ? "☀️ Cerah" : weather === "cloudy" ? "⛅ Mendung" : weather === "rainy" ? "🌧️ Hujan" : "⛈️ Badai"}
-                    </span>
-                  </h1>
-                  <p className="mt-1 text-xs text-[var(--text-muted)]">
-                    {plantedCount === 0
-                      ? "Klik pot kosong di atas untuk mulai tanam."
-                      : `${plantedCount} dari 5 pot terisi — klik pot untuk ganti crop.`}
-                  </p>
-                </div>
-                <button type="button" className="btn-primary shrink-0 !py-2 !px-4"
-                  disabled={garden.isPending}
-                  onClick={() => garden.mutate({ user: userAddress, message, amount, riskPreference: risk, execute: false })}>
-                  {garden.isPending ? <Loader2 className="size-4 animate-spin" /> : <Play className="size-4" />}
-                  {garden.isPending ? "Analisa..." : "Run autopilot"}
-                </button>
-              </div>
-
-              {/* Metrics row */}
-              <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                {[
-                  { label: "Pot terisi", value: `${plantedCount} / 5` },
-                  { label: "Benchmark",  value: "+5.2% APY" },
-                  { label: "Market",     value: data?.marketMood.mood ?? "—" },
-                  { label: "Status",     value: data ? "Planned" : "Dry-run" },
-                ].map((m) => (
-                  <div key={m.label} className="card-soft px-3 py-2.5">
-                    <p className="kicker">{m.label}</p>
-                    <p className="mt-0.5 text-sm font-black capitalize text-[var(--text)]">{m.value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* ── Agent input console ── */}
-            <div className="card-lg p-4 sm:p-5">
-              <p className="kicker">Instruksi ke Petani</p>
-              <h2 className="mt-0.5 text-lg font-black text-[var(--text)]">Playable Agent Console</h2>
-
-              <div className="mt-4 space-y-3">
-                <div>
-                  <label className="kicker mb-1 block">Wallet</label>
-                  <input
-                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 font-mono text-xs outline-none focus:ring-2 focus:ring-teal-400/30"
-                    value={userAddress}
-                    onChange={(e) => setManualAddr(e.target.value)}
-                    disabled={Boolean(address)}
-                  />
-                </div>
-                <div>
-                  <label className="kicker mb-1 block">Intent</label>
-                  <textarea
-                    className="min-h-[72px] w-full rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-sm font-medium leading-5 outline-none focus:ring-2 focus:ring-teal-400/30"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Contoh: mau tanam aman 1000 USDY, risk rendah..."
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="kicker mb-1 block">Jumlah</label>
-                    <input
-                      className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 font-mono text-sm outline-none focus:ring-2 focus:ring-teal-400/30"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                      type="number"
-                      min="1"
-                    />
-                  </div>
-                  <div>
-                    <label className="kicker mb-1 block">Risk</label>
-                    <select
-                      className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 font-mono text-sm outline-none focus:ring-2 focus:ring-teal-400/30"
-                      value={risk}
-                      onChange={(e) => setRisk(Number(e.target.value) as RiskLevel)}
-                    >
-                      <option value={1}>1 — Safe 🟢</option>
-                      <option value={2}>2 — Growth 🟡</option>
-                      <option value={3}>3 — Boost 🔴</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <button
+            <div className="flex flex-wrap items-center gap-2">
+              <Button
                 type="button"
-                className="btn-primary mt-4 w-full justify-center"
+                className="shrink-0 !py-2 !px-4"
                 disabled={garden.isPending}
-                onClick={() =>
-                  garden.mutate({ user: userAddress, message, amount, riskPreference: risk, execute: false })
-                }
+                onClick={() => garden.mutate({ user: userAddress, message, amount, riskPreference: risk, execute: false })}
               >
-                {garden.isPending ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : <ShieldCheck className="size-4" aria-hidden="true" />}
-                {garden.isPending ? "Petani lagi analisa…" : "Plan safe move"}
-              </button>
-
-              {garden.isError && (
-                <p className="mt-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-bold text-red-700">
-                  {(garden.error as Error).message}
-                </p>
-              )}
-              {data && (
-                <motion.div
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2.5"
-                >
-                  <p className="font-mono text-[11px] font-black text-emerald-700">
-                    ✅ {data.simulation.actionLabel} · {data.decision.decisionHash.slice(0, 10)}…
-                  </p>
-                  {data.marketMood.reason && (
-                    <p className="mt-1 text-[11px] leading-5 text-emerald-600">{data.marketMood.reason}</p>
-                  )}
-                </motion.div>
-              )}
-            </div>
-
-            {/* Strategy cards */}
-            <div className="grid gap-3 sm:grid-cols-3">
-              {strategies.map((s, i) => {
-                const bar   = ["bg-emerald-400", "bg-amber-400", "bg-red-400"][i];
-                const badge = ["bg-emerald-50 text-emerald-700", "bg-amber-50 text-amber-700", "bg-red-50 text-red-700"][i];
-                return (
-                  <motion.div
-                    key={s.name}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.06 }}
-                    whileHover={{ y: -3 }}
-                    className="card overflow-hidden transition-shadow hover:shadow-[var(--shadow-md)]"
-                  >
-                    <div className={`h-1 w-full ${bar}`} />
-                    <div className="p-3.5">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className={`rounded-full px-2 py-0.5 text-[10px] font-black ${badge}`}>{s.risk}</span>
-                        <span className="text-[10px] font-bold text-[var(--text-muted)]">{s.asset}</span>
-                      </div>
-                      <h3 className="mt-2 text-sm font-black text-[var(--text)]">{s.name}</h3>
-                      <p className="text-base font-black text-teal-700">{s.apy} APY</p>
-                      <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">{s.desc}</p>
-                      <Link href="#agent-planner" className="btn-secondary mt-3 w-full !py-1.5 text-xs">
-                        Use strategy <ChevronRight className="size-3" />
-                      </Link>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            {/* Agent planner */}
-            <div id="agent-planner">
-              <p className="kicker mb-1">Planner</p>
-              <h2 className="mb-3 text-lg font-black text-[var(--text)]">Agent configuration</h2>
-              <AgentPlannerSection />
+                <ShieldCheck className="size-4" />
+                Plan safe move
+              </Button>
+              <Button
+                type="button"
+                variant="secondary"
+                className="shrink-0 !py-2 !px-4"
+                disabled={!gardenVault.canInteract || gardenVault.isFauceting}
+                onClick={() => gardenVault.faucet("1000")}
+              >
+                <Sprout className="size-4" />
+                Top up gUSD
+              </Button>
             </div>
           </div>
 
-          {/* ── Right sidebar ── */}
-          <aside className="min-w-0 space-y-4">
+          <Separator />
 
-            {/* Crop guide */}
-            <div className="card-lg p-4">
-              <p className="kicker">Panduan Crop</p>
-              <h3 className="mt-0.5 mb-3 text-sm font-black text-[var(--text)]">3 pilihan sesuai kondisi pasar</h3>
-              <div className="space-y-2">
-                {CROP_OPTIONS.map((opt) => {
-                  const isRec = opt.recommended(weather);
-                  return (
-                    <div key={opt.id} className={`flex items-center gap-3 rounded-xl border p-3 transition ${
-                      isRec ? "border-teal-200 bg-teal-50/60" : "border-[var(--border)] bg-[var(--surface-soft)]"}`}>
-                      <span className="shrink-0 text-xl">{opt.emoji}</span>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-1.5">
-                          <p className="text-xs font-black text-[var(--text)]">{opt.crop}</p>
-                          {isRec && <span className="rounded-full bg-teal-500 px-1.5 py-px text-[8px] font-black text-white">Cocok sekarang</span>}
-                        </div>
-                        <p className="text-[10px] text-[var(--text-muted)]">{opt.asset} · {opt.apy}</p>
-                      </div>
-                      <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-black ${opt.riskColor}`}>{opt.risk}</span>
-                    </div>
-                  );
-                })}
-              </div>
-              <p className="mt-3 rounded-xl bg-[var(--surface-muted)] px-3 py-2 text-[10px] leading-4 text-[var(--text-muted)]">
-                💡 Klik pot kosong di garden untuk tanam, atau tanya <strong>Pak Tani</strong> buat rekomendasi.
-              </p>
+          <div className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+            <Tabs value={view} onValueChange={(value) => setView(value as typeof view)}>
+              <TabsList className="w-full sm:w-auto">
+                <TabsTrigger value="canvas">Canvas</TabsTrigger>
+                <TabsTrigger value="shop">Seed shop</TabsTrigger>
+                <TabsTrigger value="audit">Audit</TabsTrigger>
+              </TabsList>
+            </Tabs>
+            <div className="flex flex-wrap gap-2">
+              <Badge className="bg-[var(--surface-soft)] text-[var(--text-muted)]">{marketLabel(weather)}</Badge>
+              <Badge className="bg-[var(--surface-soft)] text-[var(--text-muted)]">{plantedCount} pots</Badge>
+              <Badge className="bg-[var(--surface-soft)] text-[var(--text-muted)]">
+                gUSD {gardenVault.snapshot?.tokenBalance ? Number(gardenVault.snapshot.tokenBalance).toFixed(0) : "0"}
+              </Badge>
             </div>
+          </div>
+        </Card>
 
-            {/* Agent identity */}
-            <div className="card-lg p-4">
-              <div className="mb-3 flex items-center gap-3">
-                <div className="orb-teal grid size-9 shrink-0 place-items-center rounded-xl text-white">
-                  <Fingerprint className="size-4" aria-hidden="true" />
+        <Tabs value={view} onValueChange={(value) => setView(value as typeof view)} className="mt-4">
+          <TabsContent value="canvas" className="mt-0">
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
+              <Card className="overflow-hidden p-0">
+                <div className="p-3 sm:p-4">
+                  <FarmScene
+                    weather={weather}
+                    slots={slots}
+                    agentData={data}
+                    onSlotClick={handleSlotClick}
+                    onCropPick={handleCropPick}
+                    selectedSlotId={selectedId}
+                    isLoading={garden.isPending}
+                  />
                 </div>
-                <div>
-                  <p className="kicker">Agent Identity</p>
-                  <h3 className="text-sm font-black text-[var(--text)]">ERC-8004 Ready</h3>
-                </div>
-              </div>
-              <div className="space-y-1.5">
-                {proofRows.map(([lbl, val]) => (
-                  <div key={lbl} className="card-soft px-3 py-2">
-                    <p className="kicker">{lbl}</p>
-                    <p className="mt-0.5 truncate text-xs font-bold text-[var(--text)]">{val}</p>
+              </Card>
+
+              <div className="space-y-4">
+                <Card className="p-4">
+                  <p className="kicker">Quick plant</p>
+                  <div className="mt-3 grid gap-2">
+                    {CROP_OPTIONS.map((opt) => (
+                      <Button
+                        key={opt.id}
+                        type="button"
+                        variant={opt.id === "steady" ? "primary" : "secondary"}
+                        className="justify-between"
+                        onClick={() => {
+                          const slot = slots.find((item) => item.state === "empty")?.id;
+                          if (!slot) return;
+                          handleCropPick(slot, opt.id);
+                        }}
+                      >
+                        <span className="flex items-center gap-2">
+                          <span>{opt.emoji}</span>
+                          {opt.crop}
+                        </span>
+                        <span className="text-xs opacity-80">{opt.apy}</span>
+                      </Button>
+                    ))}
                   </div>
-                ))}
+                </Card>
+
+                <Card className="p-4">
+                  <p className="kicker">Action bar</p>
+                  <div className="mt-3 flex flex-col gap-2">
+                    <Button type="button" variant="primary" onClick={() => setView("shop")}>
+                      Open seed shop
+                    </Button>
+                    <Button type="button" variant="secondary" onClick={() => setView("audit")}>
+                      Review proof
+                    </Button>
+                  </div>
+                  <p className="mt-2 text-xs leading-5 text-[var(--text-muted)]">
+                    The canvas stays simple. Details live in Shop and Audit.
+                  </p>
+                </Card>
               </div>
             </div>
 
-            {/* Market weather */}
-            <div className="card-lg p-4">
-              <p className="kicker">Market Weather</p>
-              <h3 className="mt-0.5 text-sm font-black text-[var(--text)]">
-                {weather === "sunny" ? "☀️ Cerah — Bull" : weather === "cloudy" ? "⛅ Mendung — Neutral"
-                  : weather === "rainy" ? "🌧️ Hujan — Bear" : "⛈️ Badai — Crash"}
-              </h3>
-              {data?.marketMood.reason && (
-                <p className="mt-1.5 text-xs leading-5 text-[var(--text-muted)]">{data.marketMood.reason}</p>
+            <AnimatePresence>
+              {plantedCount > 0 && (
+                <div className="mt-4">
+                  <PlantedSummary slots={slots} onClear={handleClearSlot} />
+                </div>
               )}
-              <div className="mt-3 grid grid-cols-3 gap-1.5">
-                {(["sunny","cloudy","rainy"] as const).map((w) => (
-                  <div key={w} className={`rounded-xl p-2 text-center transition ${
-                    weather === w ? "border border-teal-300 bg-teal-100" : "border border-transparent bg-[var(--surface-soft)]"}`}>
-                    <p className="text-lg">{w === "sunny" ? "☀️" : w === "cloudy" ? "⛅" : "🌧️"}</p>
-                    <p className="text-[9px] font-black text-gray-600">{w === "sunny" ? "Bull" : w === "cloudy" ? "Neutral" : "Bear"}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            </AnimatePresence>
+          </TabsContent>
 
-            {/* Farmer diary */}
-            <div className="card-lg p-4">
-              <p className="kicker">AI Farmer Diary</p>
-              <h3 className="mt-0.5 mb-3 text-sm font-black text-[var(--text)]">Latest decisions</h3>
-              <div className="space-y-1.5">
-                <DiaryEntry icon={<CheckCircle2 className="size-4 text-emerald-600" />}
-                  title={data?.simulation.actionLabel ?? "USDY Harvest Approved"}
-                  text={data?.beginnerExplanation ?? "Policy allowed Rice route. Decision hash prepared."} />
-                <DiaryEntry icon={<ShieldCheck className="size-4 text-amber-500" />}
-                  title="mETH Rebalance Paused" text="Volatility exceeded user risk preference." />
-                <DiaryEntry icon={<Wallet className="size-4 text-[var(--primary)]" />}
-                  title="Proof Card Ready" text="Shareable consumer proof includes crop, asset, and tx hash." />
+          <TabsContent value="shop" className="mt-0">
+            <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
+              <div className="space-y-4">
+                <CropGridSection />
+              </div>
+              <div className="space-y-4">
+                <GardenRwaVaultSection agentData={data} amount={amount} className="p-4" />
+                <Card className="p-4">
+                  <p className="kicker">Shop tip</p>
+                  <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">
+                    Keep the choice count small. Three seeds are enough for beginners: Rice, Corn, Chili.
+                  </p>
+                </Card>
               </div>
             </div>
-          </aside>
-        </div>
+          </TabsContent>
+
+          <TabsContent value="audit" className="mt-0">
+            <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
+              <Card className="p-4">
+                <p className="kicker">Decision diary</p>
+                <h3 className="mt-0.5 mb-3 text-sm font-black text-[var(--text)]">Live agent history</h3>
+                <AgentHistorySection />
+              </Card>
+              <div className="space-y-4">
+                <Card className="p-4">
+                  <div className="mb-3 flex items-center gap-3">
+                    <div className="orb-teal grid size-9 shrink-0 place-items-center rounded-xl text-white">
+                      <Fingerprint className="size-4" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <p className="kicker">Agent Identity</p>
+                      <h3 className="text-sm font-black text-[var(--text)]">ERC-8004 Ready</h3>
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    {proofRows.map(([label, value]) => (
+                      <div key={label} className="card-soft px-3 py-2">
+                        <p className="kicker">{label}</p>
+                        <p className="mt-0.5 truncate text-xs font-bold text-[var(--text)]">{value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+                <GardenRwaVaultSection agentData={data} amount={amount} className="p-4" />
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
 
       <FarmerCompanion
-        weather={weather} agentData={data} isPending={garden.isPending}
-        onSendMessage={handleFarmerMessage} onAction={handleFarmerAction}
+        weather={weather}
+        agentData={data}
+        pageContext={assistantContext}
+        isPending={garden.isPending}
+        onSendMessage={handleFarmerMessage}
+        onAction={handleFarmerAction}
       />
-    </div>
-  );
-}
-
-/* ── DiaryEntry ────────────────────────────────────────────────── */
-function DiaryEntry({ icon, title, text }: { icon: ReactNode; title: string; text: string }) {
-  return (
-    <div className="card-soft p-3">
-      <div className="mb-1 flex items-center gap-2">
-        {icon}
-        <span className="text-xs font-black text-[var(--text)]">{title}</span>
-      </div>
-      <p className="text-xs leading-5 text-[var(--text-muted)]">{text}</p>
     </div>
   );
 }
