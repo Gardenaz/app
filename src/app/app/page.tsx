@@ -7,9 +7,12 @@ import {
   ArrowLeft,
   CheckCircle2,
   ChevronRight,
+  CloudRain,
   Fingerprint,
   Play,
   ShieldCheck,
+  Sprout,
+  Sun,
   Wallet,
 } from "lucide-react";
 import { AgentPlannerSection } from "@/components/sections/agent-planner";
@@ -99,6 +102,8 @@ export default function LaunchAppPage() {
               </div>
             </div>
           </div>
+
+          <GardenScene />
 
           {/* Strategy cards */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -200,6 +205,90 @@ export default function LaunchAppPage() {
 }
 
 /* ── Helpers ───────────────────────────────────────────────────── */
+const gardenSlots = [
+  { crop: "Rice", asset: "USDY", label: "Safe Harvest", apy: "5.20%", health: "92%", state: "Active", x: "left-[14%]", delay: 0.1 },
+  { crop: "Corn", asset: "mETH", label: "Growth Field", apy: "9.60%", health: "86%", state: "Ready", x: "left-[42%]", delay: 0.2 },
+  { crop: "Chili", asset: "USDY/mETH", label: "Boost Farm", apy: "17.60%", health: "72%", state: "Locked", x: "left-[70%]", delay: 0.3 },
+];
+
+function GardenScene() {
+  return (
+    <div className="card-lg overflow-hidden p-0">
+      <div className="relative min-h-[390px] bg-[linear-gradient(180deg,#f7fffb_0%,#edf8f1_48%,#d7efdc_100%)]">
+        <div className="absolute inset-x-0 top-0 h-28 bg-[radial-gradient(circle_at_20%_20%,rgba(20,184,166,0.18),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(245,158,11,0.18),transparent_28%)]" />
+        <div className="relative z-10 flex flex-wrap items-start justify-between gap-4 p-5 sm:p-6">
+          <div>
+            <p className="kicker">Live Garden Agent</p>
+            <h2 className="mt-1 text-xl font-black text-[var(--text)] sm:text-2xl">AI reads market weather, then plants for you</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-muted)]">
+              Beginner mode turns USDY and mETH routing into crop slots. Policy gate still blocks risk before execution.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 rounded-full border border-emerald-200 bg-white/85 px-3 py-2 text-xs font-black text-emerald-700 shadow-sm">
+            <Sun className="size-4" aria-hidden="true" /> Sunny market
+          </div>
+        </div>
+
+        <div className="relative mx-4 h-56 overflow-hidden rounded-[2rem] border border-emerald-100 bg-white/45 shadow-inner sm:mx-6">
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,#bfe8c9,#7cc889)]" />
+          <div className="absolute inset-x-0 bottom-0 grid grid-cols-8 gap-1 opacity-45">
+            {Array.from({ length: 24 }).map((_, index) => (
+              <span key={index} className="h-24 origin-bottom rounded-t-full bg-emerald-600/30" style={{ transform: `scaleY(${0.35 + (index % 5) * 0.14})` }} />
+            ))}
+          </div>
+          <motion.div
+            initial={{ y: 6, opacity: 0 }}
+            animate={{ y: [6, -4, 6], opacity: 1 }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute left-8 top-7 flex items-center gap-2 rounded-full bg-white/85 px-3 py-2 text-xs font-black text-sky-700 shadow-sm"
+          >
+            <CloudRain className="size-4 text-sky-500" aria-hidden="true" /> Rain shield standby
+          </motion.div>
+
+          {gardenSlots.map((slot) => (
+            <motion.div
+              key={slot.crop}
+              initial={{ y: 18, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: slot.delay, duration: 0.45 }}
+              className={`absolute bottom-8 ${slot.x} w-24 -translate-x-1/2 text-center sm:w-28`}
+            >
+              <div className="mx-auto mb-2 grid size-16 place-items-center rounded-[1.5rem] border border-emerald-100 bg-white shadow-[0_16px_40px_rgba(21,128,61,0.16)] sm:size-20">
+                <Sprout className="size-8 text-emerald-600 sm:size-10" aria-hidden="true" />
+              </div>
+              <div className="rounded-2xl border border-white/70 bg-white/90 p-2 shadow-sm">
+                <p className="text-xs font-black text-[var(--text)]">{slot.crop}</p>
+                <p className="text-[10px] font-bold text-[var(--text-muted)]">{slot.asset}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="relative z-10 grid gap-3 p-5 sm:grid-cols-3 sm:p-6">
+          {gardenSlots.map((slot) => (
+            <div key={slot.label} className="card-soft p-3">
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-sm font-black text-[var(--text)]">{slot.label}</p>
+                <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-black text-emerald-700">{slot.state}</span>
+              </div>
+              <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <p className="kicker">APY</p>
+                  <p className="font-black text-teal-700">{slot.apy}</p>
+                </div>
+                <div>
+                  <p className="kicker">Health</p>
+                  <p className="font-black text-[var(--text)]">{slot.health}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function DiaryEntry({
   icon,
   title,
