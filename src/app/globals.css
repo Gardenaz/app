@@ -244,3 +244,41 @@ img, svg { display: block; max-width: 100%; }
 
 /* Divider */
 .divider { border-top: 1px solid var(--border); }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Farm RPG — weather transitions
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* Smooth background transition when market mood / weather changes */
+.shell {
+  transition: background 1.2s ease;
+}
+
+/* Pixel-crisp rendering for SVG sprite art */
+.pixel-art {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Rain drop keyframe (used by framer-motion animate override) */
+@keyframes rain-fall {
+  0%   { transform: translateY(-5%) }
+  100% { transform: translateY(110vh) }
+}
+
+/* Grass sway */
+@keyframes grass-sway {
+  0%, 100% { transform: skewX(0deg); }
+  50%       { transform: skewX(6deg); }
+}
+
+/* Sun pulse glow */
+@keyframes sun-pulse {
+  0%, 100% { box-shadow: 0 0 20px 4px rgba(251,191,36,0.35); }
+  50%       { box-shadow: 0 0 36px 12px rgba(251,191,36,0.55); }
+}
+
+/* Pot ready pulse */
+@keyframes pot-ready {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); }
+  50%       { box-shadow: 0 0 16px 6px rgba(22,163,74,0.45); }
+}
