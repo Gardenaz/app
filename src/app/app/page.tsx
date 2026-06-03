@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -104,6 +104,7 @@ export default function LaunchAppPage() {
           </div>
 
           <GardenScene />
+          <FarmerAgentCompanion />
 
           {/* Strategy cards */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -286,6 +287,81 @@ function GardenScene() {
         </div>
       </div>
     </div>
+  );
+}
+
+const farmerModes = [
+  {
+    title: "Market Coach",
+    line: "Weather sunny. Rice safe, Corn growth ready. I explain before move.",
+    cta: "Ask strategy",
+  },
+  {
+    title: "Plant for me",
+    line: "I can pick crop, set policy, and prepare agent plan. You approve final action.",
+    cta: "Start planting",
+  },
+  {
+    title: "Protect harvest",
+    line: "If market turns rainy, I hold position and block risky routes.",
+    cta: "Raise shield",
+  },
+];
+
+function FarmerAgentCompanion() {
+  const [modeIndex, setModeIndex] = useState(0);
+  const mode = farmerModes[modeIndex];
+
+  return (
+    <motion.div
+      data-testid="farmer-agent-companion"
+      initial={{ y: 22, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      className="fixed bottom-4 right-4 z-40 w-[min(92vw,340px)] rounded-[2rem] border border-emerald-100 bg-white/92 p-3 shadow-[0_24px_80px_rgba(15,118,110,0.18)] backdrop-blur-xl"
+    >
+      <div className="flex gap-3">
+        <button
+          type="button"
+          aria-label="Talk to farmer agent"
+          onClick={() => setModeIndex((current) => (current + 1) % farmerModes.length)}
+          className="relative grid size-20 shrink-0 place-items-center rounded-[1.6rem] border border-emerald-100 bg-[linear-gradient(180deg,#f8fff8,#dff5e5)] shadow-inner transition hover:scale-[1.02]"
+        >
+          <span className="absolute -top-2 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-black text-amber-700">Agent</span>
+          <span className="relative block size-12 rounded-full bg-[#9b6b43]">
+            <span className="absolute -top-3 left-1/2 h-4 w-12 -translate-x-1/2 rounded-t-full bg-amber-700" />
+            <span className="absolute left-2 top-4 size-1.5 rounded-full bg-white" />
+            <span className="absolute right-2 top-4 size-1.5 rounded-full bg-white" />
+            <span className="absolute bottom-2 left-1/2 h-1 w-5 -translate-x-1/2 rounded-full bg-white/80" />
+          </span>
+        </button>
+
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center justify-between gap-2">
+            <p className="kicker">Farmer Assistant</p>
+            <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-black text-emerald-700">Game mode</span>
+          </div>
+          <h3 className="mt-1 text-sm font-black text-[var(--text)]">{mode.title}</h3>
+          <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">{mode.line}</p>
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {farmerModes.map((item, index) => (
+              <button
+                key={item.title}
+                type="button"
+                onClick={() => setModeIndex(index)}
+                className={`rounded-full px-2.5 py-1 text-[10px] font-black transition ${
+                  modeIndex === index ? "bg-teal-600 text-white" : "bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
+                }`}
+              >
+                {item.title}
+              </button>
+            ))}
+          </div>
+          <button type="button" className="btn-primary mt-3 w-full justify-center text-xs">
+            {mode.cta}
+          </button>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
