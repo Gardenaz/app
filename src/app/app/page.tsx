@@ -16,6 +16,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { AgentPlannerSection } from "@/components/sections/agent-planner";
+import { GardenAgentConsole } from "@/components/sections/garden-agent-console";
 import { Logo } from "@/components/base/logo";
 import { PrivyConnectButton } from "@/components/base/privy-connect-button";
 import { proofRows, strategies } from "@/lib/gardena-content";
@@ -103,8 +104,7 @@ export default function LaunchAppPage() {
             </div>
           </div>
 
-          <GardenScene />
-          <FarmerAgentCompanion />
+          <GardenAgentConsole />
 
           {/* Strategy cards */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

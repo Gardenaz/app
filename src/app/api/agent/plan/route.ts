@@ -1,11 +1,23 @@
 import { NextResponse } from "next/server";
 import { maybeAnchorDecision } from "@/lib/agent/anchor";
-import { requestAgentPlan } from "@/lib/agent/service";
+import { requestAgentGardenPlan, requestAgentPlan } from "@/lib/agent/service";
 import { saveDecision } from "@/lib/agent/store";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    if (body.garden) {
+      const { garden, source } = await requestAgentGardenPlan({
+        user: body.user,
+        message: String(body.message ?? "pemula mau aman"),
+        amount: String(body.amount),
+        riskPreference: Number(body.riskPreference) as 1 | 2 | 3,
+        execute: Boolean(body.execute),
+      });
+      await saveDecision(garden.decision);
+      return NextResponse.json({ ok: true, garden, decision: garden.decision, source });
+    }
+
     const { decision, anchor, source } = await requestAgentPlan({
       user: body.user,
       crop: body.crop,
