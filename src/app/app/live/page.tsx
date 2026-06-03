@@ -55,9 +55,18 @@ export default function LiveTransparencyPage() {
               Every agent step is designed to be observable: identity, reasoning, policy gate, decision proof, execution route, and outcome benchmark.
             </p>
           </div>
-          <Link href="/app" className="btn-primary">
-            Back to console
-          </Link>
+          <div className="flex gap-2">
+            <Link href="/" className="btn-secondary">Home</Link>
+            <Link href="/app" className="btn-primary">Back to console</Link>
+          </div>
+        </div>
+
+        <div className="mt-6 grid gap-3 sm:grid-cols-3">
+          {["ERC-8004 registered", "Policy gate enforced", "DecisionLog ready"].map((item) => (
+            <div key={item} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-sm font-black text-[var(--text)]">
+              {item}
+            </div>
+          ))}
         </div>
 
         <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_360px]">
@@ -130,3 +139,4 @@ export default function LiveTransparencyPage() {
     </main>
   );
 }
+

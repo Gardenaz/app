@@ -21,6 +21,10 @@ function makeQueryClient() {
 export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(makeQueryClient);
 
+  if (!privyAppId) {
+    return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+  }
+
   return (
     <PrivyProvider
       appId={privyAppId}

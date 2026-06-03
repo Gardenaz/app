@@ -1,6 +1,6 @@
 import { Bot, DatabaseZap, Sparkles } from "lucide-react";
 
-export const navItems = ["Product", "Tracks", "How it works", "Proof", "FAQ"];
+export const navItems = ["Product", "What is Gardena?", "Solution", "How it works", "Proof"];
 
 export const strategies = [
   {
@@ -66,3 +66,4 @@ export const faq = [
   ["Can agent move funds freely?", "No. Policy fences define max amount, risk level, allowed routes, rebalance interval, and emergency pause."],
   ["Why crops?", "Crops make yield strategy understandable and shareable for consumer users without hiding benchmark proof."],
 ] as const;
+
