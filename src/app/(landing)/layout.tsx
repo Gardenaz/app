@@ -6,7 +6,7 @@ export default function LandingLayout({ children }: { children: ReactNode }) {
   return (
     <div className="shell">
       <LandingNavbar />
-      <main>{children}</main>
+      <main className="landing-main">{children}</main>
       <LandingFooter />
     </div>
   );

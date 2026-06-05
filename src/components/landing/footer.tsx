@@ -57,7 +57,7 @@ export function LandingFooter() {
           >
             <motion.p
               variants={staggerItem}
-              className="mb-3 text-[10.5px] font-bold tracking-[2.5px] text-[rgba(179,223,70,0.7)]"
+              className="mb-3 text-[10.5px] font-bold tracking-[2.5px] text-[var(--primary)]"
             >
               GET STARTED TODAY
             </motion.p>
@@ -66,7 +66,7 @@ export function LandingFooter() {
               className="mb-3 text-[28px] font-extrabold -tracking-[1px] text-white leading-[1.15]"
             >
               Run AI agents with{" "}
-              <span className="text-[#B3DF46]">confidence in production</span>
+              <span className="text-[var(--primary)]">confidence in production</span>
             </motion.h2>
             <motion.p
               variants={staggerItem}
@@ -75,7 +75,7 @@ export function LandingFooter() {
               Join teams using Gardenaz to ship reliable, auditable, and human-supervised agent workflows at scale.
             </motion.p>
             <motion.div variants={staggerItem} className="flex gap-3">
-              <Link href="/app" className="group relative inline-flex items-center gap-2 overflow-hidden rounded-3xl bg-[#B3DF46] px-6 py-2.5 text-[13px] font-bold text-[#0e1a10] shadow-[0_2px_12px_rgba(179,223,70,0.3)] transition-all duration-300 hover:bg-[#c4ea5a] hover:shadow-[0_4px_20px_rgba(179,223,70,0.4)]">
+              <Link href="/app" className="group relative inline-flex items-center gap-2 overflow-hidden rounded-3xl bg-[var(--primary)] px-6 py-2.5 text-[13px] font-bold text-[var(--primary-foreground)] shadow-[var(--primary-shadow-sm)] transition-all duration-300 hover:bg-[var(--primary-hover)] hover:shadow-[var(--primary-shadow-md)]">
                 Launch app <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
               </Link>
               <Link
@@ -115,7 +115,7 @@ export function LandingFooter() {
             <div className="mt-7 flex flex-col justify-between gap-2 border-t border-white/[0.08] pt-5 sm:flex-row sm:items-center">
               <p className="text-[11px] text-white/45">&copy; 2026 Gardenaz · Built on Mantle</p>
               <div className="flex items-center gap-1 text-[11px] text-white/45">
-                <Leaf className="size-3 text-[#B3DF46]" />
+                <Leaf className="size-3 text-[var(--primary)]" />
                 <span>AI &times; RWA &middot; Powered by LangGraph</span>
               </div>
             </div>

@@ -1,9 +1,15 @@
 import { runAgent } from "@gardena/agent";
 import type { AgentDecision, CropId, RiskLevel } from "@/lib/agent/types";
 
-type PlanPayload = { user: `0x${string}`; crop: CropId; amount: string; riskPreference: RiskLevel };
+type PlanPayload = { user: `0x${string}`; crop: CropId; amount: string; riskPreference: RiskLevel; execute?: boolean; currentPositionId?: number };
 type GardenPayload = { user: `0x${string}`; message: string; amount: string; riskPreference: RiskLevel; execute?: boolean };
-type AssistantPayload = { user?: `0x${string}`; message: string; context?: unknown; view?: "canvas" | "shop" | "audit" };
+type AssistantPayload = {
+  user?: `0x${string}`;
+  message: string;
+  context?: unknown;
+  view?: "canvas" | "shop" | "audit";
+  mode?: "guided" | "autopilot";
+};
 
 type GardenAgentResult = {
   intent: { user: `0x${string}`; message: string; parsedStrategy: CropId };
@@ -24,6 +30,17 @@ type AgentServiceResponse = {
   ok: boolean;
   decision?: AgentDecision & { anchorTxHash?: `0x${string}` | null };
   anchor?: { enabled: boolean; txHash: `0x${string}` | null; note: string; mode?: "prepared" | "sent"; calldata?: `0x${string}` };
+  execution?: {
+    enabled: boolean;
+    mode: "disabled" | "blocked" | "prepared" | "sent";
+    note: string;
+    operation: "open" | "rebalance" | "close" | null;
+    preview?: unknown;
+    calldata?: `0x${string}`;
+    target?: `0x${string}`;
+    executionTxHash?: `0x${string}`;
+  };
+  outcome?: { txHash: `0x${string}` } | null;
   source?: "agent-service";
   error?: string;
 };
@@ -31,8 +48,12 @@ type AgentServiceResponse = {
 type AssistantServiceResponse = {
   ok: boolean;
   answer?: string;
-  source?: "agent-service" | "local-fallback";
+  source?: "agent-service";
   error?: string;
+};
+
+type AssistantRequestOptions = AssistantPayload & {
+  stream?: boolean;
 };
 
 export async function requestAgentGardenPlan(payload: GardenPayload): Promise<{ garden: GardenAgentResult; anchor: AgentServiceResponse["anchor"]; source: "garden-agent" }> {
@@ -56,7 +77,7 @@ export async function requestAgentGardenPlan(payload: GardenPayload): Promise<{ 
   return { garden, anchor: json.anchor, source: "garden-agent" };
 }
 
-export async function requestAgentPlan(payload: PlanPayload): Promise<{ decision: AgentDecision; anchor: AgentServiceResponse["anchor"]; source: "agent-service" | "local-fallback" }> {
+export async function requestAgentPlan(payload: PlanPayload): Promise<{ decision: AgentDecision; anchor: AgentServiceResponse["anchor"]; execution?: AgentServiceResponse["execution"]; outcome?: AgentServiceResponse["outcome"]; source: "agent-service" | "local-fallback" }> {
   const agentUrl = process.env.AGENT_SERVICE_URL;
   if (agentUrl) {
     const res = await fetch(`${agentUrl.replace(/\/$/, "")}/autopilot/plan`, {
@@ -66,36 +87,41 @@ export async function requestAgentPlan(payload: PlanPayload): Promise<{ decision
     });
     const json = (await res.json()) as AgentServiceResponse;
     if (!res.ok || !json.ok || !json.decision) throw new Error(json.error ?? `agent service HTTP ${res.status}`);
-    // console.log(json)
-    return { decision: json.decision, anchor: json.anchor, source: "agent-service" };
+    return { decision: json.decision, anchor: json.anchor, execution: json.execution, outcome: json.outcome, source: "agent-service" };
   }
 
   const decision = await runAgent(payload);
   return { decision, anchor: { enabled: false, txHash: null, note: "AGENT_SERVICE_URL missing; used local fallback" }, source: "local-fallback" };
 }
 
-export async function requestAgentAssistantReply(payload: AssistantPayload): Promise<{ answer: string; source: "agent-service" | "local-fallback" }> {
+async function requestAssistantResponse(payload: AssistantRequestOptions): Promise<Response> {
   const agentUrl = process.env.AGENT_SERVICE_URL;
-  if (agentUrl) {
-    const res = await fetch(`${agentUrl.replace(/\/$/, "")}/garden/chat`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    const json = (await res.json()) as AssistantServiceResponse;
-    if (!res.ok || !json.ok || !json.answer) throw new Error(json.error ?? `assistant HTTP ${res.status}`);
-    return { answer: json.answer, source: "agent-service" };
+  if (!agentUrl) throw new Error("AGENT_SERVICE_URL required for assistant replies");
+
+  return fetch(`${agentUrl.replace(/\/$/, "")}/garden/chat`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function requestAgentAssistantReply(payload: AssistantPayload): Promise<{ answer: string; source: "agent-service" }> {
+  const res = await requestAssistantResponse({ ...payload, stream: false });
+  const json = (await res.json()) as AssistantServiceResponse;
+  if (!res.ok || !json.ok || !json.answer) throw new Error(json.error ?? `assistant HTTP ${res.status}`);
+  return { answer: json.answer, source: "agent-service" };
+}
+
+export async function requestAgentAssistantReplyStream(payload: AssistantPayload): Promise<Response> {
+  const res = await requestAssistantResponse({ ...payload, stream: true });
+  if (!res.ok || !res.body) {
+    let bodyText = "";
+    try {
+      bodyText = await res.text();
+    } catch {
+      bodyText = "";
+    }
+    throw new Error(bodyText || `assistant HTTP ${res.status}`);
   }
-
-  const context = payload.context as { marketLabel?: string; weatherReason?: string; gUsdBalance?: string; positionCount?: number; latestDecision?: string | null } | undefined;
-  const answer = [
-    `I can answer about balance, positions, market, seed shop, or audit proof.`,
-    context?.marketLabel ? `Current market: ${context.marketLabel}.` : null,
-    context?.weatherReason ? context.weatherReason : null,
-    context?.gUsdBalance ? `gUSD balance: ${context.gUsdBalance}.` : null,
-    typeof context?.positionCount === "number" ? `Active positions: ${context.positionCount}.` : null,
-    context?.latestDecision ? `Latest decision: ${context.latestDecision}.` : null,
-  ].filter(Boolean).join(" ");
-
-  return { answer, source: "local-fallback" };
+  return res;
 }

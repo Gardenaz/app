@@ -6,73 +6,72 @@ import { Marquee } from "@/components/ui/marquee";
 
 const marqueeRows = [
   [
-    "What strategy fits my risk appetite?",
-    "How do I verify agent decisions?",
-    "Is my yield source transparent?",
-    "Who guards the execution flow?",
+    "Why did the agent choose this move?",
+    "What makes this automation trustworthy?",
+    "Can I follow the reasoning later?",
+    "What keeps the agent inside bounds?",
   ],
   [
-    "Can I trust the AI rationale?",
+    "Do I still control the rules?",
     "How are risk limits enforced?",
-    "Where are proofs stored on-chain?",
-    "What if the market shifts suddenly?",
+    "Can beginners follow the flow?",
+    "What happens if markets change fast?",
   ],
   [
-    "How do I audit past outcomes?",
-    "Is my agent identity verifiable?",
-    "Can I override agent actions?",
-    "How does the policy gate work?",
+    "How do I review past moves?",
+    "Is the agent identity visible?",
+    "Can I step in when needed?",
+    "Where is the proof stored?",
   ],
 ];
 
 const features = [
   {
     icon: Sprout,
-    title: "Yield that tells a story",
+    title: "Reason before execution",
     description:
-      "Every strategy comes with LLM rationale, source trace, and a confidence score — no black-box APY numbers.",
+      "The agent explains the move in plain language first, so users see the thinking before automation does anything onchain.",
   },
   {
     icon: ShieldCheck,
-    title: "Deterministic guardrails",
+    title: "Policy stays in charge",
     description:
-      "Policy gates approve, hold, or block every action based on risk limits. Humans stay in control at all times.",
+      "The agent can only act inside the limits the user approved. If a move falls outside policy, it does not go through.",
   },
   {
     icon: Fingerprint,
-    title: "Verifiable proof trail",
+    title: "Proof that stays visible",
     description:
-      "Decision hashes, agent identity, and outcome benchmarks are anchored on Mantle for full auditability.",
+      "Each decision leaves a readable trail so users can come back later and see what happened, when it happened, and how it finished.",
   },
   {
     icon: Bot,
-    title: "AI you can interrogate",
+    title: "Built for ordinary users",
     description:
-      "LangGraph agents explain market context and write rationale before any capital moves — inspect every thought.",
+      "The app starts with a guided story instead of terminal-like jargon, while deeper details remain available when users want them.",
   },
 ];
 
 export function TrustFeaturesSection() {
   return (
-    <section id="product" className="relative w-full">
-      <div className="mx-auto max-w-full">
+    <section id="product" className="landing-section section-landing relative w-full">
+      <div className="landing-inner">
         {/* Header */}
-        <div className="mx-auto flex max-w-5xl flex-col items-center justify-center space-y-4 px-5 pt-20 text-center md:px-10 sm:pt-24">
-          <h2 className="max-w-3xl font-display font-semibold text-3xl text-[var(--text)] sm:text-4xl lg:text-5xl">
-            Removing the blind spots in agent-driven yield
+        <div className="landing-section-head landing-section-head--center mx-auto max-w-[40rem]">
+          <p className="landing-eyebrow">WHY THE MOAT HOLDS</p>
+          <h2 className="landing-title max-w-[40rem]">
+            The moat is not just automation. It is explainable automation.
           </h2>
-          <p className="max-w-xl text-sm leading-relaxed text-[var(--text-muted)] md:text-base">
-            It&apos;s easy to get lost in DeFi complexity, opaque AI decisions, and
-            unchecked automation. We filter out the noise, show you the proof,
-            and give you clarity over every move your agents make.
+          <p className="landing-subtitle max-w-[38rem]">
+            Gardenaz combines an AI guide, policy guardrails, and onchain proof so users can understand what the agent is doing without thinking like traders or auditors.
           </p>
 
           {/* Marquee */}
-          <div className="relative mx-auto max-w-3xl overflow-hidden">
+          <div className="relative mx-auto max-w-[40rem] overflow-hidden">
             <div className="pointer-events-none absolute left-0 z-10 h-full w-16 bg-gradient-to-r from-[var(--bg)] to-transparent" />
             <div className="pointer-events-none absolute right-0 z-10 h-full w-16 bg-gradient-to-l from-[var(--bg)] to-transparent" />
 
-            <div className="-mx-6 flex w-screen flex-col md:-mx-10 lg:-mx-16">
+            <div className="flex flex-col">
               <Marquee className="[--duration:45s] [--gap:0.5rem]" repeat={4}>
                 {marqueeRows[0].map((q) => (
                   <span
@@ -125,12 +124,8 @@ export function TrustFeaturesSection() {
               </div>
 
               <div className="flex flex-col gap-2 pt-6 lg:pt-12">
-                <h3 className="font-semibold text-lg tracking-tight text-[var(--text)] sm:text-xl">
-                  {title}
-                </h3>
-                <p className="text-sm leading-relaxed text-[var(--text-muted)]">
-                  {description}
-                </p>
+                <h3 className="landing-card-title">{title}</h3>
+                <p className="landing-card-body">{description}</p>
               </div>
             </motion.div>
           ))}

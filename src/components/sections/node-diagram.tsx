@@ -43,10 +43,10 @@ const styles = `
   /* Three staggered flow layers = continuous stream */
   .line-flow-a { fill: none; stroke: rgba(255,255,255,0.55); stroke-width: 1.2; stroke-linecap: round; stroke-dasharray: 4 14;  stroke-dashoffset: 0;  animation: flowDash1 1.2s linear infinite; animation-delay: var(--fd,0s); }
   .line-flow-b { fill: none; stroke: rgba(255,255,255,0.55); stroke-width: 1.2; stroke-linecap: round; stroke-dasharray: 4 14;  stroke-dashoffset: -9; animation: flowDash2 1.2s linear infinite; animation-delay: var(--fd,0s); }
-  .line-flow-c { fill: none; stroke: #fff;                        stroke-width: 1.0; stroke-linecap: round; stroke-dasharray: 3 18;  stroke-dashoffset: -5; animation: flowDash3 0.9s linear infinite; animation-delay: var(--fd,0s); }
+  .line-flow-c { fill: none; stroke: var(--surface);              stroke-width: 1.0; stroke-linecap: round; stroke-dasharray: 3 18;  stroke-dashoffset: -5; animation: flowDash3 0.9s linear infinite; animation-delay: var(--fd,0s); }
 
-  .ep-core    { fill: #fff; animation: glowPulse 2.4s ease-in-out infinite; animation-delay: var(--d,.3s); }
-  .ep-dot     { fill: #fff; animation: dotPulse 2.4s ease-in-out infinite; animation-delay: var(--d,.3s); }
+  .ep-core    { fill: var(--surface); animation: glowPulse 2.4s ease-in-out infinite; animation-delay: var(--d,.3s); }
+  .ep-dot     { fill: var(--surface); animation: dotPulse 2.4s ease-in-out infinite; animation-delay: var(--d,.3s); }
   .node-label { opacity: 0; animation: nodeIn .5s ease forwards var(--d,.5s); }
 `;
 
@@ -151,17 +151,17 @@ function NodeDiagramSVG() {
       </g>
 
       {/* Base platform — layered rings for depth */}
-      <circle cx="350" cy="422" r="130" fill="white" filter="url(#circleShadow)" />
+      <circle cx="350" cy="422" r="130" fill="var(--surface)" filter="url(#circleShadow)" />
       <circle cx="350" cy="422" r="130" fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="1.5" />
       <circle cx="350" cy="422" r="120" fill="none" stroke="rgba(0,0,0,0.04)" strokeWidth="1" />
       <circle cx="350" cy="422" r="130" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2" opacity="0.5" />
 
       {/* Center hub icon */}
       <g transform="translate(350,412)">
-        <circle r="28" fill="none" stroke="#151515" strokeWidth="4.5" />
-        <line x1="-26" y1="7" x2="26" y2="7" stroke="#151515" strokeWidth="3.8" />
-        <line x1="-22" y1="16" x2="22" y2="16" stroke="#151515" strokeWidth="2.8" />
-        <line x1="-14" y1="24" x2="14" y2="24" stroke="#151515" strokeWidth="1.5" />
+        <circle r="28" fill="none" stroke="var(--text)" strokeWidth="4.5" />
+        <line x1="-26" y1="7" x2="26" y2="7" stroke="var(--text)" strokeWidth="3.8" />
+        <line x1="-22" y1="16" x2="22" y2="16" stroke="var(--text)" strokeWidth="2.8" />
+        <line x1="-14" y1="24" x2="14" y2="24" stroke="var(--text)" strokeWidth="1.5" />
       </g>
 
       {/* Node dots — with halo */}
@@ -211,7 +211,7 @@ function NodeDiagramSVG() {
               fontFamily="system-ui,sans-serif"
               fontSize="9.5"
               fontWeight="700"
-              fill="#1e1e1e"
+              fill="var(--text)"
               letterSpacing=".4"
             >
               {n.id === "approvals" && "⊟ "}

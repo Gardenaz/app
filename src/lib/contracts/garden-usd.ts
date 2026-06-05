@@ -1,4 +1,5 @@
 import type { Address } from "viem";
+import { getContractAddress } from "@/lib/contracts/config";
 
 export const gardenUsdMockAbi = [
   {
@@ -39,7 +40,9 @@ export const gardenUsdMockAbi = [
 
 export function getGardenUsdMockAddress(env: NodeJS.ProcessEnv = process.env): Address | undefined {
   const value = env.NEXT_PUBLIC_GARDEN_USD_MOCK_ADDRESS;
-  if (!value) return undefined;
+  if (!value) {
+    return getContractAddress("gardenUsdMock") as Address;
+  }
   if (!/^0x[a-fA-F0-9]{40}$/.test(value)) {
     throw new Error("NEXT_PUBLIC_GARDEN_USD_MOCK_ADDRESS must be a valid address");
   }

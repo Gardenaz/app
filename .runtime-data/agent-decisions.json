@@ -1,0 +1,2028 @@
+[
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 0,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "steady-rwa-usdy",
+          "strategyId": "steady-rwa-usdy",
+          "protocol": "Mantle RWA USDY Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY",
+          "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+          "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY RWA strategy stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "growth-meth-yield",
+          "strategyId": "growth-meth-yield",
+          "protocol": "Mantle mETH Yield Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "mETH",
+          "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+          "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH compounding improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "boost-rwa-meth-dynamic",
+          "strategyId": "boost-rwa-meth-dynamic",
+          "protocol": "Mantle Dynamic RWA Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY/mETH",
+          "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+          "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "boost-rwa-meth-dynamic",
+        "strategyId": "boost-rwa-meth-dynamic",
+        "protocol": "Mantle Dynamic RWA Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY/mETH",
+        "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "growth-meth-yield",
+        "strategyId": "growth-meth-yield",
+        "protocol": "Mantle mETH Yield Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "mETH",
+        "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH compounding improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "steady-rwa-usdy",
+        "strategyId": "steady-rwa-usdy",
+        "protocol": "Mantle RWA USDY Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY",
+        "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY RWA strategy stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "steady-rwa-usdy",
+      "strategyId": "steady-rwa-usdy",
+      "protocol": "Mantle RWA USDY Route",
+      "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+      "asset": "USDY",
+      "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+      "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY RWA strategy stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "steady-rwa-usdy",
+      "marketSummary": "Mantle RWA USDY Route offers a stable moat for USDY with a 5.20% APY.",
+      "riskNotes": [
+        "Strategy matches the maximum allowed risk level of 1.",
+        "Protocol is within the allowed list defined by policy."
+      ],
+      "confidenceReason": "Policy gate strictly enforces maxRiskLevel 1 and allowed protocols, confirming steady-rwa-usdy as the only compliant option for autopilot mode."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Mantle RWA USDY Route (0x33F841C96536Bec455Ce13C68Fee1E30BE1da202) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "open",
+      "reason": "Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+      "toStrategyId": "steady-rwa-usdy",
+      "improvementBps": 520
+    },
+    "decisionHash": "0xc8238d83251f8d2a3a3de33a455ee1c0997782dcc1a269034af69e82625a8c2e",
+    "summary": "Autopilot approved a new position in steady-rwa-usdy: Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+    "createdAt": "2026-06-05T16:55:45.219Z",
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "riskPolicy": "0x73132c590b323B37344d52C9adaDA2dA939896d3",
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf",
+        "gardenUsdMock": "0x2B2Cc2e7eCF63FFaEBF3Af7566Ad76aa910Bb601",
+        "gardenRwaMockVault": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "steadyAdapter": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "growthAdapter": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "boostAdapter": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "steadyAsset": "0x7F96a25C870f1e712952F18ac5496eFDbdf2FA77",
+        "growthAsset": "0xef9b03191bFeC28518d18DFC3a7B114AF3d825DB",
+        "boostAsset": "0xDb1802DDA2B91c06358C880AaBe9027ccB9fd3c0",
+        "steadyOracle": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "growthOracle": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "boostOracle": "0xB16FcAFB8378baA0a69142a325878FDCad58606A"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "parsedIntent": {
+      "crop": "steady",
+      "riskPreference": 1,
+      "message": "tanam Rice USDY 1000"
+    },
+    "marketMood": {
+      "mood": "bullish",
+      "weather": "sunny",
+      "reason": "Strategy, confidence, and liquidity healthy."
+    },
+    "effectivePolicy": {
+      "enabled": true,
+      "paused": false,
+      "maxTxAmount": 5000,
+      "maxRiskLevel": 1,
+      "rebalanceIntervalSeconds": 3600,
+      "allowedProtocols": [
+        "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202"
+      ]
+    },
+    "gardenSimulation": {
+      "crop": "Rice / Safe Harvest",
+      "background": "bright-sky",
+      "actionLabel": "Keep route safe",
+      "potSlots": [
+        {
+          "id": "boost-rwa-meth-dynamic",
+          "label": "Chili / Boost Farm",
+          "health": 72,
+          "apy": "17.60%",
+          "active": false
+        },
+        {
+          "id": "growth-meth-yield",
+          "label": "Corn / Growth Field",
+          "health": 86,
+          "apy": "9.60%",
+          "active": false
+        },
+        {
+          "id": "steady-rwa-usdy",
+          "label": "Rice / Safe Harvest",
+          "health": 92,
+          "apy": "5.20%",
+          "active": true
+        }
+      ]
+    },
+    "beginnerExplanation": "Conservative mode: agent picked USDY via Mantle RWA USDY Route. Strategy, confidence, and liquidity healthy.",
+    "anchorTxHash": null
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 50,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "steady-rwa-usdy",
+          "strategyId": "steady-rwa-usdy",
+          "protocol": "Mantle RWA USDY Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY",
+          "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+          "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY RWA strategy stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "growth-meth-yield",
+          "strategyId": "growth-meth-yield",
+          "protocol": "Mantle mETH Yield Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "mETH",
+          "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+          "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH compounding improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "boost-rwa-meth-dynamic",
+          "strategyId": "boost-rwa-meth-dynamic",
+          "protocol": "Mantle Dynamic RWA Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY/mETH",
+          "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+          "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "boost-rwa-meth-dynamic",
+        "strategyId": "boost-rwa-meth-dynamic",
+        "protocol": "Mantle Dynamic RWA Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY/mETH",
+        "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "growth-meth-yield",
+        "strategyId": "growth-meth-yield",
+        "protocol": "Mantle mETH Yield Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "mETH",
+        "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH compounding improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "steady-rwa-usdy",
+        "strategyId": "steady-rwa-usdy",
+        "protocol": "Mantle RWA USDY Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY",
+        "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY RWA strategy stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "steady-rwa-usdy",
+      "strategyId": "steady-rwa-usdy",
+      "protocol": "Mantle RWA USDY Route",
+      "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+      "asset": "USDY",
+      "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+      "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY RWA strategy stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "steady-rwa-usdy",
+      "marketSummary": "USDY via Mantle RWA USDY Route offers stable 5.2% APY with deep $1.4M liquidity, matching conservative risk preference.",
+      "riskNotes": [
+        "Risk level 1 aligns with user preference and policy maxRiskLevel threshold.",
+        "USDY is a permissioned yield-bearing RWA asset; redemption subject to issuer slippage windows.",
+        "Protocol 0x33F841C96536Bec455Ce13C68Fee1E30BE1da202 is policy-whitelisted and passed deterministic screening."
+      ],
+      "confidenceReason": "Policy gate validated: risk 1 ≤ maxRiskLevel 1, amount 1000 ≤ maxTxAmount 5000, protocol whitelisted. Strategy scored 431 with 0.92 confidence; higher-yielding alternatives (1760 bps, 960 bps) rejected due to risk levels 3 and 2 exceeding policy cap. Autopilot mode confirms deterministic selection."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Mantle RWA USDY Route (0x33F841C96536Bec455Ce13C68Fee1E30BE1da202) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "open",
+      "reason": "Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+      "toStrategyId": "steady-rwa-usdy",
+      "improvementBps": 520
+    },
+    "decisionHash": "0x032df8b30d0fced62af3deb91f8cb15debb84ed96fc35a11b59f2639d44779cb",
+    "summary": "Autopilot approved a new position in steady-rwa-usdy: Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+    "createdAt": "2026-06-05T16:23:29.555Z",
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "riskPolicy": "0x73132c590b323B37344d52C9adaDA2dA939896d3",
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf",
+        "gardenUsdMock": "0x2B2Cc2e7eCF63FFaEBF3Af7566Ad76aa910Bb601",
+        "gardenRwaMockVault": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "steadyAdapter": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "growthAdapter": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "boostAdapter": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "steadyAsset": "0x7F96a25C870f1e712952F18ac5496eFDbdf2FA77",
+        "growthAsset": "0xef9b03191bFeC28518d18DFC3a7B114AF3d825DB",
+        "boostAsset": "0xDb1802DDA2B91c06358C880AaBe9027ccB9fd3c0",
+        "steadyOracle": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "growthOracle": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "boostOracle": "0xB16FcAFB8378baA0a69142a325878FDCad58606A"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "anchorTxHash": null
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 50,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "steady-rwa-usdy",
+          "strategyId": "steady-rwa-usdy",
+          "protocol": "Mantle RWA USDY Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY",
+          "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+          "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY RWA strategy stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "growth-meth-yield",
+          "strategyId": "growth-meth-yield",
+          "protocol": "Mantle mETH Yield Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "mETH",
+          "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+          "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH compounding improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "boost-rwa-meth-dynamic",
+          "strategyId": "boost-rwa-meth-dynamic",
+          "protocol": "Mantle Dynamic RWA Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY/mETH",
+          "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+          "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "boost-rwa-meth-dynamic",
+        "strategyId": "boost-rwa-meth-dynamic",
+        "protocol": "Mantle Dynamic RWA Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY/mETH",
+        "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "growth-meth-yield",
+        "strategyId": "growth-meth-yield",
+        "protocol": "Mantle mETH Yield Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "mETH",
+        "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH compounding improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "steady-rwa-usdy",
+        "strategyId": "steady-rwa-usdy",
+        "protocol": "Mantle RWA USDY Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY",
+        "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY RWA strategy stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "steady-rwa-usdy",
+      "strategyId": "steady-rwa-usdy",
+      "protocol": "Mantle RWA USDY Route",
+      "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+      "asset": "USDY",
+      "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+      "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY RWA strategy stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "steady-rwa-usdy",
+      "marketSummary": "USDY RWA strategy stable on Mantle RWA USDY Route",
+      "riskNotes": [
+        "Risk level 1 matches the strict policy maxRiskLevel of 1",
+        "Deposit amount of 1000 is well within the policy maxTxAmount of 5000"
+      ],
+      "confidenceReason": "High confidence as the strategy perfectly aligns with the deterministic policy gate constraints (maxRiskLevel 1, allowed protocol) and user risk preference."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Mantle RWA USDY Route (0x33F841C96536Bec455Ce13C68Fee1E30BE1da202) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "open",
+      "reason": "Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+      "toStrategyId": "steady-rwa-usdy",
+      "improvementBps": 520
+    },
+    "decisionHash": "0x5760966a59c123a73e6b96e77b2767136cfdf0dea2b3cb4195dbba3800d27be2",
+    "summary": "Autopilot approved a new position in steady-rwa-usdy: Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+    "createdAt": "2026-06-05T16:23:27.254Z",
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "riskPolicy": "0x73132c590b323B37344d52C9adaDA2dA939896d3",
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf",
+        "gardenUsdMock": "0x2B2Cc2e7eCF63FFaEBF3Af7566Ad76aa910Bb601",
+        "gardenRwaMockVault": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "steadyAdapter": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "growthAdapter": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "boostAdapter": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "steadyAsset": "0x7F96a25C870f1e712952F18ac5496eFDbdf2FA77",
+        "growthAsset": "0xef9b03191bFeC28518d18DFC3a7B114AF3d825DB",
+        "boostAsset": "0xDb1802DDA2B91c06358C880AaBe9027ccB9fd3c0",
+        "steadyOracle": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "growthOracle": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "boostOracle": "0xB16FcAFB8378baA0a69142a325878FDCad58606A"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "anchorTxHash": null
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 0,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "steady-rwa-usdy",
+          "strategyId": "steady-rwa-usdy",
+          "protocol": "Mantle RWA USDY Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY",
+          "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+          "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY RWA strategy stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "growth-meth-yield",
+          "strategyId": "growth-meth-yield",
+          "protocol": "Mantle mETH Yield Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "mETH",
+          "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+          "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH compounding improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "boost-rwa-meth-dynamic",
+          "strategyId": "boost-rwa-meth-dynamic",
+          "protocol": "Mantle Dynamic RWA Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY/mETH",
+          "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+          "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "boost-rwa-meth-dynamic",
+        "strategyId": "boost-rwa-meth-dynamic",
+        "protocol": "Mantle Dynamic RWA Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY/mETH",
+        "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "growth-meth-yield",
+        "strategyId": "growth-meth-yield",
+        "protocol": "Mantle mETH Yield Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "mETH",
+        "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH compounding improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "steady-rwa-usdy",
+        "strategyId": "steady-rwa-usdy",
+        "protocol": "Mantle RWA USDY Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY",
+        "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY RWA strategy stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "steady-rwa-usdy",
+      "strategyId": "steady-rwa-usdy",
+      "protocol": "Mantle RWA USDY Route",
+      "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+      "asset": "USDY",
+      "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+      "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY RWA strategy stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "steady-rwa-usdy",
+      "marketSummary": "USDY RWA strategy remains stable on the Mantle RWA USDY Route, providing a reliable safe moat lane for yield generation.",
+      "riskNotes": [
+        "Risk level 1 is strictly within the maximum acceptable risk threshold of 1.",
+        "Low volatility expected given the RWA stable asset backing."
+      ],
+      "confidenceReason": "The deterministic ranker successfully identified 'steady-rwa-usdy' which flawlessly passes the policy gate, matching the allowed protocol list and adhering to the user's conservative risk preference."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Mantle RWA USDY Route (0x33F841C96536Bec455Ce13C68Fee1E30BE1da202) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "open",
+      "reason": "Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+      "toStrategyId": "steady-rwa-usdy",
+      "improvementBps": 520
+    },
+    "decisionHash": "0x4722edc64c39ef36467b9337dfc6bf0d38e5b37383cc81dcc5e5baf87a1463f7",
+    "summary": "Autopilot approved a new position in steady-rwa-usdy: Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+    "createdAt": "2026-06-05T16:22:54.289Z",
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "riskPolicy": "0x73132c590b323B37344d52C9adaDA2dA939896d3",
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf",
+        "gardenUsdMock": "0x2B2Cc2e7eCF63FFaEBF3Af7566Ad76aa910Bb601",
+        "gardenRwaMockVault": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "steadyAdapter": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "growthAdapter": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "boostAdapter": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "steadyAsset": "0x7F96a25C870f1e712952F18ac5496eFDbdf2FA77",
+        "growthAsset": "0xef9b03191bFeC28518d18DFC3a7B114AF3d825DB",
+        "boostAsset": "0xDb1802DDA2B91c06358C880AaBe9027ccB9fd3c0",
+        "steadyOracle": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "growthOracle": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "boostOracle": "0xB16FcAFB8378baA0a69142a325878FDCad58606A"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "parsedIntent": {
+      "crop": "steady",
+      "riskPreference": 1,
+      "message": "tanam Rice USDY 1000"
+    },
+    "marketMood": {
+      "mood": "bullish",
+      "weather": "sunny",
+      "reason": "Strategy, confidence, and liquidity healthy."
+    },
+    "effectivePolicy": {
+      "enabled": true,
+      "paused": false,
+      "maxTxAmount": 5000,
+      "maxRiskLevel": 1,
+      "rebalanceIntervalSeconds": 3600,
+      "allowedProtocols": [
+        "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202"
+      ]
+    },
+    "gardenSimulation": {
+      "crop": "Rice / Safe Harvest",
+      "background": "bright-sky",
+      "actionLabel": "Keep route safe",
+      "potSlots": [
+        {
+          "id": "boost-rwa-meth-dynamic",
+          "label": "Chili / Boost Farm",
+          "health": 72,
+          "apy": "17.60%",
+          "active": false
+        },
+        {
+          "id": "growth-meth-yield",
+          "label": "Corn / Growth Field",
+          "health": 86,
+          "apy": "9.60%",
+          "active": false
+        },
+        {
+          "id": "steady-rwa-usdy",
+          "label": "Rice / Safe Harvest",
+          "health": 92,
+          "apy": "5.20%",
+          "active": true
+        }
+      ]
+    },
+    "beginnerExplanation": "Conservative mode: agent picked USDY via Mantle RWA USDY Route. Strategy, confidence, and liquidity healthy.",
+    "anchorTxHash": null
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 50,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "steady-rwa-usdy",
+          "strategyId": "steady-rwa-usdy",
+          "protocol": "Mantle RWA USDY Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY",
+          "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+          "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY RWA strategy stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "growth-meth-yield",
+          "strategyId": "growth-meth-yield",
+          "protocol": "Mantle mETH Yield Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "mETH",
+          "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+          "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH compounding improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "boost-rwa-meth-dynamic",
+          "strategyId": "boost-rwa-meth-dynamic",
+          "protocol": "Mantle Dynamic RWA Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY/mETH",
+          "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+          "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "boost-rwa-meth-dynamic",
+        "strategyId": "boost-rwa-meth-dynamic",
+        "protocol": "Mantle Dynamic RWA Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY/mETH",
+        "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "growth-meth-yield",
+        "strategyId": "growth-meth-yield",
+        "protocol": "Mantle mETH Yield Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "mETH",
+        "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH compounding improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "steady-rwa-usdy",
+        "strategyId": "steady-rwa-usdy",
+        "protocol": "Mantle RWA USDY Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY",
+        "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY RWA strategy stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "steady-rwa-usdy",
+      "strategyId": "steady-rwa-usdy",
+      "protocol": "Mantle RWA USDY Route",
+      "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+      "asset": "USDY",
+      "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+      "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY RWA strategy stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "steady-rwa-usdy",
+      "marketSummary": "USDY RWA strategy on Mantle RWA USDY Route is stable, offering 5.20% APY with deep liquidity of $1.4M—well-suited for risk-averse autopilot allocations.",
+      "riskNotes": [
+        "Strategy risk level (1) aligns with user preference and policy maxRiskLevel of 1.",
+        "USDY is a tokenized RWA yield product; carry risk is tied to underlying duration and issuer credit.",
+        "Two higher-yielding strategies (boost-rwa-meth-dynamic at risk 3, growth-meth-yield at risk 2) were rejected by the deterministic policy gate due to exceeding maxRiskLevel=1."
+      ],
+      "confidenceReason": "High confidence (0.92) driven by stable market condition, policy gate clearance (amount 1000 ≤ maxTxAmount 5000; protocol 0x33F841 is allowed; risk 1 ≤ maxRiskLevel 1), and strong liquidity with minimal gas cost. The deterministic ranker and policy gate both concur on this recommendation."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Mantle RWA USDY Route (0x33F841C96536Bec455Ce13C68Fee1E30BE1da202) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "open",
+      "reason": "Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+      "toStrategyId": "steady-rwa-usdy",
+      "improvementBps": 520
+    },
+    "decisionHash": "0x2333f846d800c08b4a33bd84ae2928c370d3e546e6aa4736ff4cf1960aab551a",
+    "summary": "Autopilot approved a new position in steady-rwa-usdy: Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+    "createdAt": "2026-06-05T16:17:57.499Z",
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "riskPolicy": "0x73132c590b323B37344d52C9adaDA2dA939896d3",
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf",
+        "gardenUsdMock": "0x2B2Cc2e7eCF63FFaEBF3Af7566Ad76aa910Bb601",
+        "gardenRwaMockVault": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "steadyAdapter": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "growthAdapter": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "boostAdapter": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "steadyAsset": "0x7F96a25C870f1e712952F18ac5496eFDbdf2FA77",
+        "growthAsset": "0xef9b03191bFeC28518d18DFC3a7B114AF3d825DB",
+        "boostAsset": "0xDb1802DDA2B91c06358C880AaBe9027ccB9fd3c0",
+        "steadyOracle": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "growthOracle": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "boostOracle": "0xB16FcAFB8378baA0a69142a325878FDCad58606A"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "anchorTxHash": null
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 50,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "steady-rwa-usdy",
+          "strategyId": "steady-rwa-usdy",
+          "protocol": "Mantle RWA USDY Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY",
+          "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+          "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY RWA strategy stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "growth-meth-yield",
+          "strategyId": "growth-meth-yield",
+          "protocol": "Mantle mETH Yield Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "mETH",
+          "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+          "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH compounding improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "boost-rwa-meth-dynamic",
+          "strategyId": "boost-rwa-meth-dynamic",
+          "protocol": "Mantle Dynamic RWA Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY/mETH",
+          "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+          "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "boost-rwa-meth-dynamic",
+        "strategyId": "boost-rwa-meth-dynamic",
+        "protocol": "Mantle Dynamic RWA Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY/mETH",
+        "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "growth-meth-yield",
+        "strategyId": "growth-meth-yield",
+        "protocol": "Mantle mETH Yield Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "mETH",
+        "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH compounding improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "steady-rwa-usdy",
+        "strategyId": "steady-rwa-usdy",
+        "protocol": "Mantle RWA USDY Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY",
+        "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY RWA strategy stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "steady-rwa-usdy",
+      "strategyId": "steady-rwa-usdy",
+      "protocol": "Mantle RWA USDY Route",
+      "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+      "asset": "USDY",
+      "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+      "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY RWA strategy stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "steady-rwa-usdy",
+      "marketSummary": "The USDY asset within the Mantle RWA USDY Route presents a stable market condition with reliable yield.",
+      "riskNotes": [
+        "Risk level 1 aligns perfectly with the user's conservative risk preference.",
+        "High protocol confidence and strong liquidity minimize exposure to volatility."
+      ],
+      "confidenceReason": "Policy gate deterministically enforced the maxRiskLevel 1 constraint, filtering out incompatible strategies and securely qualifying the USDY route."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Mantle RWA USDY Route (0x33F841C96536Bec455Ce13C68Fee1E30BE1da202) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "open",
+      "reason": "Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+      "toStrategyId": "steady-rwa-usdy",
+      "improvementBps": 520
+    },
+    "decisionHash": "0x83ae95d2bd34486112a95d4d0f38ab12e589185c63da405fd42baf0465129a5c",
+    "summary": "Autopilot approved a new position in steady-rwa-usdy: Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+    "createdAt": "2026-06-05T16:05:16.080Z",
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "riskPolicy": "0x73132c590b323B37344d52C9adaDA2dA939896d3",
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf",
+        "gardenUsdMock": "0x2B2Cc2e7eCF63FFaEBF3Af7566Ad76aa910Bb601",
+        "gardenRwaMockVault": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "steadyAdapter": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "growthAdapter": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "boostAdapter": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "steadyAsset": "0x7F96a25C870f1e712952F18ac5496eFDbdf2FA77",
+        "growthAsset": "0xef9b03191bFeC28518d18DFC3a7B114AF3d825DB",
+        "boostAsset": "0xDb1802DDA2B91c06358C880AaBe9027ccB9fd3c0",
+        "steadyOracle": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "growthOracle": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "boostOracle": "0xB16FcAFB8378baA0a69142a325878FDCad58606A"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "anchorTxHash": null
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 0,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "steady-rwa-usdy",
+          "strategyId": "steady-rwa-usdy",
+          "protocol": "Mantle RWA USDY Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY",
+          "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+          "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY RWA strategy stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "growth-meth-yield",
+          "strategyId": "growth-meth-yield",
+          "protocol": "Mantle mETH Yield Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "mETH",
+          "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+          "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH compounding improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "boost-rwa-meth-dynamic",
+          "strategyId": "boost-rwa-meth-dynamic",
+          "protocol": "Mantle Dynamic RWA Route",
+          "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+          "asset": "USDY/mETH",
+          "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+          "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "boost-rwa-meth-dynamic",
+        "strategyId": "boost-rwa-meth-dynamic",
+        "protocol": "Mantle Dynamic RWA Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY/mETH",
+        "adapterAddress": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "oracleAddress": "0xB16FcAFB8378baA0a69142a325878FDCad58606A",
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "growth-meth-yield",
+        "strategyId": "growth-meth-yield",
+        "protocol": "Mantle mETH Yield Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "mETH",
+        "adapterAddress": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "oracleAddress": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH compounding improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "steady-rwa-usdy",
+        "strategyId": "steady-rwa-usdy",
+        "protocol": "Mantle RWA USDY Route",
+        "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "asset": "USDY",
+        "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY RWA strategy stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "steady-rwa-usdy",
+      "strategyId": "steady-rwa-usdy",
+      "protocol": "Mantle RWA USDY Route",
+      "protocolAddress": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+      "asset": "USDY",
+      "adapterAddress": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+      "oracleAddress": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY RWA strategy stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "steady-rwa-usdy",
+      "marketSummary": "USDY RWA strategy stable on Mantle RWA USDY Route",
+      "riskNotes": [
+        "Risk level 1 aligns with your conservative preference",
+        "USDY is a tokenized RWA with stable yield characteristics",
+        "Protocol is policy-approved and within max risk threshold"
+      ],
+      "confidenceReason": "High confidence (0.92) due to policy gate validation confirming risk level 1 matches your maxRiskLevel, protocol 0x33F841C96536Bec455Ce13C68Fee1E30BE1da202 is explicitly allowed, amount 1000 is within maxTxAmount 5000, and steady-rwa-usdy is a verified known strategy ID"
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Mantle RWA USDY Route (0x33F841C96536Bec455Ce13C68Fee1E30BE1da202) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "open",
+      "reason": "Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+      "toStrategyId": "steady-rwa-usdy",
+      "improvementBps": 520
+    },
+    "decisionHash": "0x4649a7318e5a895b4bbd2b4ce7aea42721a5683ddbb706dfe2c35e08e4ec8f5d",
+    "summary": "Autopilot approved a new position in steady-rwa-usdy: Idle vault cash can be allocated to steady-rwa-usdy after deterministic policy checks.",
+    "createdAt": "2026-06-05T16:00:50.325Z",
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "riskPolicy": "0x73132c590b323B37344d52C9adaDA2dA939896d3",
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf",
+        "gardenUsdMock": "0x2B2Cc2e7eCF63FFaEBF3Af7566Ad76aa910Bb601",
+        "gardenRwaMockVault": "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202",
+        "steadyAdapter": "0x23F83a27674E9776Ab663b10e3745DD682858f29",
+        "growthAdapter": "0x744F554EfEA9cE87E459E4a927Ba7F1fb85669c5",
+        "boostAdapter": "0x9FD80B063C4d28fDbc592C7f4E4BA7F6f8166DEc",
+        "steadyAsset": "0x7F96a25C870f1e712952F18ac5496eFDbdf2FA77",
+        "growthAsset": "0xef9b03191bFeC28518d18DFC3a7B114AF3d825DB",
+        "boostAsset": "0xDb1802DDA2B91c06358C880AaBe9027ccB9fd3c0",
+        "steadyOracle": "0x22b422CECb0D4Bd5afF3EA999b048FA17F5263bD",
+        "growthOracle": "0x5bc7Cf88EB131DB18b5d7930e793095140799aD5",
+        "boostOracle": "0xB16FcAFB8378baA0a69142a325878FDCad58606A"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "reputationRegistry": "0xC2a58107725a773A21102f575104b869dAfFCb4d",
+        "validationRegistry": "0x25863A08185bb82C7C363745702125800b4509da",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "parsedIntent": {
+      "crop": "steady",
+      "riskPreference": 1,
+      "message": "Help me set up my vault and explain the safest next move."
+    },
+    "marketMood": {
+      "mood": "bullish",
+      "weather": "sunny",
+      "reason": "Strategy, confidence, and liquidity healthy."
+    },
+    "effectivePolicy": {
+      "enabled": true,
+      "paused": false,
+      "maxTxAmount": 5000,
+      "maxRiskLevel": 1,
+      "rebalanceIntervalSeconds": 3600,
+      "allowedProtocols": [
+        "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202"
+      ]
+    },
+    "gardenSimulation": {
+      "crop": "Rice / Safe Harvest",
+      "background": "bright-sky",
+      "actionLabel": "Keep route safe",
+      "potSlots": [
+        {
+          "id": "boost-rwa-meth-dynamic",
+          "label": "Chili / Boost Farm",
+          "health": 72,
+          "apy": "17.60%",
+          "active": false
+        },
+        {
+          "id": "growth-meth-yield",
+          "label": "Corn / Growth Field",
+          "health": 86,
+          "apy": "9.60%",
+          "active": false
+        },
+        {
+          "id": "steady-rwa-usdy",
+          "label": "Rice / Safe Harvest",
+          "health": 92,
+          "apy": "5.20%",
+          "active": true
+        }
+      ]
+    },
+    "beginnerExplanation": "Conservative mode: agent picked USDY via Mantle RWA USDY Route. Strategy, confidence, and liquidity healthy.",
+    "anchorTxHash": null
+  }
+]

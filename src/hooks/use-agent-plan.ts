@@ -3,7 +3,22 @@
 import { useMutation } from "@tanstack/react-query";
 import type { AgentDecision, CropId, RiskLevel } from "@/lib/agent/types";
 
-type Payload = { user: `0x${string}`; crop: CropId; amount: string; riskPreference: RiskLevel };
+type Payload = { user: `0x${string}`; crop: CropId; amount: string; riskPreference: RiskLevel; execute?: boolean; currentPositionId?: number };
+type AgentPlanResponse = {
+  decision: AgentDecision;
+  anchor?: { enabled: boolean; txHash: `0x${string}` | null; note: string; mode?: "prepared" | "sent"; calldata?: `0x${string}` };
+  execution?: {
+    enabled: boolean;
+    mode: "disabled" | "blocked" | "prepared" | "sent";
+    note: string;
+    operation: "open" | "rebalance" | "close" | null;
+    target?: `0x${string}`;
+    calldata?: `0x${string}`;
+    executionTxHash?: `0x${string}`;
+  };
+  outcome?: { txHash: `0x${string}` } | null;
+  source?: string;
+};
 
 export function useAgentPlan() {
   return useMutation({
@@ -14,9 +29,9 @@ export function useAgentPlan() {
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = (await res.json()) as { ok: boolean; decision: AgentDecision; error?: string };
+      const json = (await res.json()) as { ok: boolean; decision: AgentDecision; anchor?: AgentPlanResponse["anchor"]; execution?: AgentPlanResponse["execution"]; outcome?: AgentPlanResponse["outcome"]; source?: string; error?: string };
       if (!json.ok) throw new Error(json.error ?? "agent failed");
-      return json.decision;
+      return json;
     },
   });
 }

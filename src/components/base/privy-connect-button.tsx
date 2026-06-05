@@ -17,7 +17,7 @@ export function PrivyConnectButton({ compact = false }: { compact?: boolean }) {
       {authenticated ? (
         <LogOut className="size-4 text-[var(--text-muted)]" />
       ) : (
-        <Wallet className="size-4 text-teal-600" />
+        <Wallet className="size-4  text-[var(--primary)]" />
       )}
       <span>
         {authenticated

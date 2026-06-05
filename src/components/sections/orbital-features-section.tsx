@@ -7,9 +7,9 @@ import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 const timelineData = [
   {
     id: 1,
-    title: "Live Executions",
-    date: "Real-time",
-    content: "Monitor every agent run in real-time. See the plan, gate checks, and execution flow as they happen.",
+    title: "Live activity",
+    date: "As it happens",
+    content: "Watch the agent move from plan to execution without losing sight of what is being changed in the vault.",
     category: "Execution",
     icon: Radio,
     relatedIds: [2, 3],
@@ -18,9 +18,9 @@ const timelineData = [
   },
   {
     id: 2,
-    title: "Human Approvals",
-    date: "On-demand",
-    content: "Route sensitive actions to the right people. Approval queues keep humans in the loop.",
+    title: "User control",
+    date: "When needed",
+    content: "The user decides the rules up front, and can still step in whenever they want to review or change direction.",
     category: "Governance",
     icon: ShieldCheck,
     relatedIds: [1, 3, 4],
@@ -29,9 +29,9 @@ const timelineData = [
   },
   {
     id: 3,
-    title: "AI Advisor",
+    title: "Agent guidance",
     date: "Continuous",
-    content: "LangGraph ranks opportunities and writes rationale before any funds move.",
+    content: "The agent compares choices, explains the best fit, and records the reason before funds are deployed.",
     category: "Intelligence",
     icon: Bot,
     relatedIds: [1, 2, 5],
@@ -40,9 +40,9 @@ const timelineData = [
   },
   {
     id: 4,
-    title: "Connected Agents",
-    date: "Live",
-    content: "Map your entire agent graph. See which models connect to which tools and how data flows.",
+    title: "Connected system",
+    date: "Always on",
+    content: "Vault, policy, execution, and proof work together so the user sees one clear flow instead of scattered tools.",
     category: "Network",
     icon: Network,
     relatedIds: [2, 5, 6],
@@ -51,9 +51,9 @@ const timelineData = [
   },
   {
     id: 5,
-    title: "On-Chain Proof",
-    date: "Per-action",
-    content: "Decision hash, Mantle tx, and benchmark outcome become verifiable proof.",
+    title: "Onchain proof",
+    date: "Per action",
+    content: "Each important action leaves a record that can be checked later without relying on hidden back-office logs.",
     category: "Verification",
     icon: Fingerprint,
     relatedIds: [3, 4, 6],
@@ -62,9 +62,9 @@ const timelineData = [
   },
   {
     id: 6,
-    title: "Analytics & Trends",
+    title: "Progress over time",
     date: "Ongoing",
-    content: "Track confidence trends, approval rates, and output quality over time.",
+    content: "Users can follow how the agent has been performing instead of judging automation from a single moment.",
     category: "Analytics",
     icon: Sparkles,
     relatedIds: [4, 5],
@@ -82,11 +82,11 @@ export function OrbitalFeaturesSection() {
         viewport={{ once: true }}
         className="mx-auto max-w-[520px] px-5 pt-16 text-center"
       >
-        <p className="mb-2 text-[10.5px] font-bold tracking-[2.5px] text-[#8ab83a]">
+        <p className="mb-2 text-[10.5px] font-bold tracking-[2.5px] text-[var(--primary)]">
           EVERYTHING YOU NEED
         </p>
-        <h2 className="text-[28px] font-extrabold -tracking-[1px] text-[#0e1a10] leading-[1.15]">
-          One platform for every agent in production
+        <h2 className="text-[28px] font-extrabold -tracking-[1px] text-[var(--text)] leading-[1.15]">
+          One place to set up, watch, and review your agent
         </h2>
       </motion.div>
 

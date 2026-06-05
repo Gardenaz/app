@@ -18,7 +18,7 @@ function FloralTop() {
       {petalsTop.map((p, i) => (
         <motion.div
           key={i}
-          className="absolute rounded-full bg-gradient-to-br from-[#B3DF46]/20 to-[var(--primary)]/10"
+          className="absolute rounded-full bg-gradient-to-br from-[var(--primary-soft-strong)] to-[var(--primary-soft)]"
           style={{ left: p.x, top: p.y }}
           animate={{
             y: [0, -8, 0],
@@ -41,7 +41,7 @@ function FloralTop() {
       ))}
 
       {/* Brush-stroke horizon line */}
-      <div className="absolute bottom-0 left-1/2 h-[2px] w-[40%] -translate-x-1/2 rounded-full bg-gradient-to-r from-transparent via-[#B3DF46]/25 to-transparent" />
+      <div className="absolute bottom-0 left-1/2 h-[2px] w-[40%] -translate-x-1/2 rounded-full bg-gradient-to-r from-transparent via-[var(--primary-border)] to-transparent" />
       <div className="absolute bottom-3 left-1/2 h-[1px] w-[25%] -translate-x-1/2 rounded-full bg-gradient-to-r from-transparent via-[var(--primary)]/15 to-transparent" />
     </div>
   );
@@ -54,7 +54,7 @@ function WavesBottom() {
         <defs>
           <linearGradient id="wave-grad-bottom" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.04" />
-            <stop offset="50%" stopColor="#B3DF46" stopOpacity="0.08" />
+            <stop offset="50%" stopColor="var(--primary)" stopOpacity="0.08" />
             <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.04" />
           </linearGradient>
         </defs>

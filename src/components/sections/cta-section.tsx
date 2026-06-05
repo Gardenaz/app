@@ -7,19 +7,19 @@ import { staggerContainer, staggerItem } from "@/lib/motion";
 
 export function CtaSection() {
   return (
-    <section id="get-started" className="relative w-full overflow-hidden bg-[#0e1a10] px-9 py-[52px] text-center">
-      <div className="pointer-events-none absolute -top-20 left-1/2 h-[400px] w-[400px] -translate-x-1/2 bg-[radial-gradient(circle,rgba(140,210,50,0.12)_0%,transparent_70%)]" />
+    <section id="get-started" className="section-landing relative w-full overflow-hidden bg-[var(--text)] text-center">
+      <div className="pointer-events-none absolute -top-20 left-1/2 h-[400px] w-[400px] -translate-x-1/2 bg-[radial-gradient(circle,var(--primary-soft-strong)_0%,transparent_70%)]" />
 
       <motion.div
         variants={staggerContainer}
         initial="initial"
         whileInView="animate"
         viewport={{ once: true }}
-        className="relative"
+        className="container-landing-narrow relative"
       >
         <motion.p
           variants={staggerItem}
-          className="mb-[10px] text-[10.5px] font-bold tracking-[2.5px] text-[rgba(179,223,70,0.7)]"
+          className="mb-[10px] text-[10.5px] font-bold tracking-[2.5px] text-[var(--primary)]"
         >
           GET STARTED TODAY
         </motion.p>
@@ -29,7 +29,7 @@ export function CtaSection() {
         >
           Run AI agents with
           <br />
-          <span className="text-[#B3DF46]">confidence in production</span>
+          <span className="text-[var(--primary)]">confidence in production</span>
         </motion.h2>
         <motion.p
           variants={staggerItem}
@@ -43,7 +43,7 @@ export function CtaSection() {
           variants={staggerItem}
           className="flex justify-center gap-3"
         >
-          <Link href="/app" className="btn-primary !rounded-3xl !bg-[#B3DF46] !text-[#0e1a10] !border-[#B3DF46] hover:!bg-[#c4ea5a]">
+          <Link href="/app" className="btn-primary !rounded-3xl">
             Launch app <ArrowRight className="size-4" />
           </Link>
           <Link

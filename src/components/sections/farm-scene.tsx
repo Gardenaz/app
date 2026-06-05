@@ -77,38 +77,38 @@ const weatherTheme: Record<WeatherMood, {
   tip: string;
 }> = {
   sunny: {
-    sky: "linear-gradient(180deg,#7dd3fc 0%,#bae6fd 45%,#d1fae5 80%,#a7f3d0 100%)",
-    ground: "linear-gradient(180deg,#86efac 0%,#4ade80 40%,#16a34a 100%)",
+    sky: "var(--weather-sunny-sky)",
+    ground: "var(--weather-sunny-ground)",
     filter: "",
     label: "Clear", marketLabel: "🐂 Bull Market", emoji: "☀️",
-    cloudOpacity: 0.15, cloudColor: "#fff",
+    cloudOpacity: 0.15, cloudColor: "var(--cloud-light)",
     sunVisible: true, rainVisible: false,
     tip: "Bullish market: every crop can grow. Chili is the most aggressive lane.",
   },
   cloudy: {
-    sky: "linear-gradient(180deg,#94a3b8 0%,#cbd5e1 45%,#e2e8f0 80%,#d4ede0 100%)",
-    ground: "linear-gradient(180deg,#86efac 0%,#4ade80 40%,#22c55e 100%)",
+    sky: "var(--weather-cloudy-sky)",
+    ground: "var(--weather-cloudy-ground)",
     filter: "brightness-95",
     label: "Cloudy", marketLabel: "😐 Neutral", emoji: "⛅",
-    cloudOpacity: 0.75, cloudColor: "#e2e8f0",
+    cloudOpacity: 0.75, cloudColor: "var(--cloud-mid)",
     sunVisible: true, rainVisible: false,
     tip: "Sideways market: Corn or Rice is the safer move.",
   },
   rainy: {
-    sky: "linear-gradient(180deg,#475569 0%,#64748b 45%,#94a3b8 80%,#b8d4c8 100%)",
-    ground: "linear-gradient(180deg,#6ee7b7 0%,#34d399 40%,#059669 100%)",
+    sky: "var(--weather-rainy-sky)",
+    ground: "var(--weather-rainy-ground)",
     filter: "brightness-85 saturate-75",
     label: "Rainy", marketLabel: "🐻 Bear Market", emoji: "🌧️",
-    cloudOpacity: 0.92, cloudColor: "#94a3b8",
+    cloudOpacity: 0.92, cloudColor: "var(--cloud-dark)",
     sunVisible: false, rainVisible: true,
     tip: "Bear market: Rice is the safest lane. Skip Chili for now.",
   },
   stormy: {
-    sky: "linear-gradient(180deg,#1e293b 0%,#334155 45%,#475569 80%,#7f9e8f 100%)",
-    ground: "linear-gradient(180deg,#4ade80 0%,#16a34a 40%,#15803d 100%)",
+    sky: "var(--weather-stormy-sky)",
+    ground: "var(--weather-stormy-ground)",
     filter: "brightness-75 saturate-50",
     label: "Storm", marketLabel: "🔴 Crash", emoji: "⛈️",
-    cloudOpacity: 1, cloudColor: "#334155",
+    cloudOpacity: 1, cloudColor: "var(--cloud-storm)",
     sunVisible: false, rainVisible: true,
     tip: "Crash mode. Hold positions and let the agent protect the garden.",
   },
@@ -128,7 +128,7 @@ function Cloud({ x, y, scale, delay, color, opacity }: {
       transition={{ duration: 22 + delay * 5, repeat: Infinity, ease: "easeInOut", delay }}
     >
       <svg width={100 * scale} height={50 * scale} viewBox="0 0 120 60" fill={color}
-        style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.06))" }}>
+        style={{ filter: "drop-shadow(var(--shadow-sm))" }}>
         <ellipse cx="60" cy="40" rx="55" ry="20" />
         <ellipse cx="45" cy="32" rx="28" ry="22" />
         <ellipse cx="72" cy="28" rx="22" ry="18" />
@@ -143,7 +143,7 @@ function RainLayer() {
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       {Array.from({ length: 30 }).map((_, i) => (
         <motion.div key={i}
-          className="absolute w-px rounded-full bg-sky-300/50"
+          className="absolute w-px rounded-full bg-[var(--sky-rain)]"
           style={{ left: `${(i * 3.5) % 100}%`, height: `${10 + (i % 5) * 5}px`, top: "-8%" }}
           animate={{ y: ["0%", "110vh"] }}
           transition={{ duration: 0.65 + (i % 5) * 0.12, repeat: Infinity, delay: (i * 0.06) % 1.1, ease: "linear" }}
@@ -164,7 +164,7 @@ function Sun({ visible }: { visible: boolean }) {
             style={{ height: 12, top: "50%", left: "50%", transformOrigin: "50% 210%",
               transform: `translate(-50%,-210%) rotate(${i * 45}deg)` }} />
         ))}
-        <div className="relative z-10 size-9 rounded-full bg-gradient-to-br from-amber-300 to-orange-400 shadow-[0_0_22px_7px_rgba(251,191,36,0.38)]" />
+        <div className="relative z-10 size-9 rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--warning)] shadow-[var(--primary-shadow-md)]" />
       </div>
     </motion.div>
   );
@@ -190,7 +190,7 @@ function CropPicker({
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.92, y: 8 }}
       transition={{ type: "spring", stiffness: 340, damping: 26 }}
-      className="absolute inset-x-3 bottom-4 z-40 rounded-2xl border border-white/70 bg-white/96 p-3 shadow-[0_12px_48px_rgba(0,0,0,0.22)] backdrop-blur-xl sm:inset-x-6"
+      className="absolute inset-x-3 bottom-4 z-40 rounded-2xl border border-white/70 bg-white/96 p-3 shadow-[var(--shadow-xl)] backdrop-blur-xl sm:inset-x-6"
       onClick={(e) => e.stopPropagation()}
     >
       {/* header */}
@@ -219,7 +219,7 @@ function CropPicker({
               onClick={() => onPick(slotId, opt.id)}
               className={`relative flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 text-center transition ${
                 isRec
-                  ? "border-teal-300 bg-teal-50/80 shadow-[0_0_0_3px_rgba(20,184,166,0.15)]"
+                  ? "border-[var(--primary)] bg-[var(--primary-soft)] shadow-[0_0_0_3px_var(--primary-soft-strong)]"
                   : "border-gray-100 bg-white hover:border-gray-200"
               }`}
             >
@@ -233,15 +233,15 @@ function CropPicker({
               <span className={`rounded-full border px-1.5 py-0.5 text-[9px] font-black ${opt.riskColor}`}>
                 {opt.risk}
               </span>
-              <p className="text-[10px] font-black text-teal-700">{opt.apy}</p>
+              <p className="text-[10px] font-black text-[var(--primary)]">{opt.apy}</p>
             </motion.button>
           );
         })}
       </div>
 
-      <p className="mt-2.5 text-center text-[10px] leading-4 text-gray-400">
-        💬 Atau tanya <strong className="text-emerald-600">Pak Tani</strong> di pojok kanan untuk rekomendasi sesuai pasar
-      </p>
+        <p className="mt-2.5 text-center text-[10px] leading-4 text-gray-400">
+          💬 Use the <strong className="text-[var(--success)]">assistant</strong> in the corner if you want a simpler explanation first
+        </p>
     </motion.div>
   );
 }
@@ -250,11 +250,11 @@ function CropPicker({
    Single pot button
 ───────────────────────────────────────────────────────────────── */
 const stateColor: Record<PotSlot["state"], string> = {
-  empty:   "#e5e7eb",
-  planted: "#86efac",
-  growing: "#4ade80",
-  ready:   "#16a34a",
-  locked:  "#6b7280",
+  empty:   "var(--neutral-200)",
+  planted: "var(--primary-border)",
+  growing: "var(--primary)",
+  ready:   "var(--success)",
+  locked:  "var(--neutral-500)",
 };
 
 function GardenPot({
@@ -287,7 +287,7 @@ function GardenPot({
       <AnimatePresence>
         {isSelected && (
           <motion.div layoutId="pot-ring"
-            className="absolute -inset-2 rounded-[2rem] border-2 border-teal-400 bg-teal-50/20"
+            className="absolute -inset-2 rounded-[2rem] border-2 border-[var(--primary)] bg-[var(--primary-soft)]"
             initial={false} transition={{ type: "spring", stiffness: 300 }} />
         )}
       </AnimatePresence>
@@ -297,7 +297,7 @@ function GardenPot({
         {isSelected && !isEmpty && (
           <motion.div
             initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 4 }}
-            className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-xl border border-white/80 bg-white/90 px-2.5 py-1 text-[10px] font-black text-emerald-800 shadow-md backdrop-blur-sm"
+            className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-xl border border-white/80 bg-white/90 px-2.5 py-1 text-[10px] font-black text-[var(--success-strong)] shadow-[var(--shadow-md)] backdrop-blur-sm"
           >
             {slot.apy.toFixed(1)}% APY · {slot.asset}
           </motion.div>
@@ -310,9 +310,9 @@ function GardenPot({
         style={{
           width: 68, height: 68,
           background: isEmpty
-            ? "linear-gradient(160deg,#f3f4f6,#e5e7eb)"
+            ? "linear-gradient(160deg,var(--neutral-100),var(--neutral-200))"
             : `radial-gradient(circle at 35% 35%,${color}cc,${color})`,
-          borderColor: isSelected ? "#2dd4bf" : isEmpty ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.72)",
+          borderColor: isSelected ? "var(--primary)" : isEmpty ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.72)",
         }}
       >
         {isLocked ? (
@@ -341,7 +341,7 @@ function GardenPot({
 
       {/* Pot base */}
       <div className="rounded-b-xl border border-white/40 shadow-inner"
-        style={{ width: 52, height: 13, background: "linear-gradient(180deg,#92400e,#78350f)" }} />
+        style={{ width: 52, height: 13, background: "linear-gradient(180deg,var(--warning),color-mix(in srgb, var(--warning) 78%, black))" }} />
 
       {/* Label chip */}
       <div className="rounded-lg border border-white/70 bg-white/88 px-2 py-0.5 shadow-sm backdrop-blur-sm">
@@ -413,14 +413,6 @@ export function FarmScene({
         </div>
       </motion.div>
 
-      {/* tip badge — top-right */}
-      <motion.div
-        className="absolute right-4 top-4 z-10 hidden max-w-[200px] rounded-xl border border-white/50 bg-white/72 px-2.5 py-1.5 shadow-sm backdrop-blur-sm sm:block"
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.45 }}
-      >
-        <p className="text-[10px] font-bold leading-4 text-gray-600">{theme.tip}</p>
-      </motion.div>
-
       {/* ground */}
       <div className="absolute inset-x-0 bottom-0" style={{ height: "43%", background: theme.ground, borderRadius: "2rem 2rem 0 0" }}>
         {/* depth stripes */}
@@ -442,7 +434,7 @@ export function FarmScene({
         </div>
         {/* dirt path */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-t-3xl opacity-35"
-          style={{ width: "55%", height: "48%", background: "linear-gradient(180deg,#a16207,#92400e)" }} />
+          style={{ width: "55%", height: "48%", background: "linear-gradient(180deg,var(--warning),color-mix(in srgb, var(--warning) 78%, black))" }} />
       </div>
 
       {/* loading overlay */}
@@ -451,7 +443,7 @@ export function FarmScene({
           <motion.div className="absolute inset-0 z-40 flex items-center justify-center rounded-[2rem] bg-white/40 backdrop-blur-sm"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <div className="flex flex-col items-center gap-3 rounded-2xl border border-white/60 bg-white/92 px-6 py-4 shadow-xl backdrop-blur-md">
-              <Loader2 className="size-8 animate-spin text-teal-600" />
+              <Loader2 className="size-8 animate-spin text-[var(--primary)]" />
               <p className="text-sm font-black text-gray-700">Agent is analyzing the market…</p>
             </div>
           </motion.div>
@@ -487,11 +479,11 @@ export function FarmScene({
       <AnimatePresence>
         {agentData?.beginnerExplanation && !pickerSlot && (
           <motion.div
-            className="absolute bottom-4 left-1/2 z-20 w-[min(90%,460px)] -translate-x-1/2 rounded-2xl border border-emerald-200/80 bg-white/90 px-4 py-2.5 shadow-lg backdrop-blur-sm"
+            className="absolute bottom-4 left-1/2 z-20 w-[min(90%,460px)] -translate-x-1/2 rounded-2xl border border-[var(--primary-border)] bg-white/90 px-4 py-2.5 shadow-[var(--shadow-lg)] backdrop-blur-sm"
             initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 6 }}
           >
-            <p className="flex items-start gap-2 text-xs font-bold leading-5 text-emerald-800">
-              <Sprout className="mt-0.5 size-3.5 shrink-0 text-emerald-600" />
+            <p className="flex items-start gap-2 text-xs font-bold leading-5 text-[var(--success-strong)]">
+              <Sprout className="mt-0.5 size-3.5 shrink-0 text-[var(--success)]" />
               {agentData.beginnerExplanation}
             </p>
           </motion.div>

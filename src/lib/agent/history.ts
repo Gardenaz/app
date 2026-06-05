@@ -112,10 +112,10 @@ export async function fetchOnchainDecisionHistory(limit = 25): Promise<AgentHist
       statusLabel: statusLabel(outcomeValue),
       summary:
         outcomeValue === 1
-          ? `${strategy.name} finalized on Mantle with a successful outcome.`
+          ? `${strategy.name} was carried out and finished with a successful result.`
           : outcomeValue === 2
-            ? `${strategy.name} was logged on Mantle and later marked as failed.`
-            : `${strategy.name} logged on Mantle and awaiting outcome update.`,
+            ? `${strategy.name} was recorded, but the result was later marked as failed.`
+            : `${strategy.name} was recorded and is still waiting for a final result.`,
       decisionHash: decisionHash as `0x${string}`,
       anchorTxHash: (log.transactionHash ?? null) as `0x${string}` | null,
       createdAt: new Date(Number(timestamp) * 1000).toISOString(),

@@ -109,8 +109,8 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
 
   const getStatusColor = (status: TimelineItem["status"]): string => {
     switch (status) {
-      case "completed": return "bg-[var(--primary)] text-white";
-      case "in-progress": return "bg-[#B3DF46] text-[#0e1a10]";
+      case "completed": return "bg-[var(--primary)] text-[var(--primary-foreground)]";
+      case "in-progress": return "bg-[var(--primary)] text-[var(--primary-foreground)]";
       case "pending": return "bg-[var(--surface-muted)] text-[var(--text-muted)]";
       default: return "bg-[var(--surface-muted)] text-[var(--text-muted)]";
     }
@@ -134,7 +134,7 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
         style={{ width: 460, height: 460 }}
       >
         {/* Center hub */}
-        <div className="absolute z-10 flex size-16 items-center justify-center rounded-full bg-gradient-to-br from-[var(--primary)] to-[#0a6760] shadow-[0_0_32px_rgba(13,127,118,0.25)]">
+        <div className="absolute z-10 flex size-16 items-center justify-center rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--primary-hover)] shadow-[var(--primary-shadow-md)]">
           <div className="absolute size-20 rounded-full border border-[var(--primary)]/20 animate-ping opacity-70" />
           <div className="absolute size-24 rounded-full border border-[var(--primary)]/10 animate-ping opacity-50" style={{ animationDelay: "0.5s" }} />
           <Sprout className="size-6 text-white" />
@@ -166,7 +166,7 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
                   <div
                     className="absolute animate-pulse rounded-full"
                     style={{
-                      background: `radial-gradient(circle, rgba(13,127,118,0.15) 0%, transparent 70%)`,
+                      background: "radial-gradient(circle, var(--primary-soft-strong) 0%, transparent 70%)",
                       width: item.energy * 0.5 + 40,
                       height: item.energy * 0.5 + 40,
                       left: -(item.energy * 0.5 + 40 - 10) / 2,
@@ -178,8 +178,8 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
                 <div
                   className={`
                     flex size-10 items-center justify-center rounded-full border-2 transition-[background,border-color,box-shadow,transform] duration-300
-                    ${isExpanded ? "scale-150 border-[var(--primary)] bg-[var(--primary)] text-white shadow-[0_0_16px_rgba(13,127,118,0.3)]" : ""}
-                    ${isRelated && !isExpanded ? "border-[#B3DF46] bg-[var(--primary-soft)] text-[var(--primary)] animate-pulse" : ""}
+                    ${isExpanded ? "scale-150 border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--primary-shadow-sm)]" : ""}
+                    ${isRelated && !isExpanded ? "border-[var(--primary)] bg-[var(--primary-soft)] text-[var(--primary)] animate-pulse" : ""}
                     ${!isExpanded && !isRelated ? "border-[var(--border)] bg-white text-[var(--text-muted)]" : ""}
                   `}
                 >
@@ -191,7 +191,7 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
                 </div>
 
                 {isExpanded && (
-                  <Card className="absolute top-20 left-1/2 z-[999] w-56 -translate-x-1/2 bg-white shadow-[0_8px_40px_rgba(13,26,23,0.12)]">
+                  <Card className="absolute top-20 left-1/2 z-[999] w-56 -translate-x-1/2 bg-[var(--surface)] shadow-[var(--shadow-lg)]">
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 h-3 w-px bg-[var(--border)]" />
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
@@ -210,7 +210,7 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
                           <span className="font-mono font-bold text-[var(--text)]">{item.energy}%</span>
                         </div>
                         <div className="h-1 w-full overflow-hidden rounded-full bg-[var(--surface-muted)]">
-                          <div className="h-full rounded-full bg-gradient-to-r from-[#B3DF46] to-[var(--primary)]" style={{ width: `${item.energy}%` }} />
+                          <div className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--primary-hover)]" style={{ width: `${item.energy}%` }} />
                         </div>
                       </div>
                       {item.relatedIds.length > 0 && (

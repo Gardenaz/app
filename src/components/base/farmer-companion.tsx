@@ -19,8 +19,8 @@ function FarmerSprite({
   mood: "happy" | "thinking" | "worried" | "excited";
   size?: number;
 }) {
-  const hatColor = mood === "worried" ? "#7c3aed" : "#92400e";
-  const skin = mood === "excited" ? "#fcd34d" : "#f5d0a9";
+  const hatColor = mood === "worried" ? "var(--danger)" : "var(--warning)";
+  const skin = mood === "excited" ? "var(--primary)" : "color-mix(in srgb, var(--warning) 35%, white)";
   const eyeChar = mood === "thinking" ? "–" : mood === "worried" ? ">" : "•";
 
   return (
@@ -34,28 +34,28 @@ function FarmerSprite({
     >
       <rect x="4" y="7" width="24" height="3" rx="1.5" fill={hatColor} />
       <rect x="8" y="1" width="16" height="8" rx="3" fill={hatColor} />
-      <rect x="8" y="7" width="16" height="2" rx="1" fill="#d97706" />
+      <rect x="8" y="7" width="16" height="2" rx="1" fill="var(--warning)" />
       <ellipse cx="16" cy="16" rx="9" ry="10" fill={skin} />
-      <text x="11.5" y="16.5" fontSize="3.8" fill="#374151" fontWeight="bold">
+      <text x="11.5" y="16.5" fontSize="3.8" fill="var(--neutral-700)" fontWeight="bold">
         {eyeChar}
       </text>
-      <text x="18" y="16.5" fontSize="3.8" fill="#374151" fontWeight="bold">
+      <text x="18" y="16.5" fontSize="3.8" fill="var(--neutral-700)" fontWeight="bold">
         {eyeChar}
       </text>
       {mood === "happy" || mood === "excited" ? (
-        <path d="M12 20 Q16 24 20 20" stroke="#374151" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+        <path d="M12 20 Q16 24 20 20" stroke="var(--neutral-700)" strokeWidth="1.2" fill="none" strokeLinecap="round" />
       ) : mood === "worried" ? (
-        <path d="M12 22 Q16 19 20 22" stroke="#374151" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+        <path d="M12 22 Q16 19 20 22" stroke="var(--neutral-700)" strokeWidth="1.2" fill="none" strokeLinecap="round" />
       ) : (
-        <rect x="12" y="20" width="8" height="1.5" rx="0.75" fill="#374151" />
+        <rect x="12" y="20" width="8" height="1.5" rx="0.75" fill="var(--neutral-700)" />
       )}
-      <ellipse cx="9" cy="18" rx="2.5" ry="1.5" fill="#fca5a5" opacity="0.5" />
-      <ellipse cx="23" cy="18" rx="2.5" ry="1.5" fill="#fca5a5" opacity="0.5" />
-      <rect x="9" y="25" width="14" height="10" rx="3" fill="#16a34a" />
-      <rect x="10" y="24" width="4" height="10" rx="2" fill="#15803d" />
-      <rect x="18" y="24" width="4" height="10" rx="2" fill="#15803d" />
-      <rect x="10" y="29" width="4" height="4" rx="1" fill="#15803d" />
-      <rect x="18" y="29" width="4" height="4" rx="1" fill="#15803d" />
+      <ellipse cx="9" cy="18" rx="2.5" ry="1.5" fill="var(--danger)" opacity="0.18" />
+      <ellipse cx="23" cy="18" rx="2.5" ry="1.5" fill="var(--danger)" opacity="0.18" />
+      <rect x="9" y="25" width="14" height="10" rx="3" fill="var(--success)" />
+      <rect x="10" y="24" width="4" height="10" rx="2" fill="var(--success-strong)" />
+      <rect x="18" y="24" width="4" height="10" rx="2" fill="var(--success-strong)" />
+      <rect x="10" y="29" width="4" height="4" rx="1" fill="var(--success-strong)" />
+      <rect x="18" y="29" width="4" height="4" rx="1" fill="var(--success-strong)" />
     </svg>
   );
 }
@@ -77,6 +77,7 @@ function getMood(
 type ChatMessage = { role: "farmer" | "user"; text: string; ts: number };
 
 export type FarmerCompanionContext = {
+  mode: "guided" | "autopilot";
   view: "canvas" | "shop" | "audit";
   marketLabel: string;
   weatherReason: string;

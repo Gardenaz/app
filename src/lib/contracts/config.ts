@@ -1,6 +1,7 @@
 import mantleSepoliaDeployment from "./mantle-sepolia.json";
 
 export const mantleSepoliaContracts = mantleSepoliaDeployment.deployment;
+export const mantleSepoliaRegistration = mantleSepoliaDeployment.deployment.erc8004Registration;
 export const contractAbis = mantleSepoliaDeployment.abis;
 
 export type ContractName = keyof typeof contractAbis;

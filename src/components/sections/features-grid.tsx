@@ -47,20 +47,20 @@ export function FeaturesGridSection() {
       >
         <motion.p
           variants={staggerItem}
-          className="mb-[10px] text-[10.5px] font-bold tracking-[2.5px] text-[#8ab83a]"
+          className="mb-[10px] text-[10.5px] font-bold tracking-[2.5px] text-[var(--primary)]"
         >
           EVERYTHING YOU NEED
         </motion.p>
         <motion.h2
           variants={staggerItem}
-          className="text-[28px] font-extrabold -tracking-[1px] text-[#0e1a10] leading-[1.15]"
+          className="text-[28px] font-extrabold -tracking-[1px] text-[var(--text)] leading-[1.15]"
         >
           One platform for every agent in production
         </motion.h2>
 
         {/* Anime-style accent line */
         }
-        <div className="mx-auto mt-3 h-[2px] w-12 rounded-full bg-gradient-to-r from-transparent via-[#B3DF46]/60 to-transparent" />
+        <div className="mx-auto mt-3 h-[2px] w-12 rounded-full bg-gradient-to-r from-transparent via-[var(--primary-border)] to-transparent" />
       </motion.div>
 
       <div className="relative mt-9 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -71,17 +71,17 @@ export function FeaturesGridSection() {
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
-            className="group relative overflow-hidden rounded-2xl border border-[#e8e8e4] bg-white p-[22px] transition-all duration-300 hover:border-[#b0d060] hover:shadow-[0_4px_20px_rgba(179,223,70,0.08)]"
+            className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-[22px] transition-all duration-300 hover:border-[var(--primary-border)] hover:shadow-[var(--shadow-md)]"
           >
             {/* Subtle gradient glow on hover */
             }
-            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-[#B3DF46]/[0.03] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-[var(--primary-soft)] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-            <div className="relative mb-[14px] flex size-9 items-center justify-center rounded-xl bg-[#f4f9ec] transition-colors duration-300 group-hover:bg-[#e8f5ce]">
+            <div className="relative mb-[14px] flex size-9 items-center justify-center rounded-xl bg-[var(--primary-soft)] transition-colors duration-300 group-hover:bg-[var(--primary-soft-strong)]">
               <card.icon className="size-4 text-[var(--primary)]" />
             </div>
-            <h3 className="relative mb-[6px] text-sm font-bold text-[#111]">{card.title}</h3>
-            <p className="relative text-[12.5px] leading-[1.6] text-[#777]">{card.text}</p>
+            <h3 className="relative mb-[6px] text-sm font-bold text-[var(--text)]">{card.title}</h3>
+            <p className="relative text-[12.5px] leading-[1.6] text-[var(--text-muted)]">{card.text}</p>
           </motion.div>
         ))}
       </div>

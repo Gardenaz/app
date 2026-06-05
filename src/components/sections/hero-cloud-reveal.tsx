@@ -41,7 +41,7 @@ function BirdShape({ scale = 1 }: { scale: number }) {
     <svg width={14 * scale} height={6 * scale} viewBox="0 0 14 6">
       <path
         d="M0,3 Q4,0 8,3 Q12,0 14,3 Q10,2.5 7,3.5 Q4,2.5 0,3Z"
-        fill="#111"
+        fill="var(--text)"
       />
     </svg>
   );
@@ -78,7 +78,7 @@ function BirdsLayer() {
 
 export function HeroCloudReveal() {
   return (
-    <section id="what-is-gardenaz" className="relative min-h-[90vh] w-full overflow-hidden">
+    <section id="what-is-gardenaz" className="landing-section landing-section--flush relative min-h-[90vh] w-full overflow-hidden">
       <video
         src="/bg-hero.mp4"
         autoPlay
@@ -98,38 +98,33 @@ export function HeroCloudReveal() {
       <BirdsLayer />
 
       {/* Two-column layout */}
-      <div className="relative z-[5] mx-auto flex min-h-[90vh] max-w-6xl flex-col items-center justify-center gap-10 px-6 py-12 lg:flex-row lg:items-center lg:justify-between lg:gap-24 lg:px-10">
+      <div className="landing-inner relative z-[5] grid min-h-[90vh] place-items-center px-[var(--landing-inline)] py-12">
+        <div className="grid w-full max-w-[66rem] items-center gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-16">
         {/* Left — Text */}
         <motion.div
           variants={staggerContainer}
           initial="initial"
           animate="animate"
-          className="flex flex-col items-start text-left lg:max-w-[540px]"
+          className="flex max-w-[31rem] flex-col items-start text-left"
         >
-          <motion.p
-            variants={staggerItem}
-            className="mb-3 text-sm font-bold tracking-[3px] text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
-          >
-            AI x RWA AGENT ON MANTLE
-          </motion.p>
           <motion.h1
             variants={staggerItem}
-            className="mb-5 text-[48px] font-extrabold leading-[1.08] -tracking-[1.5px] text-white drop-shadow-[0_4px_28px_rgba(0,0,0,0.45)] sm:text-[56px] lg:text-[64px]"
+            className="mb-5 text-[44px] font-semibold leading-[1.02] -tracking-[1.5px] text-white drop-shadow-[0_4px_28px_rgba(0,0,0,0.45)] sm:text-[56px] lg:text-[64px]"
           >
-            Grow Real Yield with
+            Where guided DeFi meets
             <br />
-            <span className="text-[#B3DF46] drop-shadow-[0_0_24px_rgba(179,223,70,0.35)]">AI That Proves Its Work</span>
+            <span className="text-[var(--primary)] [filter:drop-shadow(0_0_24px_var(--primary-glow))]">an agent that proves its work</span>
           </motion.h1>
           <motion.p
             variants={staggerItem}
             className="mb-8 max-w-[480px] text-base leading-[1.75] text-white/85 drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)] sm:text-lg"
           >
-            Gardenaz gives you a transparent way to plant, monitor, and harvest agent-based yield strategies across RWA lanes, policy gates, and on-chain proof.
+            Gardenaz gives ordinary users an AI guide that explains its decisions, stays inside policy, and leaves a visible proof trail before any automated move goes through.
           </motion.p>
           <motion.div variants={staggerItem}>
             <Link
               href="/app"
-              className="group inline-flex items-center gap-2 rounded-xl bg-[#B3DF46] px-6 py-3 text-sm font-bold text-[#0e1a10] shadow-[0_2px_16px_rgba(179,223,70,0.35)] transition-all duration-300 hover:bg-[#c4ea5a] hover:shadow-[0_4px_24px_rgba(179,223,70,0.5)]"
+              className="group inline-flex items-center gap-2 rounded-xl bg-[var(--primary)] px-6 py-3 text-sm font-bold text-[var(--primary-foreground)] shadow-[var(--primary-shadow-sm)] transition-all duration-300 hover:bg-[var(--primary-hover)] hover:shadow-[var(--primary-shadow-md)]"
             >
               Launch App
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
@@ -142,16 +137,18 @@ export function HeroCloudReveal() {
           initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.8, duration: 0.6, ease: easeOutExpo }}
+          className="w-full max-w-[22rem] justify-self-center lg:justify-self-end"
         >
           <YieldCardHero
             title="Strategy Review"
-            subtitle="LangGraph agent evaluates yield routes and writes rationale before any capital moves toward USDY or mETH lanes."
-            cta="View Strategy"
+            subtitle="The agent compares options, writes a clear reason, checks policy, and records the decision before execution."
+            cta="See the plan"
             onCtaClick={() => (window.location.href = "/app")}
             confidence={84}
             assignedTo="Yield Scout"
           />
         </motion.div>
+        </div>
       </div>
     </section>
   );

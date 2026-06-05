@@ -24,7 +24,7 @@ function SparkleParticles() {
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          className="absolute rounded-full bg-[#B3DF46]/50"
+          className="absolute rounded-full bg-[var(--primary-border)]"
           style={{ left: `${p.x}%`, top: `${p.y}%`, width: p.size, height: p.size }}
           animate={{ opacity: [p.opacity, 0, p.opacity], scale: [1, 1.4, 1] }}
           transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
@@ -78,7 +78,7 @@ export function LandingNavbar() {
                 href="/app"
                 className={`group inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-[13px] font-bold transition-all duration-300 ${
                   scrolled
-                    ? "bg-[var(--primary)] text-white shadow-[0_2px_8px_rgba(13,127,118,0.25)] hover:bg-[var(--primary-hover)] hover:shadow-[0_4px_16px_rgba(13,127,118,0.3)]"
+                    ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--primary-shadow-sm)] hover:bg-[var(--primary-hover)] hover:shadow-[var(--primary-shadow-md)]"
                     : "bg-white/[0.14] text-white backdrop-blur-sm hover:bg-white/[0.22]"
                 }`}
               >

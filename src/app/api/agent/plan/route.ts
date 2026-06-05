@@ -19,18 +19,20 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true, garden, decision: { ...garden.decision, anchorTxHash }, anchor, source });
     }
 
-    const { decision, anchor, source } = await requestAgentPlan({
+    const { decision, anchor, execution, outcome, source } = await requestAgentPlan({
       user: body.user,
       crop: body.crop,
       amount: String(body.amount),
       riskPreference: Number(body.riskPreference) as 1 | 2 | 3,
+      execute: Boolean(body.execute),
+      currentPositionId: body.currentPositionId != null ? Number(body.currentPositionId) : undefined,
     });
 
     const fallbackAnchor = source === "local-fallback" ? await maybeAnchorDecision(decision) : anchor;
     const anchorTxHash = fallbackAnchor?.txHash ?? null;
     await saveDecision({ ...decision, anchorTxHash });
 
-    return NextResponse.json({ ok: true, decision: { ...decision, anchorTxHash }, anchor: fallbackAnchor, source });
+    return NextResponse.json({ ok: true, decision: { ...decision, anchorTxHash }, anchor: fallbackAnchor, execution, outcome, source });
   } catch (error) {
     return NextResponse.json({ ok: false, error: error instanceof Error ? error.message : "invalid request" }, { status: 400 });
   }
