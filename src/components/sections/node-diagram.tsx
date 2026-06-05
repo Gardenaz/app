@@ -3,20 +3,51 @@
 import { useRef, useEffect } from "react";
 
 const nodes = [
-  { id: "approvals", label: "HUMAN APPROVALS", x: 202, y: 162, lineX1: 350, lineY1: 272, lineX2: 202, lineY2: 162, delay: ".78s", dotDelay: ".72s", dotX: 199, dotY: 159 },
-  { id: "executions", label: "LIVE EXECUTIONS", x: 500, y: 162, lineX1: 350, lineY1: 272, lineX2: 500, lineY2: 162, delay: ".78s", dotDelay: ".72s", dotX: 497, dotY: 159 },
-  { id: "agents", label: "CONNECTED AGENTS", x: 96, y: 240, lineX1: 350, lineY1: 272, lineX2: 96, lineY2: 240, delay: ".88s", dotDelay: ".82s", dotX: 93, dotY: 237 },
-  { id: "queues", label: "REVIEW QUEUES", x: 608, y: 240, lineX1: 350, lineY1: 272, lineX2: 608, lineY2: 240, delay: ".88s", dotDelay: ".82s", dotX: 605, dotY: 237 },
-  { id: "events", label: "SYSTEM EVENTS", x: 350, y: 108, lineX1: 350, lineY1: 272, lineX2: 350, lineY2: 108, delay: ".62s", dotDelay: ".62s", dotX: 347, dotY: 105 },
+  { id: "approvals", label: "HUMAN APPROVALS", x: 202, y: 162, delay: ".78s", dotDelay: ".72s", dotX: 199, dotY: 159 },
+  { id: "executions", label: "LIVE EXECUTIONS", x: 500, y: 162, delay: ".78s", dotDelay: ".72s", dotX: 497, dotY: 159 },
+  { id: "agents", label: "CONNECTED AGENTS", x: 96, y: 240, delay: ".88s", dotDelay: ".82s", dotX: 93, dotY: 237 },
+  { id: "queues", label: "REVIEW QUEUES", x: 608, y: 240, delay: ".88s", dotDelay: ".82s", dotX: 605, dotY: 237 },
+  { id: "events", label: "SYSTEM EVENTS", x: 350, y: 108, delay: ".62s", dotDelay: ".62s", dotX: 347, dotY: 105 },
+];
+
+const curves = [
+  { d: "M350 272 C350 228, 350 185, 350 108", delay: ".28s", flowDelay: "0s" },
+  { d: "M350 272 C276 272, 276 217, 202 162", delay: ".40s", flowDelay: "1.0s" },
+  { d: "M350 272 C223 272, 223 256, 96 240", delay: ".52s", flowDelay: "2.0s" },
+  { d: "M350 272 C425 272, 425 217, 500 162", delay: ".40s", flowDelay: "1.5s" },
+  { d: "M350 272 C479 272, 479 256, 608 240", delay: ".52s", flowDelay: "2.5s" },
+  { d: "M350 272 C350 290, 350 300, 350 308", delay: ".18s", flowDelay: ".5s" },
+];
+
+const endpoints = [
+  { cx: 350, cy: 108, delay: ".42s" },
+  { cx: 202, cy: 162, delay: ".54s" },
+  { cx: 96, cy: 240, delay: ".66s" },
+  { cx: 500, cy: 162, delay: ".54s" },
+  { cx: 608, cy: 240, delay: ".66s" },
+  { cx: 350, cy: 308, delay: ".32s" },
+  { cx: 350, cy: 272, delay: ".18s" },
 ];
 
 const styles = `
-  @keyframes lG { to { stroke-dashoffset: 0; } }
-  @keyframes nI { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes connectorPulse { 0%,100% { r: 3; opacity: 0.5; } 50% { r: 5; opacity: 0.85; } }
-  .ll { fill: none; stroke: rgba(95,95,95,.42); stroke-width: .65; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: lG .95s ease forwards var(--d,.3s); }
-  .nn { opacity: 0; animation: nI .5s ease forwards var(--d,.5s); }
-  .cp { animation: connectorPulse 2.2s ease-in-out infinite; animation-delay: var(--d,.3s); }
+  @keyframes drawLine { to { stroke-dashoffset: 0; } }
+  @keyframes flowDash1 { to { stroke-dashoffset: -60; } }
+  @keyframes flowDash2 { to { stroke-dashoffset: -60; } }
+  @keyframes flowDash3 { to { stroke-dashoffset: -100; } }
+  @keyframes nodeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes glowPulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+  @keyframes dotPulse { 0%,100% { r: 3; opacity: 0.4; } 50% { r: 6.5; opacity: 0.85; } }
+
+  .line-base  { fill: none; stroke: rgba(255,255,255,0.45); stroke-width: 1; stroke-linecap: round; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: drawLine 1.2s ease forwards var(--d,.3s); }
+
+  /* Three staggered flow layers = continuous stream */
+  .line-flow-a { fill: none; stroke: rgba(255,255,255,0.55); stroke-width: 1.2; stroke-linecap: round; stroke-dasharray: 4 14;  stroke-dashoffset: 0;  animation: flowDash1 1.2s linear infinite; animation-delay: var(--fd,0s); }
+  .line-flow-b { fill: none; stroke: rgba(255,255,255,0.55); stroke-width: 1.2; stroke-linecap: round; stroke-dasharray: 4 14;  stroke-dashoffset: -9; animation: flowDash2 1.2s linear infinite; animation-delay: var(--fd,0s); }
+  .line-flow-c { fill: none; stroke: #fff;                        stroke-width: 1.0; stroke-linecap: round; stroke-dasharray: 3 18;  stroke-dashoffset: -5; animation: flowDash3 0.9s linear infinite; animation-delay: var(--fd,0s); }
+
+  .ep-core    { fill: #fff; animation: glowPulse 2.4s ease-in-out infinite; animation-delay: var(--d,.3s); }
+  .ep-dot     { fill: #fff; animation: dotPulse 2.4s ease-in-out infinite; animation-delay: var(--d,.3s); }
+  .node-label { opacity: 0; animation: nodeIn .5s ease forwards var(--d,.5s); }
 `;
 
 function NodeDiagramSVG() {
@@ -41,34 +72,89 @@ function NodeDiagramSVG() {
       viewBox="0 0 700 430"
       preserveAspectRatio="xMidYMid meet"
     >
-      {/* Bezier curves to center node */}
-      <path className="ll" style={{ "--d": ".28s" } as React.CSSProperties} d="M350 272 C350 228, 350 185, 350 108" />
-      <path className="ll" style={{ "--d": ".40s" } as React.CSSProperties} d="M350 272 C276 272, 276 217, 202 162" />
-      <path className="ll" style={{ "--d": ".52s" } as React.CSSProperties} d="M350 272 C223 272, 223 256, 96 240" />
-      <path className="ll" style={{ "--d": ".40s" } as React.CSSProperties} d="M350 272 C425 272, 425 217, 500 162" />
-      <path className="ll" style={{ "--d": ".52s" } as React.CSSProperties} d="M350 272 C479 272, 479 256, 608 240" />
-      <path className="ll" style={{ "--d": ".18s" } as React.CSSProperties} d="M350 272 C350 290, 350 300, 350 308" />
-
-      {/* Connector circles at endpoints */}
-      <circle className="cp" style={{ "--d": ".42s" } as React.CSSProperties} cx="350" cy="108" r="3" fill="rgba(95,95,95,.5)" />
-      <circle className="cp" style={{ "--d": ".54s" } as React.CSSProperties} cx="202" cy="162" r="3" fill="rgba(95,95,95,.5)" />
-      <circle className="cp" style={{ "--d": ".66s" } as React.CSSProperties} cx="96" cy="240" r="3" fill="rgba(95,95,95,.5)" />
-      <circle className="cp" style={{ "--d": ".54s" } as React.CSSProperties} cx="500" cy="162" r="3" fill="rgba(95,95,95,.5)" />
-      <circle className="cp" style={{ "--d": ".66s" } as React.CSSProperties} cx="608" cy="240" r="3" fill="rgba(95,95,95,.5)" />
-      <circle className="cp" style={{ "--d": ".32s" } as React.CSSProperties} cx="350" cy="308" r="3" fill="rgba(95,95,95,.5)" />
-      <circle className="cp" style={{ "--d": ".18s" } as React.CSSProperties} cx="350" cy="272" r="3" fill="rgba(95,95,95,.5)" />
-
-      {/* Drop shadow filter */}
       <defs>
-        <filter id="circleShadow" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="4" stdDeviation="12" floodColor="rgba(0,0,0,0.18)" />
-          <feDropShadow dx="0" dy="1" stdDeviation="2" floodColor="rgba(0,0,0,0.08)" />
+        {/* Layered blur filters for smooth gradient glow */}
+        <filter id="glow-outer" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="8" result="b" />
+        </filter>
+        <filter id="glow-mid" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="b" />
+        </filter>
+        <filter id="glow-inner" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="1.5" result="b" />
+        </filter>
+
+        {/* Combined glow: outer + mid + inner + core */}
+        <filter id="glow-full" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="outer" />
+          <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="mid" />
+          <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="inner" />
+          <feMerge>
+            <feMergeNode in="outer" />
+            <feMergeNode in="mid" />
+            <feMergeNode in="inner" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+
+        {/* Dot halo filter */}
+        <filter id="dot-halo" x="-200%" y="-200%" width="500%" height="500%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="outer" />
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="mid" />
+          <feMerge>
+            <feMergeNode in="outer" />
+            <feMergeNode in="mid" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+
+        <filter id="circleShadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="6" stdDeviation="16" floodColor="rgba(0,0,0,0.22)" />
+          <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="rgba(0,0,0,0.12)" />
+          <feDropShadow dx="0" dy="0" stdDeviation="1" floodColor="rgba(0,0,0,0.06)" />
         </filter>
       </defs>
 
-      {/* Base platform */}
+      {/* === CURVES — glow + base + flow === */}
+      <g filter="url(#glow-full)">
+        {curves.map((c, i) => (
+          <path key={`g-${i}`} className="line-base" style={{ "--d": c.delay } as React.CSSProperties} d={c.d} />
+        ))}
+      </g>
+
+      {/* Flowing dash animation — three staggered layers for continuous stream */}
+      {curves.map((c, i) => (
+        <path key={`fa-${i}`} className="line-flow-a" style={{ "--fd": c.flowDelay } as React.CSSProperties} d={c.d} />
+      ))}
+      {curves.map((c, i) => (
+        <path key={`fb-${i}`} className="line-flow-b" style={{ "--fd": c.flowDelay } as React.CSSProperties} d={c.d} />
+      ))}
+      {curves.map((c, i) => (
+        <path key={`fc-${i}`} className="line-flow-c" style={{ "--fd": c.flowDelay } as React.CSSProperties} d={c.d} />
+      ))}
+
+      {/* === ENDPOINTS — halo dots === */}
+      <g filter="url(#dot-halo)">
+        {endpoints.map((ep, i) => (
+          <circle key={`eh-${i}`} className="ep-dot" style={{ "--d": ep.delay } as React.CSSProperties} cx={ep.cx} cy={ep.cy} r="3.5" />
+        ))}
+      </g>
+
+      {/* Core white dot on top of halo */}
+      {endpoints.map((ep, i) => (
+        <circle key={`ec-${i}`} className="ep-core" style={{ "--d": ep.delay } as React.CSSProperties} cx={ep.cx} cy={ep.cy} r="2" />
+      ))}
+
+      {/* Central dot — with halo */}
+      <g filter="url(#dot-halo)">
+        <rect className="node-label" style={{ "--d": ".16s" } as React.CSSProperties} x="345" y="267" width="10" height="10" rx="2" fill="rgba(255,255,255,0.85)" />
+      </g>
+
+      {/* Base platform — layered rings for depth */}
       <circle cx="350" cy="422" r="130" fill="white" filter="url(#circleShadow)" />
-      <circle cx="350" cy="422" r="128" fill="none" stroke="rgba(0,0,0,.06)" strokeWidth="1" />
+      <circle cx="350" cy="422" r="130" fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="1.5" />
+      <circle cx="350" cy="422" r="120" fill="none" stroke="rgba(0,0,0,0.04)" strokeWidth="1" />
+      <circle cx="350" cy="422" r="130" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2" opacity="0.5" />
 
       {/* Center hub icon */}
       <g transform="translate(350,412)">
@@ -78,23 +164,22 @@ function NodeDiagramSVG() {
         <line x1="-14" y1="24" x2="14" y2="24" stroke="#151515" strokeWidth="1.5" />
       </g>
 
-      {/* Central dot */}
-      <rect className="nn" style={{ "--d": ".16s" } as React.CSSProperties} x="347" y="269" width="6" height="6" rx="1" fill="rgba(115,115,115,.65)" />
-
-      {/* Node dots */}
-      {nodes.map((n) => (
-        <rect
-          key={`dot-${n.id}`}
-          className="nn"
-          style={{ "--d": n.dotDelay } as React.CSSProperties}
-          x={n.dotX}
-          y={n.dotY}
-          width="6"
-          height="6"
-          rx="1"
-          fill="rgba(115,115,115,.45)"
-        />
-      ))}
+      {/* Node dots — with halo */}
+      <g filter="url(#dot-halo)">
+        {nodes.map((n) => (
+          <rect
+            key={`nd-${n.id}`}
+            className="node-label"
+            style={{ "--d": n.dotDelay } as React.CSSProperties}
+            x={n.dotX - 2}
+            y={n.dotY - 2}
+            width="10"
+            height="10"
+            rx="2"
+            fill="rgba(255,255,255,0.75)"
+          />
+        ))}
+      </g>
 
       {/* Node labels */}
       {nodes.map((n) => {
@@ -107,7 +192,7 @@ function NodeDiagramSVG() {
         };
         const w = widths[n.id] || 142;
         return (
-          <g key={`label-${n.id}`} className="nn" style={{ "--d": n.delay } as React.CSSProperties}>
+          <g key={`label-${n.id}`} className="node-label" style={{ "--d": n.delay } as React.CSSProperties}>
             <rect
               x={n.x - w / 2}
               y={n.y - 15}
@@ -155,15 +240,9 @@ export function NodeDiagramSection() {
         className="absolute inset-0 h-full w-full object-cover"
       />
 
-      <div className="absolute inset-0 bg-linear-to-b from-black/20 via-black/10 to-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/20" />
 
       <NodeDiagramSVG />
-
-      {/* <div className="pointer-events-none absolute top-[14px] left-0 right-0 z-10 text-center">
-        <h2 className="text-2xl font-bold text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.6)]">
-          Trace every decision across your agent network
-        </h2>
-      </div> */}
     </section>
   );
 }

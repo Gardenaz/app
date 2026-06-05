@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export function ManifestoSection() {
   return (
-    <section className="relative w-full bg-white py-16 sm:py-20">
+    <section className="relative w-full py-16 sm:py-20">
       {/* Decorative accent line — anime-style brush hint */}
       <div className="pointer-events-none absolute top-0 left-1/2 h-[2px] w-16 -translate-x-1/2 rounded-full bg-gradient-to-r from-transparent via-[var(--primary)]/30 to-transparent" />
 
