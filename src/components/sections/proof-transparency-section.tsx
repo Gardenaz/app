@@ -41,7 +41,7 @@ const primitives = [
 
 export function ProofTransparencySection() {
   return (
-    <section id="proof" className="w-full bg-white px-9 py-16">
+    <section id="proof" className="w-full px-9 py-16">
       <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
         {/* Left — Proof header */
         }

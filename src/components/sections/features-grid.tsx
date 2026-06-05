@@ -37,7 +37,7 @@ const featureCards = [
 
 export function FeaturesGridSection() {
   return (
-    <section id="features" className="w-full bg-white px-9 py-16">
+    <section id="features" className="w-full px-9 py-16">
       <motion.div
         variants={staggerContainer}
         initial="initial"

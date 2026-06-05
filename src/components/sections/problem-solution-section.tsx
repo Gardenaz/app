@@ -39,7 +39,7 @@ const fixes = [
 
 export function ProblemSolutionSection() {
   return (
-    <section id="product" className="w-full bg-white px-9 py-16">
+    <section id="product" className="w-full px-9 py-16 mt-40">
       <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
         {/* Left — Problem */
         }

@@ -37,7 +37,7 @@ const steps = [
 
 export function HowItWorksSection() {
   return (
-    <section id="solution" className="w-full bg-white px-9 py-16">
+    <section id="solution" className="w-full px-9 py-16">
       <motion.div
         variants={staggerContainer}
         initial="initial"
