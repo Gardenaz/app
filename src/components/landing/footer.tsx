@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
-import { Leaf } from "lucide-react";
-import { Logo } from "@/components/base/logo";
+import { motion } from "framer-motion";
+import { ArrowRight, Leaf } from "lucide-react";
+import { staggerContainer, staggerItem } from "@/lib/motion";
 
 const footerLinks = [
   {
@@ -31,49 +34,91 @@ const footerLinks = [
 
 export function LandingFooter() {
   return (
-    <footer className="divider bg-white">
-      <div className="container-page py-12 sm:py-16">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
-          {/* Brand */}
-          <div className="space-y-4">
-            <Logo />
-            <p className="max-w-[28ch] text-sm leading-6 text-[var(--text-muted)]">
-              AI × RWA yield garden on Mantle. Grow crops, earn yield, let the agent prove its work.
-            </p>
-            <div className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-1.5 w-fit">
-              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-xs font-bold text-[var(--text-muted)]">Mantle Sepolia · Testnet</span>
-            </div>
-          </div>
+    <footer className="relative w-full min-h-[75vh] overflow-hidden">
+      <video
+        src="/bg-footer.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/45 to-black/60" />
 
-          {/* Link groups */}
-          {footerLinks.map((group) => (
-            <div key={group.title}>
-              <p className="kicker mb-4">{group.title}</p>
-              <ul className="space-y-2.5">
-                {group.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-[var(--text-muted)] transition-colors hover:text-[var(--text)]"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
+      <div className="relative container-page flex items-center justify-end min-h-[75vh] py-16">
+        <div className="w-full max-w-lg rounded-[1.75rem] border border-white/[0.10] bg-white/[0.06] px-7 py-9 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
+          {/* CTA */
+          }
+          <motion.div
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <motion.p
+              variants={staggerItem}
+              className="mb-3 text-[10.5px] font-bold tracking-[2.5px] text-[rgba(179,223,70,0.7)]"
+            >
+              GET STARTED TODAY
+            </motion.p>
+            <motion.h2
+              variants={staggerItem}
+              className="mb-3 text-[28px] font-extrabold -tracking-[1px] text-white leading-[1.15]"
+            >
+              Run AI agents with{" "}
+              <span className="text-[#B3DF46]">confidence in production</span>
+            </motion.h2>
+            <motion.p
+              variants={staggerItem}
+              className="mb-6 text-[13.5px] leading-relaxed text-white/85"
+            >
+              Join teams using Gardenaz to ship reliable, auditable, and human-supervised agent workflows at scale.
+            </motion.p>
+            <motion.div variants={staggerItem} className="flex gap-3">
+              <Link href="/app" className="group relative inline-flex items-center gap-2 overflow-hidden rounded-3xl bg-[#B3DF46] px-6 py-2.5 text-[13px] font-bold text-[#0e1a10] shadow-[0_2px_12px_rgba(179,223,70,0.3)] transition-all duration-300 hover:bg-[#c4ea5a] hover:shadow-[0_4px_20px_rgba(179,223,70,0.4)]">
+                Launch app <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </Link>
+              <Link
+                href="#features"
+                className="rounded-3xl border border-white/15 bg-transparent px-6 py-2.5 text-[13px] font-medium text-white/65 transition-all duration-300 hover:border-white/35 hover:text-white"
+              >
+                View Docs
+              </Link>
+            </motion.div>
+          </motion.div>
 
-      {/* Bottom bar */}
-      <div className="divider">
-        <div className="container-page flex flex-col items-start justify-between gap-2 py-4 sm:flex-row sm:items-center">
-          <p className="text-xs text-[var(--text-subtle)]">© 2025 Gardenaz · Built on Mantle</p>
-          <div className="flex items-center gap-1 text-xs text-[var(--text-subtle)]">
-            <Leaf className="size-3 text-[var(--primary)]" />
-            <span>AI × RWA · Powered by LangGraph</span>
+          {/* Footer links */
+          }
+          <div className="mt-10 border-t border-white/[0.08] pt-7">
+            <div className="grid grid-cols-3 gap-6">
+              {footerLinks.map((group) => (
+                <div key={group.title}>
+                  <p className="mb-3 text-[10px] font-black uppercase tracking-[.16em] text-white/55">
+                    {group.title}
+                  </p>
+                  <ul className="space-y-2">
+                    {group.links.map((link) => (
+                      <li key={link.label}>
+                        <Link
+                          href={link.href}
+                          className="text-xs text-white/70 transition-colors hover:text-white"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-7 flex flex-col justify-between gap-2 border-t border-white/[0.08] pt-5 sm:flex-row sm:items-center">
+              <p className="text-[11px] text-white/45">&copy; 2026 Gardenaz · Built on Mantle</p>
+              <div className="flex items-center gap-1 text-[11px] text-white/45">
+                <Leaf className="size-3 text-[#B3DF46]" />
+                <span>AI &times; RWA &middot; Powered by LangGraph</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
