@@ -5,6 +5,7 @@ import { ManifestoSection } from "@/components/sections/manifesto-section";
 import { ProblemSolutionSection } from "@/components/sections/problem-solution-section";
 import { NodeDiagramSection } from "@/components/sections/node-diagram";
 import { TrustFeaturesSection } from "@/components/sections/trust-features-section";
+import { OrbitalFeaturesSection } from "@/components/sections/orbital-features-section";
 import { HowItWorksSection } from "@/components/sections/how-it-works-section";
 import { AgentStackFeaturesSection } from "@/components/sections/agent-stack-features-section";
 import { ProofTransparencySection } from "@/components/sections/proof-transparency-section";
@@ -18,6 +19,7 @@ export function LandingContent() {
       <ProblemSolutionSection />
       <NodeDiagramSection />
       <TrustFeaturesSection />
+      <OrbitalFeaturesSection />
       <HowItWorksSection />
       <AgentStackFeaturesSection />
       <ProofTransparencySection />
