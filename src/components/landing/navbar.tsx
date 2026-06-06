@@ -60,7 +60,7 @@ export function LandingNavbar() {
         >
           <div className="relative flex h-14 items-center justify-between gap-4 px-5">
             <Link href="/" className="shrink-0">
-              <Logo compact />
+              <Logo compact light={!scrolled} />
             </Link>
 
             <div className="flex items-center gap-2.5">
@@ -92,8 +92,7 @@ export function LandingNavbar() {
         </motion.div>
       </header>
 
-      {/* Spacer — compensates for the fixed navbar so content doesn't jump */}
-      <div className="h-17" />
+
     </>
   );
 }

@@ -71,7 +71,7 @@ export function TrustFeaturesSection() {
             <div className="pointer-events-none absolute left-0 z-10 h-full w-16 bg-gradient-to-r from-[var(--bg)] to-transparent" />
             <div className="pointer-events-none absolute right-0 z-10 h-full w-16 bg-gradient-to-l from-[var(--bg)] to-transparent" />
 
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-2">
               <Marquee className="[--duration:45s] [--gap:0.5rem]" repeat={4}>
                 {marqueeRows[0].map((q) => (
                   <span

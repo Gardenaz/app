@@ -7,6 +7,7 @@ import { NodeDiagramSection } from "@/components/sections/node-diagram";
 import { TrustFeaturesSection } from "@/components/sections/trust-features-section";
 import { OrbitalFeaturesSection } from "@/components/sections/orbital-features-section";
 import { HowItWorksSection } from "@/components/sections/how-it-works-section";
+import { AgentStackFeaturesSection } from "@/components/sections/agent-stack-features-section";
 import { ProofTransparencySection } from "@/components/sections/proof-transparency-section";
 import { CtaSection } from "@/components/sections/cta-section";
 
@@ -20,8 +21,8 @@ export function LandingContent() {
       <TrustFeaturesSection />
       <OrbitalFeaturesSection />
       <HowItWorksSection />
+      <AgentStackFeaturesSection />
       <ProofTransparencySection />
-      <CtaSection />
     </div>
   );
 }
