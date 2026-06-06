@@ -14,13 +14,33 @@ interface YieldCardHeroProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 
   assignedTo: string;
 }
 
-export const YieldCardHero = React.forwardRef<HTMLDivElement, YieldCardHeroProps>(
-  ({ className, title, subtitle, cta, onCtaClick, confidence, assignedTo, ...props }, ref) => {
+export const YieldCardHero = React.forwardRef<
+  HTMLDivElement,
+  YieldCardHeroProps
+>(
+  (
+    {
+      className,
+      title,
+      subtitle,
+      cta,
+      onCtaClick,
+      confidence,
+      assignedTo,
+      ...props
+    },
+    ref,
+  ) => {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
-    const handleMouseMove = ({ clientX, clientY, currentTarget }: React.MouseEvent) => {
-      const { left, top, width, height } = currentTarget.getBoundingClientRect();
+    const handleMouseMove = ({
+      clientX,
+      clientY,
+      currentTarget,
+    }: React.MouseEvent) => {
+      const { left, top, width, height } =
+        currentTarget.getBoundingClientRect();
       mouseX.set(clientX - left);
       mouseY.set(clientY - top);
     };
@@ -58,11 +78,15 @@ export const YieldCardHero = React.forwardRef<HTMLDivElement, YieldCardHeroProps
             <div className="flex size-7 items-center justify-center rounded-lg bg-[var(--primary-soft-strong)]">
               <TrendingUp className="size-3.5 text-[var(--primary)]" />
             </div>
-            <span className="text-[11px] font-bold text-white/80">YIELD SIGNAL</span>
+            <span className="text-[11px] font-bold text-white/80">
+              YIELD SIGNAL
+            </span>
           </div>
           <div>
             <p className="text-base font-bold text-white">+12.4% APY</p>
-            <p className="mt-0.5 text-[11px] text-white/50">USDY route · Mantle</p>
+            <p className="mt-0.5 text-[11px] text-white/50">
+              USDY route · Mantle
+            </p>
           </div>
         </motion.div> */}
 
@@ -75,11 +99,15 @@ export const YieldCardHero = React.forwardRef<HTMLDivElement, YieldCardHeroProps
             <div className="flex size-7 items-center justify-center rounded-lg bg-[var(--primary-soft-strong)]">
               <ShieldCheck className="size-3.5 text-[var(--primary)]" />
             </div>
-            <span className="text-[11px] font-bold text-white/80">POLICY GATE</span>
+            <span className="text-[11px] font-bold text-white/80">
+              POLICY GATE
+            </span>
           </div>
           <div>
             <p className="text-base font-bold text-white">Guard Active</p>
-            <p className="mt-0.5 text-[11px] text-white/50">Risk limits verified</p>
+            <p className="mt-0.5 text-[11px] text-white/50">
+              Risk limits verified
+            </p>
           </div>
           <div className="flex items-center gap-1">
             <div className="h-1 flex-1 rounded-full bg-[var(--primary-border)]">
@@ -97,7 +125,9 @@ export const YieldCardHero = React.forwardRef<HTMLDivElement, YieldCardHeroProps
           </div>
 
           <h3 className="text-xl font-bold text-white">{title}</h3>
-          <p className="mt-2 text-[13px] leading-relaxed text-white/70">{subtitle}</p>
+          <p className="mt-2 text-[13px] leading-relaxed text-white/70">
+            {subtitle}
+          </p>
 
           {/* Confidence bar */}
           <div className="mt-5">
@@ -110,7 +140,11 @@ export const YieldCardHero = React.forwardRef<HTMLDivElement, YieldCardHeroProps
                 className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--primary-hover)]"
                 initial={{ width: 0 }}
                 animate={{ width: `${confidence}%` }}
-                transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  delay: 0.3,
+                  duration: 0.8,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
               />
             </div>
           </div>
@@ -118,7 +152,8 @@ export const YieldCardHero = React.forwardRef<HTMLDivElement, YieldCardHeroProps
           {/* Footer */}
           <div className="mt-5 flex items-center justify-between">
             <p className="text-[11px] text-white/40">
-              Assigned to <strong className="text-white/70">{assignedTo}</strong>
+              Assigned to{" "}
+              <strong className="text-white/70">{assignedTo}</strong>
             </p>
             <button
               onClick={onCtaClick}
