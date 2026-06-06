@@ -4,8 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { staggerContainer, staggerItem, easeOutExpo } from "@/lib/motion";
-import { YieldCardHero } from "@/components/ui/yield-card-hero";
+import { staggerContainer, staggerItem } from "@/lib/motion";
 
 type Bird = {
   id: number;
@@ -91,21 +90,19 @@ export function HeroCloudReveal() {
       {/* Dark gradient overlay */}
       <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-b from-black/55 via-black/35 to-black/65" />
 
-      {/* Gradient cover to blend with page background */}
-      <div className="pointer-events-none absolute top-0 left-0 right-0 z-[7] h-20 bg-gradient-to-b from-[var(--bg)] to-transparent" />
+      Gradient cover to blend with page background
+      {/* <div className="pointer-events-none absolute top-0 left-0 right-0 z-[7] h-20 bg-gradient-to-b from-[var(--bg)] to-transparent" /> */}
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-[7] h-24 bg-gradient-to-t from-[var(--bg)] to-transparent" />
 
-      <BirdsLayer />
+      {/* <BirdsLayer /> */}
 
-      {/* Two-column layout */}
-      <div className="landing-inner relative z-[5] grid min-h-[90vh] place-items-center px-[var(--landing-inline)] py-12">
-        <div className="grid w-full max-w-[66rem] items-center gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-16">
-        {/* Left — Text */}
+      {/* Centered text layout */}
+      <div className="landing-inner relative z-[5] flex min-h-[90vh] items-center justify-center px-[var(--landing-inline)] py-12">
         <motion.div
           variants={staggerContainer}
           initial="initial"
           animate="animate"
-          className="flex max-w-[31rem] flex-col items-start text-left"
+          className="flex max-w-[40rem] flex-col items-center text-center"
         >
           <motion.h1
             variants={staggerItem}
@@ -132,7 +129,7 @@ export function HeroCloudReveal() {
           </motion.div>
         </motion.div>
 
-        {/* Right — 3D Tilt Yield Card */}
+        {/* Right — 3D Tilt Yield Card (commented out)
         <motion.div
           initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
@@ -148,7 +145,7 @@ export function HeroCloudReveal() {
             assignedTo="Yield Scout"
           />
         </motion.div>
-        </div>
+        */}
       </div>
     </section>
   );

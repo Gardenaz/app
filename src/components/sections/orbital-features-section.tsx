@@ -4,7 +4,7 @@ import { Bot, Fingerprint, Network, Radio, ShieldCheck, Sparkles } from "lucide-
 import { motion } from "framer-motion";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 
-const timelineData = [
+export const timelineData = [
   {
     id: 1,
     title: "Live activity",

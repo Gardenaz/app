@@ -4,14 +4,6 @@ import { motion } from "framer-motion";
 import { Bot, CheckCircle2, ShieldCheck, Sprout } from "lucide-react";
 import { staggerContainer, staggerItem } from "@/lib/motion";
 
-const stackLayers = [
-  { level: "L5", title: "Garden UI", text: "guided setup + clear next step", user: true },
-  { level: "L4", title: "AI Guide", text: "agent plan + plain-language reason" },
-  { level: "L3", title: "Policy Gate", text: "user rules + safety checks" },
-  { level: "L2", title: "Mantle Proof", text: "decision log + outcomes" },
-  { level: "L1", title: "Execution Layer", text: "strategy routes + mock DeFi adapters" },
-] as const;
-
 const steps = [
   {
     icon: Sprout,
@@ -123,74 +115,7 @@ export function HowItWorksSection() {
         ))}
       </div>
 
-      {/* Stack Layers */
-      }
-      <div className="mt-12">
-        <div className="landing-section-head max-w-[34rem]">
-          <p className="landing-subhead mb-0">AGENT STACK</p>
-          <h3 className="landing-subhead-title">The layers that keep the agent readable and bounded.</h3>
-          <p className="landing-subhead-body">
-            Each layer has one job: guide the user, shape the plan, enforce the rules, store the proof, and execute the route.
-          </p>
-        </div>
-        <div className="grid gap-3 lg:grid-cols-[1fr_1fr] lg:items-start">
-          <div className="space-y-2">
-            {stackLayers.map(({ level, title, text, ...rest }, i) => (
-              <motion.div
-                key={level}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="flex items-center gap-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]"
-              >
-                <div className="grid size-10 shrink-0 place-items-center rounded-xl bg-[var(--primary-soft)] text-xs font-black text-[var(--primary)]">
-                  {level}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="landing-card-title mt-0">{title}</h3>
-                  <p className="landing-card-body mt-1 text-[var(--text-subtle)]">{text}</p>
-                </div>
-                {"user" in rest && (
-                  <span className="shrink-0 rounded-full bg-[var(--text)] px-3 py-1 text-[10px] font-black text-[var(--surface)]">
-                    user-facing
-                  </span>
-                )}
-              </motion.div>
-            ))}
-          </div>
-          <LayerDiagram />
-        </div>
-      </div>
       </div>
     </section>
-  );
-}
-
-function LayerDiagram() {
-  return (
-    <div className="relative min-h-[320px] overflow-hidden rounded-[1.75rem] border border-[var(--border)] bg-[var(--primary-soft)] p-6 shadow-[var(--shadow-md)]">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,var(--primary-soft)_1px,transparent_1px),linear-gradient(var(--primary-soft)_1px,transparent_1px)] bg-[size:24px_24px]" />
-      <div className="relative mx-auto max-w-sm space-y-2 pt-4">
-        {stackLayers.map(({ level, title }, i) => (
-          <div
-            key={level}
-            className="rounded-2xl border border-white/80 bg-white/95 px-4 py-3 shadow-[var(--shadow-sm)]"
-            style={{
-              transform: `translateX(${i % 2 === 0 ? -6 : 10}px) rotate(${i % 2 === 0 ? -1 : 0.8}deg)`,
-            }}
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-black text-[var(--primary)]">{level}</span>
-              <span className="text-sm font-bold text-[var(--text)]">{title}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="absolute bottom-4 left-4 rounded-2xl bg-[var(--surface)] px-3 py-2 shadow-[var(--shadow-sm)]">
-        <p className="landing-subhead mb-0">ACTIVE PROOF</p>
-        <p className="mt-1 text-xs font-bold text-[var(--text)]">decision + result records</p>
-      </div>
-    </div>
   );
 }
