@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@farcaster/mini-app-solana": "^1.1.3",
     "@gardena/agent": "github:Gardenaz/agent",
     "@privy-io/react-auth": "^3.28.0",
     "@radix-ui/react-separator": "^1.1.9",
