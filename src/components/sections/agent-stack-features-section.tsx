@@ -15,14 +15,14 @@ const stackLayers = [
 
 export function AgentStackFeaturesSection() {
   return (
-    <section id="stack" className="landing-section section-landing w-full bg-[var(--surface-soft)]">
+    <section id="stack" className="landing-section section-landing w-full bg-(--surface-soft)">
       <div className="landing-inner">
         <motion.div
           variants={staggerContainer}
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
-          className="landing-section-head landing-section-head--center relative mx-auto max-w-[40rem]"
+          className="landing-section-head landing-section-head--center relative mx-auto max-w-160"
         >
           <motion.p variants={staggerItem} className="landing-eyebrow">
             AGENT STACK
