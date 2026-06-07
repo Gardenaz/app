@@ -230,7 +230,7 @@ function NodeDiagramSVG() {
 
 export function NodeDiagramSection() {
   return (
-    <section id="how-it-works" className="relative h-[460px] w-full overflow-hidden">
+    <section id="how-it-works" className="relative h-[460px] w-full overflow-hidden -my-[var(--landing-gap)]">
       <video
         src="/bg-section.mp4"
         autoPlay
