@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Radio } from "lucide-react";
 import { Logo } from "@/components/base/logo";
 import { PrivyConnectButton } from "@/components/base/privy-connect-button";
+import { Button } from "@/components/ui/button";
 
 export function AppNavbar() {
   return (
@@ -16,9 +16,15 @@ export function AppNavbar() {
         </div>
 
         <div className="flex items-center gap-2.5">
-          <div className="hidden lg:block">
-            <PrivyConnectButton compact />
-          </div> 
+          <div className="hidden items-center gap-2 sm:flex">
+            <Button type="button" variant="secondary" className="px-3 py-2 text-xs">
+              Mantle Testnet
+            </Button>
+            <Button type="button" variant="secondary" disabled className="px-3 py-2 text-xs opacity-60">
+              Mantle Mainnet Soon
+            </Button>
+          </div>
+          <PrivyConnectButton compact />
         </div>
       </div>
     </header>

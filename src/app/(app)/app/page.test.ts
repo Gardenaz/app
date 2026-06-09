@@ -1,59 +1,86 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
+import {
+  buildFlowState,
+  getActionRiskPreference,
+  getExecutionGardenLabel,
+  getOperationLabel,
+  getPreviewStepLabel,
+} from "@/lib/launch/launch-actions";
 
 const pageSource = readFileSync(new URL("./page.tsx", import.meta.url), "utf8");
 const farmerSource = readFileSync(new URL("../../../components/base/farmer-companion/index.tsx", import.meta.url), "utf8");
-const launchSectionsSource = readFileSync(new URL("../../../components/launch/page-sections/index.ts", import.meta.url), "utf8");
-const launchHeaderSource = readFileSync(new URL("../../../components/launch/page-sections/header-card.tsx", import.meta.url), "utf8");
-const launchCanvasSource = readFileSync(new URL("../../../components/launch/page-sections/canvas-tab.tsx", import.meta.url), "utf8");
-const launchShopSource = readFileSync(new URL("../../../components/launch/page-sections/shop-tab.tsx", import.meta.url), "utf8");
-const launchAuditSource = readFileSync(new URL("../../../components/launch/page-sections/audit-tab.tsx", import.meta.url), "utf8");
 const historySource = readFileSync(new URL("../../../components/sections/agent-history.tsx", import.meta.url), "utf8");
-const vaultSource = readFileSync(new URL("../../../components/sections/garden-rwa-vault.tsx", import.meta.url), "utf8");
+const navbarSource = readFileSync(new URL("../../../components/app/app-navbar.tsx", import.meta.url), "utf8");
+const walletButtonSource = readFileSync(new URL("../../../components/base/privy-connect-button.tsx", import.meta.url), "utf8");
 
-describe("Launch app game assistant UI", () => {
-  it("renders a paper-style garden agent console connected to runtime API and live history", () => {
-    assert.match(pageSource, /Start Here/);
-    assert.match(pageSource, /Claim test funds/i);
-    assert.match(pageSource, /Move funds into vault/i);
-    assert.match(pageSource, /Allow agent/i);
-    assert.match(pageSource, /Start autopilot/i);
-    assert.doesNotMatch(pageSource, /At a glance/i);
-    assert.doesNotMatch(pageSource, /Latest decision/i);
-    assert.match(pageSource, /LaunchCanvasTab/);
-    assert.match(pageSource, /LaunchAuditTab/);
+describe("Launch app Agni-first flow", () => {
+  it("uses a direct wallet-policy-preview-execute beginner flow without vault onboarding language", () => {
+    assert.match(pageSource, /Connect wallet/i);
+    assert.match(pageSource, /Set policy/i);
+    assert.match(pageSource, /Preview plan/i);
+    assert.match(pageSource, /Execute move/i);
+    assert.match(pageSource, /AI x RWA/i);
+    assert.match(pageSource, /Agni-first/i);
+    assert.match(pageSource, /Live readiness/i);
+    assert.match(pageSource, /Live benchmark readiness/i);
+    assert.match(pageSource, /swap\/add liquidity\/remove liquidity\/rebalance/i);
+    assert.doesNotMatch(pageSource, /Claim test funds/i);
+    assert.doesNotMatch(pageSource, /Move funds into vault/i);
+    assert.doesNotMatch(pageSource, /Allow agent/i);
+    assert.doesNotMatch(pageSource, /Start autopilot/i);
+    assert.doesNotMatch(pageSource, /Open vault/i);
+    assert.doesNotMatch(pageSource, /Claim gUSD/i);
+    assert.doesNotMatch(pageSource, /setVaultOperator/i);
+    assert.doesNotMatch(pageSource, /gardenVault\./i);
+    assert.doesNotMatch(pageSource, /useGardenRwaVault/i);
     assert.match(pageSource, /FarmerCompanion/);
     assert.match(pageSource, /useGardenAgent/);
-    assert.match(launchSectionsSource, /LaunchHeaderCard/);
-    assert.match(launchSectionsSource, /LaunchCanvasTab/);
-    assert.match(launchSectionsSource, /LaunchShopTab/);
-    assert.match(launchSectionsSource, /LaunchAuditTab/);
-    assert.match(launchHeaderSource, /Gardenaz/);
-    assert.match(launchHeaderSource, /Run plan|Run agent/);
-    assert.match(launchHeaderSource, /Finish setup|Agent ready/);
-    assert.match(launchHeaderSource, /Plan/);
-    assert.match(launchHeaderSource, /Vault/);
-    assert.match(launchHeaderSource, /Proof/);
-    assert.match(launchCanvasSource, /FarmScene/);
-    assert.match(launchCanvasSource, /PlantedSummary/);
-    assert.match(launchShopSource, /GardenRwaVaultSection/);
-    assert.match(launchAuditSource, /Latest actions and on-chain record/);
-    assert.match(launchAuditSource, /AgentHistorySection/);
-    assert.match(farmerSource, /FarmerSpriteView/);
-    assert.match(farmerSource, /Assistant/);
-    assert.match(farmerSource, /Open assistant/);
+    assert.match(pageSource, /useAgentPlan/);
     assert.match(farmerSource, /Quick actions/);
-    assert.match(farmerSource, /stream: true/);
     assert.match(historySource, /useAgentHistory/);
-    assert.match(vaultSource, /Move money in, let the agent work, pull money out when needed/i);
-    assert.match(vaultSource, /Wallet/i);
-    assert.match(vaultSource, /Vault/i);
-    assert.match(vaultSource, /Next step/i);
-    assert.match(vaultSource, /Deposit/i);
-    assert.match(vaultSource, /Withdraw/i);
-    assert.match(vaultSource, /Authorize/i);
-    assert.doesNotMatch(pageSource, /AI Farmer Diary/);
-    assert.doesNotMatch(pageSource, /Latest decisions/);
+    assert.match(navbarSource, /Mantle Testnet/);
+    assert.match(navbarSource, /Mantle Mainnet Soon/);
+    assert.match(walletButtonSource, /Wallet profile/);
+    assert.match(walletButtonSource, /Logout/);
+    assert.match(walletButtonSource, /DropdownMenu/);
+  });
+
+  it("keeps the flow boundaries aligned to real Agni planning and execution states", () => {
+    assert.deepEqual(
+      buildFlowState({
+        connected: true,
+        policyReady: true,
+        planPreviewed: false,
+        hasExecutionTarget: false,
+      }),
+      {
+        hasConnectedWallet: true,
+        hasPolicy: true,
+        hasPreview: false,
+        canExecute: false,
+      },
+    );
+
+    assert.equal(getPreviewStepLabel("prepared"), "Preview ready");
+    assert.equal(getPreviewStepLabel("sent"), "Preview anchored");
+    assert.equal(getPreviewStepLabel("disabled"), "Preview unavailable");
+    assert.equal(getPreviewStepLabel("blocked"), "Preview blocked");
+
+    assert.equal(getOperationLabel("swap"), "Swap");
+    assert.equal(getOperationLabel("addLiquidity"), "Add liquidity");
+    assert.equal(getOperationLabel("removeLiquidity"), "Remove liquidity");
+    assert.equal(getOperationLabel("rebalanceLiquidity"), "Rebalance liquidity");
+    assert.equal(getOperationLabel(null), "No move yet");
+
+    assert.equal(getExecutionGardenLabel("swap"), "Transplant");
+    assert.equal(getExecutionGardenLabel("addLiquidity"), "Plant");
+    assert.equal(getExecutionGardenLabel("removeLiquidity"), "Harvest");
+    assert.equal(getExecutionGardenLabel("rebalanceLiquidity"), "Rebalance field");
+    assert.equal(getExecutionGardenLabel(null), "Wait");
+
+    assert.equal(getActionRiskPreference("protect", 3), 1);
+    assert.equal(getActionRiskPreference("harvest", 2), 2);
   });
 });

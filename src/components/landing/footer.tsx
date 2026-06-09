@@ -10,7 +10,6 @@ const footerLinks = [
     title: "Product",
     links: [
       { label: "Launch app", href: "/app" },
-      { label: "Live proof", href: "/app/live" },
       { label: "Garden console", href: "/app#agent-planner" },
     ],
   },

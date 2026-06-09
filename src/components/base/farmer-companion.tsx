@@ -115,9 +115,9 @@ const GREETINGS: Record<WeatherMood, string[]> = {
 
 const QUICK_ACTIONS = [
   { id: "analyze" as const, emoji: "📊", label: "Analyze market", desc: "Check current conditions" },
-  { id: "plant" as const, emoji: "🌱", label: "Auto plant", desc: "Let me choose" },
+  { id: "plant" as const, emoji: "🌱", label: "Plant crop", desc: "Use the prepared route" },
   { id: "protect" as const, emoji: "🛡️", label: "Protect position", desc: "Enable risk guard" },
-  { id: "harvest" as const, emoji: "🌾", label: "Harvest now", desc: "Take the gains" },
+  { id: "harvest" as const, emoji: "🌾", label: "Harvest now", desc: "Exit an active crop" },
 ] as const;
 
 function classifyPrompt(text: string) {
@@ -136,8 +136,8 @@ function buildContextReply(
   const normalized = text.toLowerCase();
   if (!context) return "I need the page context first to answer accurately.";
 
-  if (/(balance|saldo|gusd|usd)/.test(normalized)) {
-    return `Your current gUSD balance is ${context.gUsdBalance}. There are ${context.positionCount} active onchain positions.`;
+  if (/(balance|saldo|gusd|usd|amount)/.test(normalized)) {
+    return `Your current planned move size is ${context.gUsdBalance}. There are ${context.positionCount} active crop records in view.`;
   }
 
   if (/(weather|market|cuaca|bull|bear|neutral|mood)/.test(normalized)) {
@@ -146,7 +146,7 @@ function buildContextReply(
 
   if (/(position|posisi|pot|tanam|garden|portfolio)/.test(normalized)) {
     if (!context.activePositions.length) {
-      return "There are no active onchain positions yet. If you want, we can start from the Seed shop.";
+      return "There are no active crop records yet. Start with a route preview and the first crop card will appear here.";
     }
     const top = context.activePositions
       .slice(0, 2)
@@ -167,14 +167,14 @@ function buildContextReply(
     const seedSummary = context.seedCatalog
       .map((seed) => `${seed.name} ${seed.price} / ${seed.returnLabel}`)
       .join(" • ");
-    return `The seed shop includes: ${seedSummary}. Pick the one that matches your risk, then Pak Tani can help continue.`;
+    return `The crop lanes include: ${seedSummary}. Pick the one that matches your comfort level, then I can help continue.`;
   }
 
   if (agentData?.beginnerExplanation) {
     return agentData.beginnerExplanation;
   }
 
-  return `You are in ${context.view.toUpperCase()} mode. Ask about balance, positions, market, seed shop, or audit proof.`;
+  return `You are in ${context.view.toUpperCase()} mode. Ask about route size, crops, market, or proof.`;
 }
 
 /* ─────────────────────────────────────────────────────────────────

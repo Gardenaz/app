@@ -20,6 +20,25 @@ const baseDecision: AgentDecision = {
   decisionHash: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   summary: "Best option: steady",
   createdAt: "2026-06-04T00:00:00.000Z",
+  erc8004: {
+    agentId: "1",
+    registries: {
+      agentIdentity: "0x1111111111111111111111111111111111111111",
+      autopilotPolicy: "0x2222222222222222222222222222222222222222",
+    },
+  },
+  benchmark: {
+    decisionLog: "0x3333333333333333333333333333333333333333",
+    status: "required",
+    anchorState: "pending",
+    outcomeState: "pending",
+    transparency: "live",
+  },
+  track: {
+    primary: "AI x RWA",
+    secondary: "Consumer & Viral DApps",
+    support: "Agentic Wallets & Economy",
+  },
 };
 
 describe("assistant summary helpers", () => {

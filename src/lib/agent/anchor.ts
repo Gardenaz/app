@@ -4,11 +4,9 @@ export async function maybeAnchorDecision(decision: AgentDecision): Promise<{ en
   const enabled = process.env.ANCHOR_ONCHAIN === "true";
   if (!enabled) return { enabled: false, txHash: null, note: "ANCHOR_ONCHAIN disabled" };
 
-  // Placeholder testnet-ready adapter:
-  // next step: wire viem walletClient + DecisionLog ABI call.
   return {
-    enabled: true,
-    txHash: (`0x${decision.decisionHash.slice(2, 66)}`) as `0x${string}`,
-    note: "Simulated anchor (replace with real DecisionLog write)",
+    enabled: false,
+    txHash: null,
+    note: `Real DecisionLog write required for ${decision.benchmark.transparency} benchmark proof`,
   };
 }

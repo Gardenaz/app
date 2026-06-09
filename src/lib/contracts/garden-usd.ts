@@ -1,5 +1,4 @@
 import type { Address } from "viem";
-import { getContractAddress } from "@/lib/contracts/config";
 
 export const gardenUsdMockAbi = [
   {
@@ -29,22 +28,9 @@ export const gardenUsdMockAbi = [
     ],
     outputs: [{ name: "", type: "bool" }],
   },
-  {
-    type: "function",
-    name: "faucet",
-    stateMutability: "nonpayable",
-    inputs: [{ name: "amount", type: "uint256" }],
-    outputs: [],
-  },
 ] as const;
 
-export function getGardenUsdMockAddress(env: NodeJS.ProcessEnv = process.env): Address | undefined {
-  const value = env.NEXT_PUBLIC_GARDEN_USD_MOCK_ADDRESS;
-  if (!value) {
-    return getContractAddress("gardenUsdMock") as Address;
-  }
-  if (!/^0x[a-fA-F0-9]{40}$/.test(value)) {
-    throw new Error("NEXT_PUBLIC_GARDEN_USD_MOCK_ADDRESS must be a valid address");
-  }
-  return value as Address;
+// Compatibility shim while mock gUSD onboarding is being removed from the visible app.
+export function getGardenUsdMockAddress(): Address | undefined {
+  return undefined;
 }

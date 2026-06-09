@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
-import { fetchOnchainDecisionHistory, toHistoryRow } from "@/lib/agent/history";
-import { listDecisions } from "@/lib/agent/store";
+import { fetchOnchainDecisionHistory } from "@/lib/agent/history";
 
 export async function GET() {
   try {
     const rows = await fetchOnchainDecisionHistory();
     return NextResponse.json({ ok: true, rows, source: "onchain" });
-  } catch {
-    const rows = (await listDecisions()).map(toHistoryRow);
-    return NextResponse.json({ ok: true, rows, source: "local-fallback" });
+  } catch (error) {
+    return NextResponse.json(
+      { ok: false, rows: [], source: "onchain", error: error instanceof Error ? error.message : "failed to read on-chain history" },
+      { status: 502 },
+    );
   }
 }

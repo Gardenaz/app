@@ -19,3 +19,10 @@ export function getPrivyAddressLabel(address?: string | null) {
   if (!address) return "Not connected";
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }
+
+export function getPrivyChainLabel(chainId?: number | null) {
+  if (!chainId) return "Unknown chain";
+  if (chainId === mantleSepolia.id) return "Mantle Sepolia";
+  if (chainId === mantle.id) return "Mantle Mainnet";
+  return `Chain ${chainId}`;
+}

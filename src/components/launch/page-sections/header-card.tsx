@@ -37,7 +37,7 @@ export function LaunchHeaderCard({
   marketEmoji,
   agentReady,
 }: HeaderProps) {
-  const currentTab = view === "canvas" ? "Plan" : view === "shop" ? "Vault" : "Proof";
+  const currentTab = view === "canvas" ? "Plan" : view === "shop" ? "Setup" : "Proof";
   const actionLabel = mode === "guided" ? "Run plan" : "Run agent";
 
   return (
@@ -78,7 +78,7 @@ export function LaunchHeaderCard({
             </Button>
             <Button type="button" variant="secondary" className="shrink-0 !px-4 !py-2" disabled={!canTopUp} onClick={onTopUp}>
               <Sprout className="size-4" />
-              {canTopUp ? "Claim gUSD" : "Cooling down"}
+              {canTopUp ? "Refresh preview" : "Cooling down"}
             </Button>
           </div>
         </div>
@@ -91,7 +91,7 @@ export function LaunchHeaderCard({
           <Tabs value={view} onValueChange={(value) => onViewChange(value as HeaderProps["view"])}>
             <TabsList className="w-full sm:w-auto">
               <TabsTrigger value="canvas">Plan</TabsTrigger>
-              <TabsTrigger value="shop">Vault</TabsTrigger>
+              <TabsTrigger value="shop">Setup</TabsTrigger>
               <TabsTrigger value="audit">Proof</TabsTrigger>
             </TabsList>
           </Tabs>

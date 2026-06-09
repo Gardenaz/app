@@ -1,13 +1,13 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import type { AgentDecision, RiskLevel } from "@/lib/agent/types";
+import type { AgentDecision, CropId, RiskLevel } from "@/lib/agent/types";
 
 export type GardenAgentResult = {
   intent: {
     user: `0x${string}`;
     message: string;
-    parsedStrategy: "steady" | "growth" | "boost";
+    parsedStrategy: CropId;
   };
   marketMood: { mood: "bullish" | "neutral" | "bearish"; weather: "sunny" | "cloudy" | "rainy"; reason: string };
   simulation: {
@@ -18,7 +18,7 @@ export type GardenAgentResult = {
     potSlots: Array<{ strategyId: string; title: string; crop: string; apy: number; health: number; selected: boolean }>;
   };
   beginnerExplanation: string;
-  effectivePolicy: { maxRiskLevel: RiskLevel; allowedProtocols: string[]; enabled: boolean };
+  effectivePolicy: { maxRiskLevel: RiskLevel; allowedProtocols: `0x${string}`[]; enabled: boolean };
   decision: AgentDecision;
 };
 

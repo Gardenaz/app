@@ -22,11 +22,11 @@ export function buildGuidedAssistantSummary(decision: AgentDecision, anchorTxHas
   const why = safeText(decision.plan?.explanation, decision.summary);
   const risk = safeText(decision.policy?.reason, "Policy check completed");
   const next = decision.policy?.allow
-    ? "If this looks good, move money into the vault or use the manual controls."
+    ? "If this looks good, approve the next Agni step or keep it in guided mode."
     : "Nothing will move until your safety rules allow it.";
   const proof = anchorTxHash
     ? `Decision anchored on-chain: \`${anchorTxHash}\`.`
-    : "Decision proof will appear after the vault action is confirmed.";
+    : "Decision proof will appear after the Mantle benchmark write is confirmed.";
 
   return [
     `**Best option:** ${best}`,
@@ -46,14 +46,14 @@ export function buildAutopilotAssistantSummary(decision: AgentDecision, anchorTx
     ? `Proof anchored on-chain: \`${anchorTxHash}\`.`
     : decision.anchorTxHash
       ? `Proof anchored on-chain: \`${decision.anchorTxHash}\`.`
-      : "Proof is pending anchor confirmation.";
+      : "Proof is pending Mantle benchmark confirmation.";
 
   return [
-    `**Current plan:** ${title}`,
-    `**Why:** ${why}`,
+    `**Current action:** ${title}`,
+    `**Why it moved:** ${why}`,
     `**Safety check:** ${risk}`,
     `**Proof:** ${proof}`,
-    `**Next:** Autopilot can keep reviewing vault cash and active positions inside your policy.`,
+    `**Next review:** Autopilot can keep reviewing Agni-ready positions and policy-safe opportunities on Mantle.`,
   ].join("\n\n");
 }
 

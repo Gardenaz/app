@@ -1,16 +1,15 @@
 import { CROP_OPTIONS, type PotSlot } from "@/components/sections/farm-scene";
 import type { RiskLevel } from "@/lib/agent/types";
-import type { GardenRwaCropKey } from "@/lib/contracts/garden-rwa";
 
 export type FarmerAction = "plant" | "analyze" | "protect" | "harvest";
 export type CropOptionId = (typeof CROP_OPTIONS)[number]["id"];
-
-export type StartHereState = {
-  hasWalletFunds: boolean;
-  hasVaultFunds: boolean;
-  hasAuthorizedOperator: boolean;
-  hasRequestedAutopilotStart: boolean;
-  hasCompletedOnboarding: boolean;
+export type ExecutionMode = "disabled" | "blocked" | "prepared" | "sent";
+export type ExecutionOperation = "swap" | "addLiquidity" | "removeLiquidity" | "rebalanceLiquidity" | null;
+export type FlowState = {
+  hasConnectedWallet: boolean;
+  hasPolicy: boolean;
+  hasPreview: boolean;
+  canExecute: boolean;
 };
 
 export function getCropOption(cropId: CropOptionId) {
@@ -54,28 +53,39 @@ export function getNextHarvestablePositionId(
   return positions.find((position) => !position.harvested)?.positionId ?? null;
 }
 
-export function toGardenCropKey(parsedStrategy?: string | null): GardenRwaCropKey {
-  return (parsedStrategy ?? "steady") as GardenRwaCropKey;
+export function buildFlowState(input: {
+  connected: boolean;
+  policyReady: boolean;
+  planPreviewed: boolean;
+  hasExecutionTarget: boolean;
+}): FlowState {
+  return {
+    hasConnectedWallet: input.connected,
+    hasPolicy: input.policyReady,
+    hasPreview: input.planPreviewed,
+    canExecute: input.hasExecutionTarget,
+  };
 }
 
-export function buildStartHereState(input: {
-  walletBalance?: string;
-  vaultBalance?: string;
-  operatorApproved?: boolean;
-  autopilotStarted?: boolean;
-  onboardingCompleted?: boolean;
-}): StartHereState {
-  const hasWalletFunds = Number(input.walletBalance ?? "0") > 0;
-  const hasVaultFunds = Number(input.vaultBalance ?? "0") > 0;
-  const hasAuthorizedOperator = Boolean(input.operatorApproved);
-  const hasRequestedAutopilotStart = Boolean(input.autopilotStarted);
-  const hasCompletedOnboarding = Boolean(input.onboardingCompleted);
+export function getPreviewStepLabel(mode: ExecutionMode) {
+  if (mode === "prepared") return "Preview ready";
+  if (mode === "sent") return "Preview anchored";
+  if (mode === "blocked") return "Preview blocked";
+  return "Preview unavailable";
+}
 
-  return {
-    hasWalletFunds,
-    hasVaultFunds,
-    hasAuthorizedOperator,
-    hasRequestedAutopilotStart,
-    hasCompletedOnboarding,
-  };
+export function getOperationLabel(operation: ExecutionOperation) {
+  if (operation === "swap") return "Swap";
+  if (operation === "addLiquidity") return "Add liquidity";
+  if (operation === "removeLiquidity") return "Remove liquidity";
+  if (operation === "rebalanceLiquidity") return "Rebalance liquidity";
+  return "No move yet";
+}
+
+export function getExecutionGardenLabel(operation: ExecutionOperation) {
+  if (operation === "swap") return "Transplant";
+  if (operation === "addLiquidity") return "Plant";
+  if (operation === "removeLiquidity") return "Harvest";
+  if (operation === "rebalanceLiquidity") return "Rebalance field";
+  return "Wait";
 }

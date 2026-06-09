@@ -14,6 +14,3438 @@
         "maxRiskLevel": 1,
         "rebalanceIntervalSeconds": 3600,
         "allowedProtocols": [
+          "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+          "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "agni-usdy-safe-swap",
+          "strategyId": "agni-usdy-safe-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+          "asset": "USDY",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/USDY",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "feeTier": 500,
+          "slippageBps": 75,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY swap lane stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "agni-meth-growth-swap",
+          "strategyId": "agni-meth-growth-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+          "asset": "mETH",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/mETH",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 100,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH growth lane improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "agni-usdy-meth-liquidity",
+          "strategyId": "agni-usdy-meth-liquidity",
+          "protocol": "Agni Position Manager",
+          "protocolAddress": "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394",
+          "asset": "USDY/mETH",
+          "actionType": "addLiquidity",
+          "executionKind": "liquidity",
+          "pair": "USDY/mETH",
+          "tokenIn": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 125,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "agni-usdy-meth-liquidity",
+        "strategyId": "agni-usdy-meth-liquidity",
+        "protocol": "Agni Position Manager",
+        "protocolAddress": "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394",
+        "asset": "USDY/mETH",
+        "actionType": "addLiquidity",
+        "executionKind": "liquidity",
+        "pair": "USDY/mETH",
+        "tokenIn": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 125,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "agni-meth-growth-swap",
+        "strategyId": "agni-meth-growth-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+        "asset": "mETH",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/mETH",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 100,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH growth lane improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "agni-usdy-safe-swap",
+        "strategyId": "agni-usdy-safe-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+        "asset": "USDY",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/USDY",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "feeTier": 500,
+        "slippageBps": 75,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY swap lane stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "agni-usdy-safe-swap",
+      "strategyId": "agni-usdy-safe-swap",
+      "protocol": "Agni Swap Router",
+      "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+      "asset": "USDY",
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "tokenIn": {
+        "symbol": "USDT",
+        "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "decimals": 6
+      },
+      "tokenOut": {
+        "symbol": "USDY",
+        "decimals": 18
+      },
+      "feeTier": 500,
+      "slippageBps": 75,
+      "deadlineSeconds": 900,
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY swap lane stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "agni-usdy-safe-swap",
+      "marketSummary": "Stable USDY swap opportunity via Agni Swap Router.",
+      "riskNotes": [
+        "Strategy aligns perfectly with the maximum allowed risk level of 1.",
+        "High liquidity of $1,400,000 ensures minimal slippage for the 1000 USDT position."
+      ],
+      "confidenceReason": "High confidence due to the deterministic policy gate successfully filtering out non-compliant higher-risk assets, ensuring execution only occurs on approved protocols within risk tolerance."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Agni Swap Router (0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "swap",
+      "reason": "Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+      "toStrategyId": "agni-usdy-safe-swap",
+      "improvementBps": 520,
+      "pair": "USDT/USDY"
+    },
+    "decisionHash": "0xe0731c076e540642e3f1726986400df3867e9ddc78874e0eef04fff973b35c80",
+    "summary": "Autopilot approved Agni swap into agni-usdy-safe-swap: Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+    "createdAt": "2026-06-07T02:43:55.705Z",
+    "execution": {
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "feeTier": 500,
+      "quotedInputAmount": "1000",
+      "slippageBps": 75,
+      "deadline": "900",
+      "tokenIn": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+      "tokenInSymbol": "USDT",
+      "tokenOutSymbol": "USDY"
+    },
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "benchmark": {
+      "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+      "status": "required",
+      "anchorState": "pending",
+      "outcomeState": "pending",
+      "transparency": "live"
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "parsedIntent": {
+      "crop": "steady",
+      "riskPreference": 1,
+      "message": "Help me choose the safest Agni-first crop and explain the next move in plain language."
+    },
+    "marketMood": {
+      "mood": "bullish",
+      "weather": "sunny",
+      "reason": "Strategy, confidence, and liquidity healthy."
+    },
+    "effectivePolicy": {
+      "enabled": true,
+      "paused": false,
+      "maxTxAmount": 5000,
+      "maxRiskLevel": 1,
+      "rebalanceIntervalSeconds": 3600,
+      "allowedProtocols": [
+        "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+        "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394"
+      ]
+    },
+    "gardenSimulation": {
+      "crop": "Rice / Safe Harvest",
+      "background": "bright-sky",
+      "actionLabel": "Keep route safe",
+      "potSlots": [
+        {
+          "id": "agni-usdy-meth-liquidity",
+          "label": "Chili / Boost Farm",
+          "health": 72,
+          "apy": "17.60%",
+          "active": false
+        },
+        {
+          "id": "agni-meth-growth-swap",
+          "label": "Corn / Growth Field",
+          "health": 86,
+          "apy": "9.60%",
+          "active": false
+        },
+        {
+          "id": "agni-usdy-safe-swap",
+          "label": "Rice / Safe Harvest",
+          "health": 92,
+          "apy": "5.20%",
+          "active": true
+        }
+      ]
+    },
+    "beginnerExplanation": "Conservative mode: agent picked USDY via Agni Swap Router. Strategy, confidence, and liquidity healthy.",
+    "plan": {
+      "strategyId": "agni-usdy-safe-swap",
+      "title": "agni-usdy-safe-swap",
+      "riskLevel": 1,
+      "protocol": "Agni Swap Router",
+      "action": "swap",
+      "asset": "USDY",
+      "expectedApy": "Preview",
+      "steps": [],
+      "explanation": "Autopilot approved Agni swap into agni-usdy-safe-swap: Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+      "consumerTheme": "Rice / Safe Harvest",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "trackFit": "AI x RWA",
+      "agni": {
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/USDY",
+        "feeTier": 500,
+        "quotedInputAmount": "1000",
+        "slippageBps": 75,
+        "deadline": "900",
+        "tokenIn": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "tokenInSymbol": "USDT",
+        "tokenOutSymbol": "USDY"
+      }
+    },
+    "anchorTxHash": null
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 0,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+          "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "agni-usdy-safe-swap",
+          "strategyId": "agni-usdy-safe-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+          "asset": "USDY",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/USDY",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "feeTier": 500,
+          "slippageBps": 75,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY swap lane stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "agni-meth-growth-swap",
+          "strategyId": "agni-meth-growth-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+          "asset": "mETH",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/mETH",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 100,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH growth lane improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "agni-usdy-meth-liquidity",
+          "strategyId": "agni-usdy-meth-liquidity",
+          "protocol": "Agni Position Manager",
+          "protocolAddress": "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394",
+          "asset": "USDY/mETH",
+          "actionType": "addLiquidity",
+          "executionKind": "liquidity",
+          "pair": "USDY/mETH",
+          "tokenIn": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 125,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "agni-usdy-meth-liquidity",
+        "strategyId": "agni-usdy-meth-liquidity",
+        "protocol": "Agni Position Manager",
+        "protocolAddress": "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394",
+        "asset": "USDY/mETH",
+        "actionType": "addLiquidity",
+        "executionKind": "liquidity",
+        "pair": "USDY/mETH",
+        "tokenIn": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 125,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "agni-meth-growth-swap",
+        "strategyId": "agni-meth-growth-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+        "asset": "mETH",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/mETH",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 100,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH growth lane improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "agni-usdy-safe-swap",
+        "strategyId": "agni-usdy-safe-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+        "asset": "USDY",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/USDY",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "feeTier": 500,
+        "slippageBps": 75,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY swap lane stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "agni-usdy-safe-swap",
+      "strategyId": "agni-usdy-safe-swap",
+      "protocol": "Agni Swap Router",
+      "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+      "asset": "USDY",
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "tokenIn": {
+        "symbol": "USDT",
+        "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "decimals": 6
+      },
+      "tokenOut": {
+        "symbol": "USDY",
+        "decimals": 18
+      },
+      "feeTier": 500,
+      "slippageBps": 75,
+      "deadlineSeconds": 900,
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY swap lane stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "agni-usdy-safe-swap",
+      "marketSummary": "Agni Swap Router provides a highly liquid and stable USDY swap lane, optimizing the RWA yield with $1.4M available liquidity and a 5.20% expected APY.",
+      "riskNotes": [
+        "Matches maximum allowed risk level (1) and user preference.",
+        "Low execution slippage risk with a 75 bps tolerance on the USDT/USDY pair.",
+        "Protocol and transaction amount are fully compliant with safe harbor policies."
+      ],
+      "confidenceReason": "The policy gate deterministically validated the transaction: amount ($1000) is within the 5000 limit, risk level (1) matches the user profile, and the protocol is explicitly allowed by the guardrails."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Agni Swap Router (0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "swap",
+      "reason": "Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+      "toStrategyId": "agni-usdy-safe-swap",
+      "improvementBps": 520,
+      "pair": "USDT/USDY"
+    },
+    "decisionHash": "0xa04681fced966858e3237dde84e2ecc560561b1166dfbc74e4165d6de7619c20",
+    "summary": "Autopilot approved Agni swap into agni-usdy-safe-swap: Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+    "createdAt": "2026-06-06T19:53:35.856Z",
+    "execution": {
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "feeTier": 500,
+      "quotedInputAmount": "1000",
+      "slippageBps": 75,
+      "deadline": "900",
+      "tokenIn": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+      "tokenInSymbol": "USDT",
+      "tokenOutSymbol": "USDY"
+    },
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "benchmark": {
+      "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+      "status": "required",
+      "anchorState": "pending",
+      "outcomeState": "pending",
+      "transparency": "live"
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "parsedIntent": {
+      "crop": "steady",
+      "riskPreference": 1,
+      "message": "plant Chili with USDY/mETH using 1000"
+    },
+    "marketMood": {
+      "mood": "bullish",
+      "weather": "sunny",
+      "reason": "Strategy, confidence, and liquidity healthy."
+    },
+    "effectivePolicy": {
+      "enabled": true,
+      "paused": false,
+      "maxTxAmount": 5000,
+      "maxRiskLevel": 1,
+      "rebalanceIntervalSeconds": 3600,
+      "allowedProtocols": [
+        "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+        "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394"
+      ]
+    },
+    "gardenSimulation": {
+      "crop": "Rice / Safe Harvest",
+      "background": "bright-sky",
+      "actionLabel": "Keep route safe",
+      "potSlots": [
+        {
+          "id": "agni-usdy-meth-liquidity",
+          "label": "Chili / Boost Farm",
+          "health": 72,
+          "apy": "17.60%",
+          "active": false
+        },
+        {
+          "id": "agni-meth-growth-swap",
+          "label": "Corn / Growth Field",
+          "health": 86,
+          "apy": "9.60%",
+          "active": false
+        },
+        {
+          "id": "agni-usdy-safe-swap",
+          "label": "Rice / Safe Harvest",
+          "health": 92,
+          "apy": "5.20%",
+          "active": true
+        }
+      ]
+    },
+    "beginnerExplanation": "Conservative mode: agent picked USDY via Agni Swap Router. Strategy, confidence, and liquidity healthy.",
+    "plan": {
+      "strategyId": "agni-usdy-safe-swap",
+      "title": "agni-usdy-safe-swap",
+      "riskLevel": 1,
+      "protocol": "Agni Swap Router",
+      "action": "swap",
+      "asset": "USDY",
+      "expectedApy": "Preview",
+      "steps": [],
+      "explanation": "Autopilot approved Agni swap into agni-usdy-safe-swap: Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+      "consumerTheme": "Rice / Safe Harvest",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "trackFit": "AI x RWA",
+      "agni": {
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/USDY",
+        "feeTier": 500,
+        "quotedInputAmount": "1000",
+        "slippageBps": 75,
+        "deadline": "900",
+        "tokenIn": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "tokenInSymbol": "USDT",
+        "tokenOutSymbol": "USDY"
+      }
+    },
+    "anchorTxHash": null
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 50,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+          "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "agni-usdy-safe-swap",
+          "strategyId": "agni-usdy-safe-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+          "asset": "USDY",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/USDY",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "feeTier": 500,
+          "slippageBps": 75,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY swap lane stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "agni-meth-growth-swap",
+          "strategyId": "agni-meth-growth-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+          "asset": "mETH",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/mETH",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 100,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH growth lane improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "agni-usdy-meth-liquidity",
+          "strategyId": "agni-usdy-meth-liquidity",
+          "protocol": "Agni Position Manager",
+          "protocolAddress": "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394",
+          "asset": "USDY/mETH",
+          "actionType": "addLiquidity",
+          "executionKind": "liquidity",
+          "pair": "USDY/mETH",
+          "tokenIn": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 125,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "agni-usdy-meth-liquidity",
+        "strategyId": "agni-usdy-meth-liquidity",
+        "protocol": "Agni Position Manager",
+        "protocolAddress": "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394",
+        "asset": "USDY/mETH",
+        "actionType": "addLiquidity",
+        "executionKind": "liquidity",
+        "pair": "USDY/mETH",
+        "tokenIn": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 125,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "agni-meth-growth-swap",
+        "strategyId": "agni-meth-growth-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+        "asset": "mETH",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/mETH",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 100,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH growth lane improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "agni-usdy-safe-swap",
+        "strategyId": "agni-usdy-safe-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+        "asset": "USDY",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/USDY",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "feeTier": 500,
+        "slippageBps": 75,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY swap lane stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "agni-usdy-safe-swap",
+      "strategyId": "agni-usdy-safe-swap",
+      "protocol": "Agni Swap Router",
+      "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+      "asset": "USDY",
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "tokenIn": {
+        "symbol": "USDT",
+        "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "decimals": 6
+      },
+      "tokenOut": {
+        "symbol": "USDY",
+        "decimals": 18
+      },
+      "feeTier": 500,
+      "slippageBps": 75,
+      "deadlineSeconds": 900,
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY swap lane stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "agni-usdy-safe-swap",
+      "marketSummary": "Stable USDY swap lane on Agni Swap Router offering secure RWA yields.",
+      "riskNotes": [
+        "Strategy aligns perfectly with user risk preference 1 and policy maxRiskLevel 1.",
+        "Deep liquidity of $1.4M ensures minimal slippage for the 1000 USDT swap."
+      ],
+      "confidenceReason": "Policy gate deterministically validated the strategy as it falls within allowed protocols and strict risk limits."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Agni Swap Router (0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "swap",
+      "reason": "Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+      "toStrategyId": "agni-usdy-safe-swap",
+      "improvementBps": 520,
+      "pair": "USDT/USDY"
+    },
+    "decisionHash": "0x8b6a497758014918941476bce7f477f44473960ed640aef8e887acc92a56ddd2",
+    "summary": "Autopilot approved Agni swap into agni-usdy-safe-swap: Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+    "createdAt": "2026-06-06T19:52:57.779Z",
+    "execution": {
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "feeTier": 500,
+      "quotedInputAmount": "1000",
+      "slippageBps": 75,
+      "deadline": "900",
+      "tokenIn": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+      "tokenInSymbol": "USDT",
+      "tokenOutSymbol": "USDY"
+    },
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "benchmark": {
+      "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+      "status": "required",
+      "anchorState": "pending",
+      "outcomeState": "pending",
+      "transparency": "live"
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "anchorTxHash": null,
+    "plan": {
+      "strategyId": "agni-usdy-safe-swap",
+      "title": "agni-usdy-safe-swap",
+      "riskLevel": 1,
+      "protocol": "Agni Swap Router",
+      "action": "swap",
+      "asset": "USDY",
+      "expectedApy": "Preview",
+      "steps": [],
+      "explanation": "Autopilot approved Agni swap into agni-usdy-safe-swap: Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+      "consumerTheme": "Rice / Safe Harvest",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "trackFit": "AI x RWA",
+      "agni": {
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/USDY",
+        "feeTier": 500,
+        "quotedInputAmount": "1000",
+        "slippageBps": 75,
+        "deadline": "900",
+        "tokenIn": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "tokenInSymbol": "USDT",
+        "tokenOutSymbol": "USDY"
+      }
+    }
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 50,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+          "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "agni-usdy-safe-swap",
+          "strategyId": "agni-usdy-safe-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+          "asset": "USDY",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/USDY",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "feeTier": 500,
+          "slippageBps": 75,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY swap lane stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "agni-meth-growth-swap",
+          "strategyId": "agni-meth-growth-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+          "asset": "mETH",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/mETH",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 100,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH growth lane improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "agni-usdy-meth-liquidity",
+          "strategyId": "agni-usdy-meth-liquidity",
+          "protocol": "Agni Position Manager",
+          "protocolAddress": "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394",
+          "asset": "USDY/mETH",
+          "actionType": "addLiquidity",
+          "executionKind": "liquidity",
+          "pair": "USDY/mETH",
+          "tokenIn": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 125,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "agni-usdy-meth-liquidity",
+        "strategyId": "agni-usdy-meth-liquidity",
+        "protocol": "Agni Position Manager",
+        "protocolAddress": "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394",
+        "asset": "USDY/mETH",
+        "actionType": "addLiquidity",
+        "executionKind": "liquidity",
+        "pair": "USDY/mETH",
+        "tokenIn": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 125,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "agni-meth-growth-swap",
+        "strategyId": "agni-meth-growth-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+        "asset": "mETH",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/mETH",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 100,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH growth lane improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "agni-usdy-safe-swap",
+        "strategyId": "agni-usdy-safe-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+        "asset": "USDY",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/USDY",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "feeTier": 500,
+        "slippageBps": 75,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY swap lane stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "agni-usdy-safe-swap",
+      "strategyId": "agni-usdy-safe-swap",
+      "protocol": "Agni Swap Router",
+      "protocolAddress": "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
+      "asset": "USDY",
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "tokenIn": {
+        "symbol": "USDT",
+        "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "decimals": 6
+      },
+      "tokenOut": {
+        "symbol": "USDY",
+        "decimals": 18
+      },
+      "feeTier": 500,
+      "slippageBps": 75,
+      "deadlineSeconds": 900,
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY swap lane stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "agni-usdy-safe-swap",
+      "marketSummary": "USDY swap lane on Agni Swap Router remains stable with $1.4M liquidity, offering a reliable USDT/USDY conversion path at 5.2% APY within the user's risk-1 threshold.",
+      "riskNotes": [
+        "Strategy risk level (1) aligns with both user riskPreference (1) and policy maxRiskLevel (1).",
+        "Slippage tolerance of 75bps provides adequate buffer for current market depth.",
+        "USDY is an RWA-backed yield token; carry risk includes underlying protocol and redemption latency.",
+        "Two higher-scoring strategies (agni-usdy-meth-liquidity at risk 3, agni-meth-growth-swap at risk 2) were rejected by the policy gate due to exceeding maxRiskLevel=1."
+      ],
+      "confidenceReason": "Policy gate deterministically filtered out risk-exceeding strategies (risk levels 2 and 3), and agni-usdy-safe-swap was the highest-ranked opportunity satisfying all constraints—protocol allowlist, maxTxAmount (1000 ≤ 5000), and maxRiskLevel (1 ≤ 1). High confidence score of 0.92 with no liquidity penalty further supports this selection under the Rice / Safe Harvest consumer theme."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Agni Swap Router (0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "swap",
+      "reason": "Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+      "toStrategyId": "agni-usdy-safe-swap",
+      "improvementBps": 520,
+      "pair": "USDT/USDY"
+    },
+    "decisionHash": "0x58d7c1c673a6a1979b68b9479367921c1bd364ad7756f3173ad95069bc0c39da",
+    "summary": "Autopilot approved Agni swap into agni-usdy-safe-swap: Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+    "createdAt": "2026-06-06T19:50:48.852Z",
+    "execution": {
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "feeTier": 500,
+      "quotedInputAmount": "1000",
+      "slippageBps": 75,
+      "deadline": "900",
+      "tokenIn": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+      "tokenInSymbol": "USDT",
+      "tokenOutSymbol": "USDY"
+    },
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "benchmark": {
+      "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+      "status": "required",
+      "anchorState": "pending",
+      "outcomeState": "pending",
+      "transparency": "live"
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "anchorTxHash": null,
+    "plan": {
+      "strategyId": "agni-usdy-safe-swap",
+      "title": "agni-usdy-safe-swap",
+      "riskLevel": 1,
+      "protocol": "Agni Swap Router",
+      "action": "swap",
+      "asset": "USDY",
+      "expectedApy": "Preview",
+      "steps": [],
+      "explanation": "Autopilot approved Agni swap into agni-usdy-safe-swap: Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+      "consumerTheme": "Rice / Safe Harvest",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "trackFit": "AI x RWA",
+      "agni": {
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/USDY",
+        "feeTier": 500,
+        "quotedInputAmount": "1000",
+        "slippageBps": 75,
+        "deadline": "900",
+        "tokenIn": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "tokenInSymbol": "USDT",
+        "tokenOutSymbol": "USDY"
+      }
+    }
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 50,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+          "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "agni-usdy-safe-swap",
+          "strategyId": "agni-usdy-safe-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+          "asset": "USDY",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/USDY",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "feeTier": 500,
+          "slippageBps": 75,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY swap lane stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "agni-meth-growth-swap",
+          "strategyId": "agni-meth-growth-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+          "asset": "mETH",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/mETH",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 100,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH growth lane improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "agni-usdy-meth-liquidity",
+          "strategyId": "agni-usdy-meth-liquidity",
+          "protocol": "Agni Position Manager",
+          "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+          "asset": "USDY/mETH",
+          "actionType": "addLiquidity",
+          "executionKind": "liquidity",
+          "pair": "USDY/mETH",
+          "tokenIn": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 125,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "agni-usdy-meth-liquidity",
+        "strategyId": "agni-usdy-meth-liquidity",
+        "protocol": "Agni Position Manager",
+        "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+        "asset": "USDY/mETH",
+        "actionType": "addLiquidity",
+        "executionKind": "liquidity",
+        "pair": "USDY/mETH",
+        "tokenIn": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 125,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "agni-meth-growth-swap",
+        "strategyId": "agni-meth-growth-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+        "asset": "mETH",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/mETH",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 100,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH growth lane improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "agni-usdy-safe-swap",
+        "strategyId": "agni-usdy-safe-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+        "asset": "USDY",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/USDY",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "feeTier": 500,
+        "slippageBps": 75,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY swap lane stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "agni-usdy-safe-swap",
+      "strategyId": "agni-usdy-safe-swap",
+      "protocol": "Agni Swap Router",
+      "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+      "asset": "USDY",
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "tokenIn": {
+        "symbol": "USDT",
+        "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "decimals": 6
+      },
+      "tokenOut": {
+        "symbol": "USDY",
+        "decimals": 18
+      },
+      "feeTier": 500,
+      "slippageBps": 75,
+      "deadlineSeconds": 900,
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY swap lane stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "agni-usdy-safe-swap",
+      "marketSummary": "The USDY swap lane on Agni Swap Router offers a stable APY of 5.20% with substantial liquidity ($1.4M), providing a secure harvest within the Mantle RWA ecosystem.",
+      "riskNotes": [
+        "Strategy risk level is 1, aligning perfectly with your conservative risk preference.",
+        "USDT/USDY pool presents low volatility exposure typical of stable RWA asset pairs."
+      ],
+      "confidenceReason": "High confidence is driven by the deterministic policy gate strictly enforcing a max risk level of 1, successfully filtering out higher-yielding but ineligible volatile assets to secure a safe moat."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Agni Swap Router (0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "swap",
+      "reason": "Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+      "toStrategyId": "agni-usdy-safe-swap",
+      "improvementBps": 520,
+      "pair": "USDT/USDY"
+    },
+    "decisionHash": "0x0ac042877be118d9625755d6a861e4d59410cd440cf70c0a906fb5b4afd472ba",
+    "summary": "Autopilot approved Agni swap into agni-usdy-safe-swap: Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+    "createdAt": "2026-06-06T19:47:32.617Z",
+    "execution": {
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "tokenIn": {
+        "symbol": "USDT",
+        "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "decimals": 6
+      },
+      "tokenOut": {
+        "symbol": "USDY",
+        "decimals": 18
+      },
+      "feeTier": 500,
+      "slippageBps": 75,
+      "deadlineSeconds": 900,
+      "quotedInputAmount": "1000"
+    },
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "benchmark": {
+      "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+      "status": "required",
+      "anchorState": "pending",
+      "outcomeState": "pending",
+      "transparency": "live"
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "anchorTxHash": null
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 2,
+      "mode": "autopilot",
+      "minImprovementBps": 50,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 2,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+          "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "agni-usdy-safe-swap",
+          "strategyId": "agni-usdy-safe-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+          "asset": "USDY",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/USDY",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "feeTier": 500,
+          "slippageBps": 75,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY swap lane stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "agni-meth-growth-swap",
+          "strategyId": "agni-meth-growth-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+          "asset": "mETH",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/mETH",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 100,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH growth lane improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "agni-usdy-meth-liquidity",
+          "strategyId": "agni-usdy-meth-liquidity",
+          "protocol": "Agni Position Manager",
+          "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+          "asset": "USDY/mETH",
+          "actionType": "addLiquidity",
+          "executionKind": "liquidity",
+          "pair": "USDY/mETH",
+          "tokenIn": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 125,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "agni-usdy-meth-liquidity",
+        "strategyId": "agni-usdy-meth-liquidity",
+        "protocol": "Agni Position Manager",
+        "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+        "asset": "USDY/mETH",
+        "actionType": "addLiquidity",
+        "executionKind": "liquidity",
+        "pair": "USDY/mETH",
+        "tokenIn": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 125,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "agni-meth-growth-swap",
+        "strategyId": "agni-meth-growth-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+        "asset": "mETH",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/mETH",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 100,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH growth lane improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "agni-usdy-safe-swap",
+        "strategyId": "agni-usdy-safe-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+        "asset": "USDY",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/USDY",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "feeTier": 500,
+        "slippageBps": 75,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY swap lane stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "agni-meth-growth-swap",
+      "strategyId": "agni-meth-growth-swap",
+      "protocol": "Agni Swap Router",
+      "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+      "asset": "mETH",
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/mETH",
+      "tokenIn": {
+        "symbol": "USDT",
+        "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "decimals": 6
+      },
+      "tokenOut": {
+        "symbol": "mETH",
+        "decimals": 18
+      },
+      "feeTier": 3000,
+      "slippageBps": 100,
+      "deadlineSeconds": 900,
+      "expectedApyBps": 960,
+      "riskLevel": 2,
+      "liquidityUsd": 950000,
+      "gasCostUsd": 0.08,
+      "confidence": 0.86,
+      "marketCondition": "mETH growth lane improving",
+      "consumerTheme": "Corn / Growth Field",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Growth lane compounding with mETH",
+      "score": 684.4,
+      "scoreBreakdown": {
+        "apy": 960,
+        "riskPenalty": 360,
+        "gasPenalty": 1.6,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 86
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "agni-meth-growth-swap",
+      "marketSummary": "mETH growth lane improving on Agni Swap Router",
+      "riskNotes": [
+        "Strategy risk level is 2, which aligns perfectly with your maximum risk preference of 2.",
+        "Subject to standard mETH price volatility during the swap execution."
+      ],
+      "confidenceReason": "The deterministic policy gate successfully passed this strategy because its risk level of 2 is within your max tolerance, the protocol is explicitly allowed, and the 1000 USDT amount is safely below the 5000 USDT transaction limit."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 2 <= policy risk 2"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Agni Swap Router (0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "swap",
+      "reason": "Fresh Agni swap can start the agni-meth-growth-swap lane after deterministic policy checks.",
+      "toStrategyId": "agni-meth-growth-swap",
+      "improvementBps": 960,
+      "pair": "USDT/mETH"
+    },
+    "decisionHash": "0x73e7a7cd603009873cee7e35055580d163791418084c8279ab4f371d5fa2ef75",
+    "summary": "Autopilot approved Agni swap into agni-meth-growth-swap: Fresh Agni swap can start the agni-meth-growth-swap lane after deterministic policy checks.",
+    "createdAt": "2026-06-06T19:39:59.785Z",
+    "execution": {
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/mETH",
+      "tokenIn": {
+        "symbol": "USDT",
+        "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "decimals": 6
+      },
+      "tokenOut": {
+        "symbol": "mETH",
+        "decimals": 18
+      },
+      "feeTier": 3000,
+      "slippageBps": 100,
+      "deadlineSeconds": 900,
+      "quotedInputAmount": "1000"
+    },
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "benchmark": {
+      "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+      "status": "required",
+      "anchorState": "pending",
+      "outcomeState": "pending",
+      "transparency": "live"
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "parsedIntent": {
+      "crop": "growth",
+      "riskPreference": 2,
+      "message": "plant Corn with mETH using 1000"
+    },
+    "marketMood": {
+      "mood": "bullish",
+      "weather": "sunny",
+      "reason": "Strategy, confidence, and liquidity healthy."
+    },
+    "effectivePolicy": {
+      "enabled": true,
+      "paused": false,
+      "maxTxAmount": 5000,
+      "maxRiskLevel": 2,
+      "rebalanceIntervalSeconds": 3600,
+      "allowedProtocols": [
+        "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+        "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7"
+      ]
+    },
+    "gardenSimulation": {
+      "crop": "Corn / Growth Field",
+      "background": "bright-sky",
+      "actionLabel": "Keep route safe",
+      "potSlots": [
+        {
+          "id": "agni-usdy-meth-liquidity",
+          "label": "Chili / Boost Farm",
+          "health": 72,
+          "apy": "17.60%",
+          "active": false
+        },
+        {
+          "id": "agni-meth-growth-swap",
+          "label": "Corn / Growth Field",
+          "health": 86,
+          "apy": "9.60%",
+          "active": true
+        },
+        {
+          "id": "agni-usdy-safe-swap",
+          "label": "Rice / Safe Harvest",
+          "health": 92,
+          "apy": "5.20%",
+          "active": false
+        }
+      ]
+    },
+    "beginnerExplanation": "Agent runs mETH strategy through a deterministic policy gate before move.",
+    "anchorTxHash": null
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 50,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+          "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "agni-usdy-safe-swap",
+          "strategyId": "agni-usdy-safe-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+          "asset": "USDY",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/USDY",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "feeTier": 500,
+          "slippageBps": 75,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY swap lane stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "agni-meth-growth-swap",
+          "strategyId": "agni-meth-growth-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+          "asset": "mETH",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/mETH",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 100,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH growth lane improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "agni-usdy-meth-liquidity",
+          "strategyId": "agni-usdy-meth-liquidity",
+          "protocol": "Agni Position Manager",
+          "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+          "asset": "USDY/mETH",
+          "actionType": "addLiquidity",
+          "executionKind": "liquidity",
+          "pair": "USDY/mETH",
+          "tokenIn": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 125,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "agni-usdy-meth-liquidity",
+        "strategyId": "agni-usdy-meth-liquidity",
+        "protocol": "Agni Position Manager",
+        "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+        "asset": "USDY/mETH",
+        "actionType": "addLiquidity",
+        "executionKind": "liquidity",
+        "pair": "USDY/mETH",
+        "tokenIn": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 125,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "agni-meth-growth-swap",
+        "strategyId": "agni-meth-growth-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+        "asset": "mETH",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/mETH",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 100,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH growth lane improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "agni-usdy-safe-swap",
+        "strategyId": "agni-usdy-safe-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+        "asset": "USDY",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/USDY",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "feeTier": 500,
+        "slippageBps": 75,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY swap lane stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "agni-usdy-safe-swap",
+      "strategyId": "agni-usdy-safe-swap",
+      "protocol": "Agni Swap Router",
+      "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+      "asset": "USDY",
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "tokenIn": {
+        "symbol": "USDT",
+        "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "decimals": 6
+      },
+      "tokenOut": {
+        "symbol": "USDY",
+        "decimals": 18
+      },
+      "feeTier": 500,
+      "slippageBps": 75,
+      "deadlineSeconds": 900,
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY swap lane stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "agni-usdy-safe-swap",
+      "marketSummary": "The Agni Swap Router presents a stable USDT/USDY swap opportunity with deep liquidity and steady yield on Mantle.",
+      "riskNotes": [
+        "Risk level 1 complies perfectly with your conservative risk preference and policy limits.",
+        "Slippage is tightly controlled at 0.75%, ensuring minimal execution variance."
+      ],
+      "confidenceReason": "High confidence due to deterministic selection and successful validation through the strict policy gate, which confirmed the strategy's adherence to the maximum risk level and allowed protocol constraints."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Agni Swap Router (0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "swap",
+      "reason": "Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+      "toStrategyId": "agni-usdy-safe-swap",
+      "improvementBps": 520,
+      "pair": "USDT/USDY"
+    },
+    "decisionHash": "0x3ea2eeda45a515e12bda437bc6c7d1a0754e86e0721815a95e3869068767075b",
+    "summary": "Autopilot approved Agni swap into agni-usdy-safe-swap: Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+    "createdAt": "2026-06-06T19:39:21.946Z",
+    "execution": {
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "tokenIn": {
+        "symbol": "USDT",
+        "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "decimals": 6
+      },
+      "tokenOut": {
+        "symbol": "USDY",
+        "decimals": 18
+      },
+      "feeTier": 500,
+      "slippageBps": 75,
+      "deadlineSeconds": 900,
+      "quotedInputAmount": "1000"
+    },
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "benchmark": {
+      "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+      "status": "required",
+      "anchorState": "pending",
+      "outcomeState": "pending",
+      "transparency": "live"
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "anchorTxHash": null
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 50,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+          "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "agni-usdy-safe-swap",
+          "strategyId": "agni-usdy-safe-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+          "asset": "USDY",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/USDY",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "feeTier": 500,
+          "slippageBps": 75,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY swap lane stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "agni-meth-growth-swap",
+          "strategyId": "agni-meth-growth-swap",
+          "protocol": "Agni Swap Router",
+          "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+          "asset": "mETH",
+          "actionType": "swap",
+          "executionKind": "swap",
+          "pair": "USDT/mETH",
+          "tokenIn": {
+            "symbol": "USDT",
+            "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+            "decimals": 6
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 100,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH growth lane improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "agni-usdy-meth-liquidity",
+          "strategyId": "agni-usdy-meth-liquidity",
+          "protocol": "Agni Position Manager",
+          "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+          "asset": "USDY/mETH",
+          "actionType": "addLiquidity",
+          "executionKind": "liquidity",
+          "pair": "USDY/mETH",
+          "tokenIn": {
+            "symbol": "USDY",
+            "decimals": 18
+          },
+          "tokenOut": {
+            "symbol": "mETH",
+            "decimals": 18
+          },
+          "feeTier": 3000,
+          "slippageBps": 125,
+          "deadlineSeconds": 900,
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "agni-usdy-meth-liquidity",
+        "strategyId": "agni-usdy-meth-liquidity",
+        "protocol": "Agni Position Manager",
+        "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+        "asset": "USDY/mETH",
+        "actionType": "addLiquidity",
+        "executionKind": "liquidity",
+        "pair": "USDY/mETH",
+        "tokenIn": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 125,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "agni-meth-growth-swap",
+        "strategyId": "agni-meth-growth-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+        "asset": "mETH",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/mETH",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "mETH",
+          "decimals": 18
+        },
+        "feeTier": 3000,
+        "slippageBps": 100,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH growth lane improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "agni-usdy-safe-swap",
+        "strategyId": "agni-usdy-safe-swap",
+        "protocol": "Agni Swap Router",
+        "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+        "asset": "USDY",
+        "actionType": "swap",
+        "executionKind": "swap",
+        "pair": "USDT/USDY",
+        "tokenIn": {
+          "symbol": "USDT",
+          "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+          "decimals": 6
+        },
+        "tokenOut": {
+          "symbol": "USDY",
+          "decimals": 18
+        },
+        "feeTier": 500,
+        "slippageBps": 75,
+        "deadlineSeconds": 900,
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY swap lane stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "agni-usdy-safe-swap",
+      "strategyId": "agni-usdy-safe-swap",
+      "protocol": "Agni Swap Router",
+      "protocolAddress": "0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df",
+      "asset": "USDY",
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "tokenIn": {
+        "symbol": "USDT",
+        "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "decimals": 6
+      },
+      "tokenOut": {
+        "symbol": "USDY",
+        "decimals": 18
+      },
+      "feeTier": 500,
+      "slippageBps": 75,
+      "deadlineSeconds": 900,
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY swap lane stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "agni-usdy-safe-swap",
+      "marketSummary": "USDY stable swap lane on Agni Swap Router offering 5.2% APY via USDT/USDY pair with deep liquidity ($1.4M) and tight 0.75% slippage protection",
+      "riskNotes": [
+        "Strategy risk level 1 matches user's conservative preference and policy maximum",
+        "Higher-yielding alternatives (USDY/mETH LP at 17.6%, mETH swap at 9.6%) were rejected by policy gate due to risk levels exceeding threshold",
+        "USDY carries RWA counterparty risk from underlying yield sources"
+      ],
+      "confidenceReason": "0.92 confidence score driven by deterministic policy gate validation — only strategy passing all constraints: riskLevel ≤ 1, protocol 0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df whitelisted, amount 1000 < maxTxAmount 5000"
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Agni Swap Router (0xe2DB835566F8677d6889ffFC4F3304e8Df5Fc1df) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "swap",
+      "reason": "Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+      "toStrategyId": "agni-usdy-safe-swap",
+      "improvementBps": 520,
+      "pair": "USDT/USDY"
+    },
+    "decisionHash": "0xa47fafeadba1aeb3cf111b2de5000ced4231de66f62b565c7308a55c39c614ae",
+    "summary": "Autopilot approved Agni swap into agni-usdy-safe-swap: Fresh Agni swap can start the agni-usdy-safe-swap lane after deterministic policy checks.",
+    "createdAt": "2026-06-06T19:34:18.457Z",
+    "execution": {
+      "actionType": "swap",
+      "executionKind": "swap",
+      "pair": "USDT/USDY",
+      "tokenIn": {
+        "symbol": "USDT",
+        "address": "0x3e163F861826C3f7878bD8fa8117A179d80731Ab",
+        "decimals": 6
+      },
+      "tokenOut": {
+        "symbol": "USDY",
+        "decimals": 18
+      },
+      "feeTier": 500,
+      "slippageBps": 75,
+      "deadlineSeconds": 900,
+      "quotedInputAmount": "1000"
+    },
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "benchmark": {
+      "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+      "status": "required",
+      "anchorState": "pending",
+      "outcomeState": "pending",
+      "transparency": "live"
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "anchorTxHash": null
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 50,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
+          "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7"
+        ]
+      }
+    },
+    "market": {
+      "opportunities": [
+        {
+          "id": "steady-rwa-usdy",
+          "strategyId": "steady-rwa-usdy",
+          "protocol": "Mantle RWA USDY Route",
+          "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+          "asset": "USDY",
+          "expectedApyBps": 520,
+          "riskLevel": 1,
+          "liquidityUsd": 1400000,
+          "gasCostUsd": 0.05,
+          "confidence": 0.92,
+          "marketCondition": "USDY RWA strategy stable",
+          "consumerTheme": "Rice / Safe Harvest",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Stable moat lane powered by USDY"
+        },
+        {
+          "id": "growth-meth-yield",
+          "strategyId": "growth-meth-yield",
+          "protocol": "Mantle mETH Yield Route",
+          "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+          "asset": "mETH",
+          "expectedApyBps": 960,
+          "riskLevel": 2,
+          "liquidityUsd": 950000,
+          "gasCostUsd": 0.08,
+          "confidence": 0.86,
+          "marketCondition": "mETH compounding improving",
+          "consumerTheme": "Corn / Growth Field",
+          "trackFit": "AI x RWA",
+          "shareLabel": "Growth lane compounding with mETH"
+        },
+        {
+          "id": "boost-rwa-meth-dynamic",
+          "strategyId": "boost-rwa-meth-dynamic",
+          "protocol": "Mantle Dynamic RWA Route",
+          "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+          "asset": "USDY/mETH",
+          "expectedApyBps": 1760,
+          "riskLevel": 3,
+          "liquidityUsd": 420000,
+          "gasCostUsd": 0.12,
+          "confidence": 0.72,
+          "marketCondition": "dynamic RWA and mETH spread opportunity",
+          "consumerTheme": "Chili / Boost Farm",
+          "trackFit": "Consumer & Viral DApps",
+          "shareLabel": "Dynamic moat lane caught a spicy RWA spread"
+        }
+      ]
+    },
+    "rankedOpportunities": [
+      {
+        "id": "boost-rwa-meth-dynamic",
+        "strategyId": "boost-rwa-meth-dynamic",
+        "protocol": "Mantle Dynamic RWA Route",
+        "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+        "asset": "USDY/mETH",
+        "expectedApyBps": 1760,
+        "riskLevel": 3,
+        "liquidityUsd": 420000,
+        "gasCostUsd": 0.12,
+        "confidence": 0.72,
+        "marketCondition": "dynamic RWA and mETH spread opportunity",
+        "consumerTheme": "Chili / Boost Farm",
+        "trackFit": "Consumer & Viral DApps",
+        "shareLabel": "Dynamic moat lane caught a spicy RWA spread",
+        "score": 1139.6,
+        "scoreBreakdown": {
+          "apy": 1760,
+          "riskPenalty": 540,
+          "gasPenalty": 2.4,
+          "liquidityPenalty": 150,
+          "confidenceBonus": 72
+        }
+      },
+      {
+        "id": "growth-meth-yield",
+        "strategyId": "growth-meth-yield",
+        "protocol": "Mantle mETH Yield Route",
+        "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+        "asset": "mETH",
+        "expectedApyBps": 960,
+        "riskLevel": 2,
+        "liquidityUsd": 950000,
+        "gasCostUsd": 0.08,
+        "confidence": 0.86,
+        "marketCondition": "mETH compounding improving",
+        "consumerTheme": "Corn / Growth Field",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Growth lane compounding with mETH",
+        "score": 684.4,
+        "scoreBreakdown": {
+          "apy": 960,
+          "riskPenalty": 360,
+          "gasPenalty": 1.6,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 86
+        }
+      },
+      {
+        "id": "steady-rwa-usdy",
+        "strategyId": "steady-rwa-usdy",
+        "protocol": "Mantle RWA USDY Route",
+        "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+        "asset": "USDY",
+        "expectedApyBps": 520,
+        "riskLevel": 1,
+        "liquidityUsd": 1400000,
+        "gasCostUsd": 0.05,
+        "confidence": 0.92,
+        "marketCondition": "USDY RWA strategy stable",
+        "consumerTheme": "Rice / Safe Harvest",
+        "trackFit": "AI x RWA",
+        "shareLabel": "Stable moat lane powered by USDY",
+        "score": 431,
+        "scoreBreakdown": {
+          "apy": 520,
+          "riskPenalty": 180,
+          "gasPenalty": 1,
+          "liquidityPenalty": 0,
+          "confidenceBonus": 92
+        }
+      }
+    ],
+    "selectedOpportunity": {
+      "id": "steady-rwa-usdy",
+      "strategyId": "steady-rwa-usdy",
+      "protocol": "Mantle RWA USDY Route",
+      "protocolAddress": "0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7",
+      "asset": "USDY",
+      "expectedApyBps": 520,
+      "riskLevel": 1,
+      "liquidityUsd": 1400000,
+      "gasCostUsd": 0.05,
+      "confidence": 0.92,
+      "marketCondition": "USDY RWA strategy stable",
+      "consumerTheme": "Rice / Safe Harvest",
+      "trackFit": "AI x RWA",
+      "shareLabel": "Stable moat lane powered by USDY",
+      "score": 431,
+      "scoreBreakdown": {
+        "apy": 520,
+        "riskPenalty": 180,
+        "gasPenalty": 1,
+        "liquidityPenalty": 0,
+        "confidenceBonus": 92
+      }
+    },
+    "aiAdvisor": {
+      "provider": "llm",
+      "model": "glm-5",
+      "recommendedStrategyId": "steady-rwa-usdy",
+      "marketSummary": "USDY RWA strategy stable via Mantle RWA USDY Route",
+      "riskNotes": [
+        "Strategy risk level 1 exactly matches the user risk preference and policy maxRiskLevel.",
+        "Sufficient liquidity available for the 1000 USD allocation."
+      ],
+      "confidenceReason": "Policy gate deterministically approved steady-rwa-usdy as riskLevel is within bounds and protocol address is explicitly whitelisted."
+    },
+    "policy": {
+      "allow": true,
+      "status": "approved",
+      "reason": "Autopilot opportunity passes deterministic policy checks.",
+      "checks": [
+        {
+          "label": "Autopilot enabled",
+          "pass": true,
+          "detail": "Autopilot enabled"
+        },
+        {
+          "label": "Amount limit",
+          "pass": true,
+          "detail": "Amount 1000 <= 5000"
+        },
+        {
+          "label": "Risk limit",
+          "pass": true,
+          "detail": "Opportunity risk 1 <= policy risk 1"
+        },
+        {
+          "label": "Protocol allowlist",
+          "pass": true,
+          "detail": "Mantle RWA USDY Route (0xb04a19EF7853c52EDe6FBb28F8FfBecb73329eD7) must be allowed by user policy"
+        }
+      ]
+    },
+    "action": {
+      "kind": "addLiquidity",
+      "reason": "Fresh Agni position can be started in steady-rwa-usdy after deterministic policy checks.",
+      "toStrategyId": "steady-rwa-usdy",
+      "improvementBps": 520
+    },
+    "decisionHash": "0xc9ae159ad5c91dcb020efa64adee397bfb8f3de180b18585b6d145c020d830ed",
+    "summary": "Autopilot approved a new Agni position in steady-rwa-usdy: Fresh Agni position can be started in steady-rwa-usdy after deterministic policy checks.",
+    "createdAt": "2026-06-06T19:15:23.055Z",
+    "deployment": {
+      "chainId": 5003,
+      "network": "mantle-sepolia",
+      "contracts": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "erc8004": {
+      "agentId": "1",
+      "registries": {
+        "agentIdentity": "0xfAc7E0Ecb4BdFB5CabDf0A4A8f9930E547771271",
+        "autopilotPolicy": "0xe04003396491954919a851fBbF90d87555cDdFEf"
+      }
+    },
+    "benchmark": {
+      "decisionLog": "0x4f38D23639a1E8644c64b262d2E4f09d22c5aC7c",
+      "status": "required",
+      "anchorState": "pending",
+      "outcomeState": "pending",
+      "transparency": "live"
+    },
+    "track": {
+      "primary": "AI x RWA",
+      "secondary": "Consumer & Viral DApps",
+      "support": "Agentic Wallets & Economy"
+    },
+    "anchorTxHash": null
+  },
+  {
+    "intent": {
+      "user": "0x09c90C2f7de9DeF131B716CE982b3eEa289E6Ceb",
+      "agentId": "1",
+      "amount": "1000",
+      "riskPreference": 1,
+      "mode": "autopilot",
+      "minImprovementBps": 0,
+      "policy": {
+        "enabled": true,
+        "paused": false,
+        "maxTxAmount": 5000,
+        "maxRiskLevel": 1,
+        "rebalanceIntervalSeconds": 3600,
+        "allowedProtocols": [
           "0x33F841C96536Bec455Ce13C68Fee1E30BE1da202"
         ]
       }

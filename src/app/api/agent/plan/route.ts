@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { maybeAnchorDecision } from "@/lib/agent/anchor";
 import { requestAgentGardenPlan, requestAgentPlan } from "@/lib/agent/service";
-import { saveDecision } from "@/lib/agent/store";
 
 export async function POST(req: Request) {
   try {
@@ -15,7 +13,6 @@ export async function POST(req: Request) {
         execute: Boolean(body.execute),
       });
       const anchorTxHash = anchor?.txHash ?? garden.decision.anchorTxHash ?? null;
-      await saveDecision({ ...garden.decision, anchorTxHash });
       return NextResponse.json({ ok: true, garden, decision: { ...garden.decision, anchorTxHash }, anchor, source });
     }
 
@@ -25,14 +22,12 @@ export async function POST(req: Request) {
       amount: String(body.amount),
       riskPreference: Number(body.riskPreference) as 1 | 2 | 3,
       execute: Boolean(body.execute),
-      currentPositionId: body.currentPositionId != null ? Number(body.currentPositionId) : undefined,
+      currentPositionId: body.currentPositionId != null ? String(body.currentPositionId) : undefined,
+      policy: body.policy,
     });
 
-    const fallbackAnchor = source === "local-fallback" ? await maybeAnchorDecision(decision) : anchor;
-    const anchorTxHash = fallbackAnchor?.txHash ?? null;
-    await saveDecision({ ...decision, anchorTxHash });
-
-    return NextResponse.json({ ok: true, decision: { ...decision, anchorTxHash }, anchor: fallbackAnchor, execution, outcome, source });
+    const anchorTxHash = anchor?.txHash ?? null;
+    return NextResponse.json({ ok: true, decision: { ...decision, anchorTxHash }, anchor, execution, outcome, source });
   } catch (error) {
     return NextResponse.json({ ok: false, error: error instanceof Error ? error.message : "invalid request" }, { status: 400 });
   }
