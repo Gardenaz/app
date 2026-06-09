@@ -11,10 +11,10 @@ export function HeroEnergy() {
             Gardenaz on Mantle
           </span>
           <h1 className="max-w-3xl text-balance text-3xl font-black leading-tight tracking-tight text-[var(--text)] sm:text-4xl lg:text-5xl">
-            Start with test funds, then let the agent explain every move.
+            Start with a garden deposit, then let the agent explain every move.
           </h1>
           <p className="max-w-2xl text-base leading-7 text-[var(--text-muted)]">
-            Gardenaz is a beginner-friendly vault app where users can claim test money, move it into a vault, allow the agent once, and get an autopilot plan without first learning every part of DeFi.
+            Gardenaz is a beginner-friendly managed garden app where users fund a garden account, approve a simple policy, and get an autopilot plan without first learning every part of DeFi.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/app" className="btn-primary">
@@ -35,9 +35,9 @@ export function HeroEnergy() {
             </div>
             <div>
               <p className="kicker">Clear balances</p>
-              <h3 className="mt-1 text-lg font-black text-[var(--text)]">See wallet money and vault money separately.</h3>
+              <h3 className="mt-1 text-lg font-black text-[var(--text)]">See wallet money and garden money separately.</h3>
               <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">
-                Users can tell what is still sitting in the wallet and what is already ready for the agent inside the vault.
+                Users can tell what is still sitting in the wallet and what is already ready for the agent inside the garden account.
               </p>
             </div>
           </div>
@@ -67,7 +67,7 @@ export function HeroEnergy() {
               <p className="kicker">Bounded automation</p>
               <h3 className="mt-1 text-lg font-black text-[var(--text)]">The agent works inside user policy.</h3>
               <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">
-                Automation is allowed only after the user gives access, and every move is still shaped by policy, vault state, and proof logging.
+                Automation is allowed only after the user gives access, and every move is still shaped by policy, managed-account state, and proof logging.
               </p>
             </div>
           </div>

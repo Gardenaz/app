@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CheckCircle2, Circle, ShieldCheck, Sparkles, Wallet } from "lucide-react";
 import {
   CROP_OPTIONS,
@@ -12,6 +12,8 @@ import {
 import { FarmerCompanion, type FarmerCompanionContext } from "@/components/base/farmer-companion";
 import { AgentHistorySection } from "@/components/sections/agent-history";
 import { PlantedSummary } from "@/components/launch/canvas/planted-summary";
+import { LaunchSettingsDrawer } from "@/components/launch/settings-drawer";
+import { WelcomeModal } from "@/components/launch/welcome-modal";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useGardenAgent } from "@/hooks/use-garden-agent";
@@ -22,12 +24,20 @@ import { useAgentReadiness } from "@/hooks/use-agent-readiness";
 import { useAutopilotPolicy } from "@/hooks/use-autopilot-policy";
 import { useFearGreedIndex } from "@/hooks/use-fear-greed";
 import { useManagedAgniExecution } from "@/hooks/use-managed-agni-execution";
+import { useManagedGardenAccount } from "@/hooks/use-managed-garden-account";
+import { useLaunchSettings } from "@/hooks/use-launch-settings";
 import { usePrivyWalletAddress } from "@/hooks/use-privy-wallet-address";
-import { useGardenRwaVault } from "@/hooks/use-garden-rwa-vault";
 import type { CropId, RiskLevel } from "@/lib/agent/types";
-import { buildAutopilotPolicy, type ExecutionAuthority } from "@/lib/agent/autopilot";
+import { buildAutopilotPolicy } from "@/lib/agent/autopilot";
 import { buildAssistantSummary } from "@/lib/agent/assistant-summary";
-import { buildAssistantContext, marketEmoji, marketLabel, toWeatherMood } from "@/lib/launch/app-page";
+import {
+  APP_ONBOARDING_STEPS,
+  buildAssistantContext,
+  marketEmoji,
+  marketLabel,
+  toWeatherMood,
+} from "@/lib/launch/app-page";
+import { shouldShowWelcomeModal } from "@/lib/launch/settings-state";
 import { fearGreedToLabel, fearGreedToReason, fearGreedToWeather } from "@/lib/fear-greed";
 import {
   buildFlowState,
@@ -56,16 +66,34 @@ function money(value?: string | null) {
 }
 
 function assistantGuide(input: {
+  welcomeSeen: boolean;
   connected: boolean;
+  depositReady: boolean;
   policyReady: boolean;
   previewReady: boolean;
   executionMode?: "disabled" | "blocked" | "prepared" | "sent";
 }) {
+  if (!input.welcomeSeen) {
+    return {
+      title: "Welcome",
+      body: "Managed mode comes first. The welcome modal explains the garden deposit, on-chain benchmarking, and ERC-8004 identity before anything moves.",
+      note: "Preview summaries stay in assistant chat, not as live garden state.",
+    };
+  }
+
   if (!input.connected) {
     return {
       title: "Connect wallet",
       body: "Start with your wallet so the garden can tie every preview and proof record to a real owner.",
       note: "No wallet means no live Agni move request.",
+    };
+  }
+
+  if (!input.depositReady) {
+    return {
+      title: "Deposit to garden",
+      body: "Move USDC into the garden account before the assistant shapes a route around it.",
+      note: "Deposit comes before policy so the flow stays managed-mode-first.",
     };
   }
 
@@ -80,8 +108,8 @@ function assistantGuide(input: {
   if (!input.previewReady) {
     return {
       title: "Preview plan",
-      body: "Ask the agent for an Agni-first route preview before sending anything on-chain.",
-      note: "You will see whether the next move is a swap, add liquidity, remove liquidity, or rebalance liquidity.",
+      body: "Ask the agent for an Agni-first route preview before sending anything on-chain. The preview summary stays in chat, not as live garden state.",
+      note: "You will see whether the next move is swap/add liquidity/remove liquidity/rebalance liquidity.",
     };
   }
 
@@ -112,17 +140,13 @@ export default function Page() {
   const [view, setView] = useState<"canvas" | "audit">("canvas");
   const [mode, setMode] = useState<"guided" | "autopilot">("guided");
   const [message, setMessage] = useState("Help me choose the safest Agni-first crop and explain the next move in plain language.");
-  const [amount, setAmount] = useState("1000");
-  const [risk, setRisk] = useState<RiskLevel>(1);
   const [manualAddr] = useState("0x1111111111111111111111111111111111111111");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [slots, setSlots] = useState<PotSlot[]>(INITIAL_SLOTS);
-  const [policyReady, setPolicyReady] = useState(false);
-  const [activeCrop, setActiveCrop] = useState<CropId>("steady");
-  const [executionAuthority, setExecutionAuthority] = useState<ExecutionAuthority>("wallet");
+  const [welcomeDismissed, setWelcomeDismissed] = useState(false);
 
   const { address, authenticated, login } = usePrivyWalletAddress();
-  const { snapshot } = useGardenRwaVault();
+  const managedAccount = useManagedGardenAccount();
   const garden = useGardenAgent();
   const autopilot = useAgentPlan();
   const agniExecution = useAgniExecution();
@@ -137,7 +161,82 @@ export default function Page() {
     () => (address ?? manualAddr) as `0x${string}`,
     [address, manualAddr],
   );
+  const depositReady = managedAccount.depositReady;
+  const onchainPolicyReady = Boolean(managedAccount.snapshot?.executorAuthorized);
+  const launchSettings = useLaunchSettings({
+    walletConnected: Boolean(address),
+    depositReady,
+    policyReady: onchainPolicyReady,
+  });
+  const shouldShowWelcome = shouldShowWelcomeModal(launchSettings.draft, {
+    walletConnected: Boolean(address),
+    depositReady,
+    policyReady: onchainPolicyReady,
+  });
+  useEffect(() => {
+    if (!shouldShowWelcome) {
+      setWelcomeDismissed(false);
+    }
+  }, [shouldShowWelcome]);
+  const shouldOpenWelcome = shouldShowWelcome && !welcomeDismissed;
+  const [settingsDrawerOpen, setSettingsDrawerOpen] = useState(false);
+  const [settingsDraft, setSettingsDraft] = useState(launchSettings.draft);
+  const launchDraftRef = useRef(launchSettings.draft);
+  const settingsBaselineRef = useRef(launchSettings.draft);
+
+  useEffect(() => {
+    launchDraftRef.current = launchSettings.draft;
+  }, [launchSettings.draft]);
+
+  useEffect(() => {
+    const syncFromHash = () => {
+      if (window.location.hash === "#launch-settings") {
+        const snapshot = launchDraftRef.current;
+        settingsBaselineRef.current = snapshot;
+        setSettingsDraft(snapshot);
+        setSettingsDrawerOpen(true);
+        return;
+      }
+
+      setSettingsDrawerOpen(false);
+    };
+
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, []);
+
+  const openSettingsDrawer = useCallback(() => {
+    const snapshot = launchDraftRef.current;
+    settingsBaselineRef.current = snapshot;
+    setSettingsDraft(snapshot);
+    setSettingsDrawerOpen(true);
+    window.location.hash = "launch-settings";
+  }, []);
+
+  const closeSettingsDrawer = useCallback(() => {
+    setSettingsDrawerOpen(false);
+    if (window.location.hash === "#launch-settings") {
+      window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+    }
+  }, []);
+
+  const handleSettingsSave = useCallback(async () => {
+    launchSettings.updateDraft(settingsDraft);
+    launchSettings.saveDraft();
+    closeSettingsDrawer();
+  }, [closeSettingsDrawer, launchSettings, settingsDraft]);
+
+  const handleSettingsReset = useCallback(() => {
+    setSettingsDraft(settingsBaselineRef.current);
+    closeSettingsDrawer();
+  }, [closeSettingsDrawer]);
+
   const backendExecutorAddress = process.env.NEXT_PUBLIC_AUTOPILOT_EXECUTOR_ADDRESS as `0x${string}` | undefined;
+  const amount = launchSettings.draft.defaultAmount;
+  const risk = launchSettings.draft.riskPreference;
+  const activeCrop = launchSettings.draft.selectedLane;
+  const executionAuthority = launchSettings.draft.executionAuthority;
   const policyInput = useMemo(
     () =>
       buildAutopilotPolicy({
@@ -158,11 +257,13 @@ export default function Page() {
     && Boolean(backendExecutorAddress)
     && userAddress.toLowerCase() !== (backendExecutorAddress ?? "").toLowerCase();
   const preview = autopilot.data;
-  const onchainPolicyReady = Boolean(snapshot?.policyEnabled && !snapshot?.policyPaused);
-  const hasPolicyReady = policyReady || onchainPolicyReady;
+  const hasPolicyReady = launchSettings.draft.policyConfirmed || onchainPolicyReady;
   const previewMode = preview?.execution?.mode;
   const previewOperation = preview?.execution?.operation ?? null;
   const previewReady = Boolean(preview);
+  const previewAssistantSummary = preview
+    ? buildAssistantSummary("autopilot", preview.decision, preview.anchor?.txHash ?? preview.decision.anchorTxHash ?? null)
+    : null;
   const modeReadiness = readiness.data?.executionModes[executionAuthority];
   const readinessNotes = readiness.data?.benchmarking.notes ?? [];
   const executionReady = (previewMode === "prepared" || previewMode === "sent") && (modeReadiness?.ready ?? false);
@@ -193,7 +294,9 @@ export default function Page() {
   const marketEmojiText = marketEmoji(weather);
   const selectedCrop = getCropOption(activeCrop);
   const guide = assistantGuide({
+    welcomeSeen: launchSettings.draft.onboardingComplete,
     connected: flowState.hasConnectedWallet,
+    depositReady,
     policyReady: hasPolicyReady,
     previewReady: flowState.hasPreview,
     executionMode: previewMode,
@@ -201,19 +304,20 @@ export default function Page() {
 
   const assistantContext: FarmerCompanionContext = useMemo(
     () =>
-      buildAssistantContext({
-        mode,
-        view,
-        weather,
-        marketLabel: marketLabelText,
-        weatherReason: `${fearGreedReading ? fearGreedToReason(fearGreedReading) : ""} ${data?.marketMood.reason ?? "The garden is waiting for your Agni-first choices."}`.trim(),
-        gUsdBalance: money(amount),
-        plantedCount: slots.filter((slot) => slot.state !== "empty").length,
-        historyRows: history.data ?? [],
-        onchainPositions: [],
-        data,
-      }),
-    [amount, data, fearGreedReading, history.data, marketLabelText, mode, slots, view, weather],
+        buildAssistantContext({
+          mode,
+          view,
+          weather,
+          marketLabel: marketLabelText,
+          weatherReason: `${fearGreedReading ? fearGreedToReason(fearGreedReading) : ""} ${data?.marketMood.reason ?? "The garden is waiting for your Agni-first choices."}`.trim(),
+          gUsdBalance: money(amount),
+          plantedCount: slots.filter((slot) => slot.state !== "empty").length,
+          historyRows: history.data ?? [],
+          onchainPositions: [],
+          data,
+          latestDecision: previewAssistantSummary ?? data?.decision.summary ?? data?.beginnerExplanation ?? null,
+        }),
+    [amount, data, fearGreedReading, history.data, marketLabelText, mode, previewAssistantSummary, slots, view, weather],
   );
 
   const buildPlanRequest = useCallback(
@@ -234,8 +338,8 @@ export default function Page() {
     if (!option) return;
 
     const nextRisk = getCropRisk(cropId);
-    setActiveCrop(cropId);
-    setRisk(nextRisk);
+    launchSettings.setLane(cropId);
+    launchSettings.setRisk(nextRisk);
     setSlots((prev) => prev.map((slot) => (slot.id === slotId ? buildPlantedSlot(slot, cropId) : slot)));
     setSelectedId(null);
     setTimeout(() => {
@@ -245,7 +349,7 @@ export default function Page() {
     const intent = `plant ${option.crop} with ${option.asset} using ${amount}`;
     setMessage(intent);
     garden.mutate({ user: userAddress, message: intent, amount, riskPreference: nextRisk, execute: false });
-  }, [amount, garden, userAddress]);
+  }, [amount, garden, launchSettings, userAddress]);
 
   const handleClearSlot = useCallback((slotId: string) => {
     setSlots((prev) => prev.map((slot) => (slot.id === slotId ? { ...INITIAL_SLOTS.find((item) => item.id === slotId)! } : slot)));
@@ -261,15 +365,27 @@ export default function Page() {
     }
   }, [authenticated, login]);
 
+  const handleDepositToGarden = useCallback(() => {
+    if (!address) {
+      void login();
+      return;
+    }
+
+    setView("canvas");
+    const intent = `Explain the deposit to garden step for ${amount} in beginner language.`;
+    setMessage(intent);
+    garden.mutate({ user: userAddress, message: intent, amount, riskPreference: risk, execute: false });
+  }, [address, amount, garden, login, risk, userAddress]);
+
   const handlePolicyReady = useCallback(async () => {
     if (!address) {
       void login();
       return;
     }
     await autopilotPolicy.mutateAsync({ policy: policyInput });
-    setPolicyReady(true);
+    launchSettings.setPolicyConfirmed(true);
     setMode("autopilot");
-  }, [address, autopilotPolicy, login, policyInput]);
+  }, [address, autopilotPolicy, launchSettings, login, policyInput]);
 
   const handlePreviewPlan = useCallback(async () => {
     if (!address) {
@@ -277,8 +393,8 @@ export default function Page() {
       return;
     }
     if (!hasPolicyReady) {
-      setPolicyReady(true);
       setMode("autopilot");
+      return;
     }
     setView("canvas");
     await buildPlanRequest(false);
@@ -290,8 +406,8 @@ export default function Page() {
       return;
     }
     if (!hasPolicyReady) {
-      setPolicyReady(true);
       setMode("autopilot");
+      return;
     }
     if (modeReadiness?.ready === false) {
       throw new Error(modeReadiness.note);
@@ -373,47 +489,100 @@ export default function Page() {
     garden.mutate({ user: userAddress, message: nextMessage, amount, riskPreference: risk, execute: false });
   }
 
-  const steps = [
-    {
-      id: "connect",
-      title: "Connect wallet",
-      body: "Use a real wallet before asking for live Agni moves.",
-      complete: flowState.hasConnectedWallet,
-      disabled: flowState.hasConnectedWallet,
-      action: handleConnectWallet,
-      cta: flowState.hasConnectedWallet ? "Connected" : "Connect wallet",
-    },
-    {
-      id: "policy",
-      title: "Set policy",
-      body: "Choose the lane and risk guardrails before the agent prepares a move.",
-      complete: flowState.hasPolicy,
-      disabled: !flowState.hasConnectedWallet || flowState.hasPolicy || autopilotPolicy.isPending,
-      action: () => void handlePolicyReady(),
-      cta: flowState.hasPolicy ? "Policy ready" : "Set policy",
-    },
-    {
-      id: "preview",
-      title: "Preview plan",
-      body: "Review the route first. Agni move kinds: swap/add liquidity/remove liquidity/rebalance.",
-      complete: flowState.hasPreview,
-      disabled: !flowState.hasPolicy || autopilot.isPending || agniExecution.isPending || managedAgniExecution.isPending || autopilotPolicy.isPending,
-      action: () => void handlePreviewPlan(),
-      cta: "Preview plan",
-    },
-    {
-      id: "execute",
-      title: "Execute move",
-      body: "Only send the move after the preview and proof notes still look correct.",
+  const steps = APP_ONBOARDING_STEPS.map((step) => {
+    if (step.id === "welcome") {
+      return {
+        ...step,
+        complete: launchSettings.draft.onboardingComplete,
+        disabled: false,
+        action: () => launchSettings.markOnboardingComplete(),
+        cta: launchSettings.draft.onboardingComplete ? "Setup saved" : step.cta,
+      };
+    }
+
+    if (step.id === "connect-wallet") {
+      return {
+        ...step,
+        complete: flowState.hasConnectedWallet,
+        disabled: flowState.hasConnectedWallet,
+        action: handleConnectWallet,
+        cta: flowState.hasConnectedWallet ? "Connected" : step.cta,
+      };
+    }
+
+    if (step.id === "deposit-to-garden") {
+      return {
+        ...step,
+        complete: depositReady,
+        disabled: !flowState.hasConnectedWallet || depositReady || garden.isPending,
+        action: handleDepositToGarden,
+        cta: depositReady ? "Deposit ready" : step.cta,
+      };
+    }
+
+    if (step.id === "set-policy") {
+      return {
+        ...step,
+        complete: hasPolicyReady,
+        disabled: !flowState.hasConnectedWallet || hasPolicyReady || autopilotPolicy.isPending,
+        action: () => void handlePolicyReady(),
+        cta: hasPolicyReady ? "Policy ready" : step.cta,
+      };
+    }
+
+    if (step.id === "preview-plan") {
+      return {
+        ...step,
+        complete: flowState.hasPreview,
+        disabled:
+          !flowState.hasPolicy || autopilot.isPending || agniExecution.isPending || managedAgniExecution.isPending || autopilotPolicy.isPending,
+        action: () => void handlePreviewPlan(),
+        cta: step.cta,
+      };
+    }
+
+    return {
+      ...step,
       complete: previewMode === "sent",
-      disabled: !flowState.canExecute || autopilot.isPending || agniExecution.isPending || managedAgniExecution.isPending || autopilotPolicy.isPending || readiness.isLoading,
+      disabled:
+        !flowState.canExecute || autopilot.isPending || agniExecution.isPending || managedAgniExecution.isPending || autopilotPolicy.isPending || readiness.isLoading,
       action: () => void handleExecuteMove(),
-      cta: executionAuthority === "managed" ? "Run managed move" : preview?.execution?.mode === "blocked" ? "Approve token" : "Execute move",
-    },
-  ] as const;
+      cta: executionAuthority === "managed" ? "Run managed move" : preview?.execution?.mode === "blocked" ? "Approve token" : step.cta,
+    };
+  });
 
   return (
-    <div className={`shell min-h-svh ${theme.bg}`}>
+    <>
+      <LaunchSettingsDrawer
+        open={settingsDrawerOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            closeSettingsDrawer();
+          }
+        }}
+        draft={settingsDraft}
+        onDraftChange={setSettingsDraft}
+        onSave={handleSettingsSave}
+        onReset={handleSettingsReset}
+        readinessLabel={modeReadiness?.note ?? "Live readiness checks still need a pass."}
+        saveDisabled={autopilotPolicy.isPending || readiness.isLoading || !settingsDraft.defaultAmount.trim()}
+      />
+      <WelcomeModal
+        open={shouldOpenWelcome}
+        onOpenChange={(open) => {
+          if (!open) {
+            setWelcomeDismissed(true);
+          }
+        }}
+        onContinue={() => launchSettings.markOnboardingComplete()}
+        draft={launchSettings.draft}
+        readiness={{
+          walletConnected: Boolean(address),
+          depositReady,
+          policyReady: onchainPolicyReady,
+        }}
+      />
+      <div className={`shell min-h-svh ${theme.bg}`}>
       <div className="mx-auto max-w-screen-xl px-4 py-4 sm:px-6">
         <Card className="overflow-hidden border-[var(--border-strong)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(247,249,247,0.98))] p-5 shadow-[var(--shadow-md)]">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
@@ -431,10 +600,10 @@ export default function Page() {
               </div>
 
               <h1 className="mt-3 text-3xl font-black text-[var(--text)] sm:text-4xl">
-                Connect wallet, set policy, preview the route, then execute the move.
+                Welcome, connect wallet, deposit to garden, set policy, preview the route, then execute the move.
               </h1>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--text-muted)]">
-                Beginner-friendly garden flow, honest Agni routing, and Mantle proof visibility in one place. No fake proof or fake execution claims.
+                Managed mode comes first. Preview summaries stay in assistant chat; the garden only shows state that is actually planted or executed on-chain.
               </p>
             </div>
 
@@ -445,11 +614,11 @@ export default function Page() {
               </div>
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3">
                 <p className="font-black text-[var(--text)]">{executionStatus}</p>
-                <p className="mt-1">Planner status</p>
+                <p className="mt-1">Agent status</p>
               </div>
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3">
                 <p className="font-black text-[var(--text)]">{flowState.hasPolicy ? "Policy ready" : "Need policy"}</p>
-                <p className="mt-1">Guardrail state</p>
+                <p className="mt-1">Setup state</p>
               </div>
             </div>
           </div>
@@ -460,14 +629,14 @@ export default function Page() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="kicker">Start Here</p>
-                <h2 className="mt-1 text-2xl font-black text-[var(--text)]">Direct Agni flow for first-time growers</h2>
+                <h2 className="mt-1 text-2xl font-black text-[var(--text)]">Managed-mode-first flow for first-time growers</h2>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-muted)]">
-                  Stay in garden language while the app routes real planner output underneath. The agent will only describe a move as sent when the response actually includes a live execution state.
+                  The welcome modal explains managed mode, on-chain benchmarking, ERC-8004 identity, and the deposit-to-garden idea in plain language before the rest of the flow starts.
                 </p>
               </div>
               <div className="rounded-3xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-right">
                 <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[var(--text-muted)]">Progress</p>
-                <p className="mt-1 text-2xl font-black text-[var(--text)]">{steps.filter((step) => step.complete).length}/4</p>
+                <p className="mt-1 text-2xl font-black text-[var(--text)]">{steps.filter((step) => step.complete).length}/6</p>
               </div>
             </div>
 
@@ -484,7 +653,7 @@ export default function Page() {
                       <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">{step.body}</p>
                     </div>
                   </div>
-                  <Button type="button" variant={step.id === "execute" ? "primary" : "secondary"} disabled={step.disabled} onClick={step.action}>
+                  <Button type="button" variant={step.id === "execute-move" ? "primary" : "secondary"} disabled={step.disabled} onClick={step.action}>
                     {step.cta}
                   </Button>
                 </div>
@@ -510,14 +679,14 @@ export default function Page() {
             <Card className="p-5">
               <div className="flex items-center gap-2">
                 <Wallet className="size-4 text-[var(--text-muted)]" />
-                <p className="text-sm font-black text-[var(--text)]">Current policy inputs</p>
+                <p className="text-sm font-black text-[var(--text)]">Launch settings</p>
               </div>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
                 <label className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-xs text-[var(--text-muted)]">
-                  Amount
+                  Default amount
                   <input
                     value={amount}
-                    onChange={(event) => setAmount(event.target.value)}
+                    onChange={(event) => launchSettings.setAmount(event.target.value)}
                     className="mt-2 w-full bg-transparent text-lg font-black text-[var(--text)] outline-none"
                   />
                 </label>
@@ -538,8 +707,8 @@ export default function Page() {
                     key={lane.id}
                     type="button"
                     onClick={() => {
-                      setActiveCrop(lane.id);
-                      setRisk(getCropRisk(lane.id));
+                      launchSettings.setLane(lane.id);
+                      launchSettings.setRisk(getCropRisk(lane.id));
                     }}
                     className={`rounded-2xl border px-4 py-3 text-left transition ${
                       activeCrop === lane.id
@@ -560,7 +729,7 @@ export default function Page() {
                   <button
                     key={option.id}
                     type="button"
-                    onClick={() => setExecutionAuthority(option.id)}
+                    onClick={() => launchSettings.setExecutionAuthority(option.id)}
                     className={`rounded-2xl border px-4 py-3 text-left transition ${
                       executionAuthority === option.id
                         ? "border-[var(--primary-border)] bg-[var(--primary-soft)]"
@@ -573,20 +742,20 @@ export default function Page() {
                 ))}
               </div>
               <div className="mt-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-xs text-[var(--text-muted)]">
-                <p className="font-black text-[var(--text)]">Policy write target</p>
+                <p className="font-black text-[var(--text)]">Policy target</p>
                 <p className="mt-1 break-all">AutopilotPolicy: {process.env.NEXT_PUBLIC_AUTOPILOT_POLICY_ADDRESS ?? "from deployment config"}</p>
                 <p className="mt-1">
                   Executor mode: {executionAuthority === "managed" ? "Managed autopilot" : "Wallet execution"}
                 </p>
                 {managedModeMismatch ? (
                   <p className="mt-2 text-[var(--danger,#b42318)]">
-                    Managed mode is only valid when this connected wallet matches the configured executor wallet.
+                    Managed mode only works when the connected wallet matches the configured executor wallet.
                   </p>
                 ) : null}
                 {autopilotPolicy.data?.hash ? <p className="mt-2 break-all">Last policy tx: {autopilotPolicy.data.hash}</p> : null}
               </div>
               <div className="mt-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-xs text-[var(--text-muted)]">
-                <p className="font-black text-[var(--text)]">Live readiness</p>
+                <p className="font-black text-[var(--text)]">Ready check</p>
                 <p className="mt-1">
                   {readiness.data
                     ? `${executionAuthority === "managed" ? "Managed" : "Wallet"} mode: ${modeReadiness?.status ?? "blocked"}`
@@ -651,9 +820,9 @@ export default function Page() {
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                   <div className="min-w-0">
                     <p className="kicker">Garden Plan</p>
-                    <p className="mt-1 text-sm font-black text-[var(--text)]">Pick a crop lane, then preview what the agent sees next.</p>
+                    <p className="mt-1 text-sm font-black text-[var(--text)]">Pick a lane, then ask the assistant for the preview note.</p>
                     <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">
-                      {preview?.decision.summary ?? data?.beginnerExplanation ?? "Choose safe, growth, or dynamic to preview the next beginner-friendly route."}
+                      The page keeps lane choice simple. The full preview summary appears in the assistant chat so the main canvas stays focused on the garden.
                     </p>
                   </div>
 
@@ -667,8 +836,8 @@ export default function Page() {
                         onClick={() => {
                           const nextSlot = getNextEmptySlotId(slots);
                           if (!nextSlot) {
-                            setActiveCrop(option.id);
-                            setRisk(getCropRisk(option.id));
+                            launchSettings.setLane(option.id);
+                            launchSettings.setRisk(getCropRisk(option.id));
                             return;
                           }
                           handleCropPick(nextSlot, option.id);
@@ -690,10 +859,10 @@ export default function Page() {
 
             <div className="space-y-4">
               <Card className="p-5">
-                <p className="kicker">Live preview</p>
-                <h3 className="mt-1 text-sm font-black text-[var(--text)]">{preview?.decision.plan.title ?? "No route preview yet"}</h3>
+                <p className="kicker">Assistant preview</p>
+                <h3 className="mt-1 text-sm font-black text-[var(--text)]">{preview ? "Assistant summary ready" : "No route preview yet"}</h3>
                 <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">
-                  {preview?.decision.plan.explanation ?? "Preview a plan to see the exact route notes, policy checks, and proof state."}
+                  {preview ? "The assistant chat shows the route summary, policy checks, and proof note. It is not treated as live garden state until execution happens." : "Preview a plan to ask the assistant what the agent sees next."}
                 </p>
 
                 <div className="mt-4 grid gap-2 text-xs text-[var(--text-muted)]">
@@ -719,7 +888,7 @@ export default function Page() {
               </Card>
 
               <Card className="p-5">
-                <p className="kicker">Proof status</p>
+                <p className="kicker">On-chain proof</p>
                 <h3 className="mt-1 text-sm font-black text-[var(--text)]">Mantle record and execution note</h3>
                 <div className="mt-3 space-y-3 text-xs text-[var(--text-muted)]">
                   <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3">
@@ -733,7 +902,7 @@ export default function Page() {
                     {preview?.execution?.executionTxHash ? <p className="mt-1 break-all">{preview.execution.executionTxHash}</p> : null}
                   </div>
                   <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3">
-                    <p className="font-black text-[var(--text)]">Live benchmark readiness</p>
+                    <p className="font-black text-[var(--text)]">Benchmark readiness</p>
                     <p className="mt-1">
                       {readiness.data?.benchmarking.ready
                         ? "Relayer can write DecisionLog outcomes and record AutopilotPolicy execution on-chain."
@@ -747,12 +916,8 @@ export default function Page() {
                     <p className="mt-1">{preview?.decision.policy.reason ?? "No policy result yet."}</p>
                   </div>
                   <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3">
-                    <p className="font-black text-[var(--text)]">Agni route details</p>
-                    <p className="mt-1">
-                      {preview?.decision.plan.agni?.pair
-                        ? `${preview.decision.plan.agni.actionType ?? "move"} on ${preview.decision.plan.agni.pair}`
-                        : "Pair, quote, and fee lane will appear here when the live Agni preview is available."}
-                    </p>
+                    <p className="font-black text-[var(--text)]">Assistant note</p>
+                    <p className="mt-1">The full markdown preview lives in the assistant bubble.</p>
                   </div>
                 </div>
               </Card>
@@ -770,9 +935,11 @@ export default function Page() {
         agentData={data}
         pageContext={assistantContext}
         isPending={garden.isPending || autopilot.isPending || agniExecution.isPending || managedAgniExecution.isPending || autopilotPolicy.isPending}
+        onOpenSettings={openSettingsDrawer}
         onSendMessage={handleFarmerMessage}
         onAction={handleFarmerAction}
       />
-    </div>
+      </div>
+    </>
   );
 }

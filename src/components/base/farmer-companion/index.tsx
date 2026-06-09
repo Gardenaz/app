@@ -49,7 +49,7 @@ const GREETINGS: Record<WeatherMood, string[]> = {
 
 const QUICK_ACTIONS = [
   { id: "analyze" as const, emoji: "📊", label: "Review plan", desc: "Plan only" },
-  { id: "plant" as const, emoji: "🌱", label: "Open position", desc: "Use vault cash" },
+  { id: "plant" as const, emoji: "🌱", label: "Open position", desc: "Use garden balance" },
   { id: "protect" as const, emoji: "🛡️", label: "Check safety", desc: "Policy only" },
   { id: "harvest" as const, emoji: "🌾", label: "Close position", desc: "Return to cash" },
 ] as const;
@@ -75,6 +75,7 @@ interface FarmerCompanionProps {
   agentData?: GardenAgentResult | null;
   pageContext?: FarmerCompanionContext;
   isPending?: boolean;
+  onOpenSettings?: () => void;
   onSendMessage?: (msg: string) => void;
   onAction?: (
     action: "plant" | "analyze" | "protect" | "harvest",
@@ -87,6 +88,7 @@ export function FarmerCompanion({
   agentData,
   pageContext,
   isPending = false,
+  onOpenSettings,
   onSendMessage,
   onAction,
 }: FarmerCompanionProps) {
@@ -98,6 +100,7 @@ export function FarmerCompanion({
   const chatEndRef = useRef<HTMLDivElement>(null);
   const messageCounterRef = useRef(0);
   const isAskingRef = useRef(false);
+  const lastContextNoteRef = useRef<string | null>(null);
   const mood = getFarmerCompanionMood(weather, isPending);
 
   useEffect(() => {
@@ -115,6 +118,20 @@ export function FarmerCompanion({
     const id = `${Date.now()}-${messageCounterRef.current++}`;
     return { id, role, text };
   }, []);
+
+  useEffect(() => {
+    const note = pageContext?.latestDecision?.trim();
+    if (!note) return;
+
+    if (lastContextNoteRef.current === null) {
+      lastContextNoteRef.current = note;
+      return;
+    }
+
+    if (lastContextNoteRef.current === note) return;
+    lastContextNoteRef.current = note;
+    setMessages((prev) => [...prev, createMessage("assistant", note)]);
+  }, [createMessage, pageContext?.latestDecision]);
 
   const runActionPrompt = useCallback(
     async (action: "plant" | "analyze" | "protect" | "harvest", userText: string) => {
@@ -312,6 +329,16 @@ export function FarmerCompanion({
                         </button>
                       ))}
                     </div>
+                    {onOpenSettings ? (
+                      <button
+                        type="button"
+                        onClick={onOpenSettings}
+                        className="mt-2 flex w-full items-center justify-between rounded-xl border border-[var(--border)] bg-white px-3 py-2 text-left transition hover:border-[var(--primary)] hover:bg-[var(--surface-soft)] active:scale-[0.99]"
+                      >
+                        <span className="text-[11px] font-black text-[var(--text)]">⚙️ Quick settings</span>
+                        <span className="text-[9px] text-[var(--text-muted)]">Policy defaults</span>
+                      </button>
+                    ) : null}
                   </div>
 
                   <FarmerCompanionChatComposer

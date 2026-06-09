@@ -8,6 +8,26 @@ import {
 } from "./autopilot";
 
 describe("app autopilot model", () => {
+  it("defaults managed policy to the relayer executor and explicit allowlist", () => {
+    const policy = buildAutopilotPolicy({
+      user: "0x1111111111111111111111111111111111111111",
+      amount: "1000",
+      crop: "steady",
+      riskPreference: 1,
+      enabled: true,
+      rebalanceIntervalHours: 24,
+      oracleHeartbeatMinutes: 15,
+      executionAuthority: "managed",
+      executorAddress: "0x9999999999999999999999999999999999999999",
+      selectedProtocols: ["0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16"],
+    });
+
+    assert.equal(policy.executionAuthority, "managed");
+    assert.deepEqual(policy.allowedExecutors, ["0x9999999999999999999999999999999999999999"]);
+    assert.deepEqual(policy.allowedProtocols, ["0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16"]);
+    assert.equal(policy.enabled, true);
+  });
+
   it("builds safe autopilot policy from crop, amount, risk, selected protocols, and execution authority", () => {
     const policy = buildAutopilotPolicy({
       user: "0x1111111111111111111111111111111111111111",

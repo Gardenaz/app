@@ -218,6 +218,7 @@ interface FarmerCompanionProps {
   agentData?: GardenAgentResult | null;
   pageContext?: FarmerCompanionContext;
   isPending?: boolean;
+  onOpenSettings?: () => void;
   onSendMessage?: (msg: string) => void;
   onAction?: (action: "plant" | "analyze" | "protect" | "harvest") => void;
 }
@@ -246,6 +247,7 @@ export function FarmerCompanion({
   agentData,
   pageContext,
   isPending = false,
+  onOpenSettings,
   onSendMessage,
   onAction,
 }: FarmerCompanionProps) {
@@ -503,6 +505,16 @@ export function FarmerCompanion({
                         </button>
                       ))}
                     </div>
+                    {onOpenSettings ? (
+                      <button
+                        type="button"
+                        onClick={onOpenSettings}
+                        className="mt-2 flex w-full items-center justify-between rounded-xl border border-[var(--border)] bg-white px-3 py-2 text-left transition hover:border-[var(--primary)] hover:bg-[var(--surface-soft)] active:scale-[0.99]"
+                      >
+                        <span className="text-[11px] font-black text-[var(--text)]">⚙️ Quick settings</span>
+                        <span className="text-[9px] text-[var(--text-muted)]">Edit defaults</span>
+                      </button>
+                    ) : null}
                   </div>
 
                   <div className="shrink-0 border-t border-[var(--border)] px-4 py-3">

@@ -15,15 +15,21 @@ export function PlantedSummary({
   onClear: (id: string) => void;
 }) {
   const planted = slots.filter((s) => s.state !== "empty");
-  const cards = historyRows.slice(0, 3).map((row) => historyRowToCropCard(row));
+  const liveRows = historyRows.filter((row) => row.proofStatus === "live" || row.outcome === "success");
+  const cards = liveRows.slice(0, 3).map((row) => historyRowToCropCard(row));
   if (!planted.length && !cards.length) return null;
 
   return (
     <Card className="p-3.5">
       <div className="flex items-center justify-between gap-3">
-        <p className="kicker">Garden record</p>
+        <p className="kicker">Live garden record</p>
         <p className="text-[11px] text-[var(--text-subtle)]">{cards.length || planted.length} active</p>
       </div>
+      {cards.length > 0 ? (
+        <p className="mt-1 text-[11px] leading-5 text-[var(--text-subtle)]">
+          Only executed moves appear here. Preview anchors stay in the decision log and in the assistant chat.
+        </p>
+      ) : null}
       {cards.length > 0 ? (
         <div className="mt-3 grid gap-3 md:grid-cols-3">
           {cards.map((card) => (

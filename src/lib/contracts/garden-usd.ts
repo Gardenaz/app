@@ -30,7 +30,7 @@ export const gardenUsdMockAbi = [
   },
 ] as const;
 
-// Compatibility shim while mock gUSD onboarding is being removed from the visible app.
+// Compatibility shim while the old mock gUSD helper is being retired from the visible app.
 export function getGardenUsdMockAddress(): Address | undefined {
   return undefined;
 }

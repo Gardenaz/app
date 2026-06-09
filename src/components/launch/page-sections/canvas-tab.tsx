@@ -92,7 +92,7 @@ export function LaunchCanvasTab({
 
           <div className="mt-4 flex flex-col gap-2 border-t border-[var(--border)] pt-4 sm:flex-row">
             <Button type="button" variant="primary" onClick={onOpenShop}>
-              Open vault
+              Open garden
             </Button>
             <Button type="button" variant="secondary" onClick={onOpenAudit}>
               Open proof
