@@ -16,8 +16,8 @@ const footerLinks = [
   {
     title: "Protocol",
     links: [
-      { label: "USDY route", href: "#solution" },
-      { label: "mETH route", href: "#solution" },
+      { label: "USDC route", href: "#solution" },
+      { label: "WMNT route", href: "#solution" },
       { label: "Policy gate", href: "#what-is-gardenaz" },
     ],
   },

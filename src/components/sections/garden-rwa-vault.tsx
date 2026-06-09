@@ -14,9 +14,9 @@ type Props = {
 
 function cropLabel(cropKey: GardenRwaCropKey) {
   return cropKey === "steady"
-    ? "Safe lane for USDY"
+    ? "Safe lane for USDC"
     : cropKey === "growth"
-      ? "Growth lane for mETH"
+      ? "Growth lane for WMNT"
       : "Dynamic lane for active rebalancing";
 }
 
@@ -68,7 +68,7 @@ export function GardenRwaVaultSection({ agentData, amount, className }: Props) {
             Hubungkan dompet, pasang pagar risiko, lalu lihat rencana tanam AI tanpa layar lama yang menyesatkan.
           </h3>
           <p className="mt-1 max-w-2xl text-xs leading-5 text-[var(--text-muted)]">
-            Gardenaz sedang dipindahkan ke alur Agni-first untuk USDY dan mETH. Fase ini jujur: kami baru menampilkan
+            Gardenaz sekarang diarahkan ke alur Agni-first untuk stablecoin dan WMNT. Fase ini jujur: kami hanya menampilkan
             wallet, policy, dan preview langkah sebelum approval dan execute move dihidupkan.
           </p>
         </div>

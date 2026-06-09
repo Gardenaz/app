@@ -85,7 +85,7 @@ export const YieldCardHero = React.forwardRef<
           <div>
             <p className="text-base font-bold text-white">+12.4% APY</p>
             <p className="mt-0.5 text-[11px] text-white/50">
-              USDY route · Mantle
+              USDC route · Mantle
             </p>
           </div>
         </motion.div> */}

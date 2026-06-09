@@ -7,21 +7,21 @@ import type { AgentDecision } from "./types";
 const decision: AgentDecision = {
   intent: { user: "0x1111111111111111111111111111111111111111", crop: "growth", amount: "1500", riskPreference: 2 },
   plan: {
-    strategyId: "growth-agni-meth",
+    strategyId: "agni-wmnt-growth-swap",
     title: "Corn / Growth Field",
     riskLevel: 2,
     protocol: "Agni",
-    action: "Grow with mETH",
-    asset: "mETH",
+    action: "Grow with WMNT",
+    asset: "WMNT",
     expectedApy: "7-11%",
     steps: ["quote", "policy", "execute"],
-    explanation: "Balanced lane with mETH upside.",
+    explanation: "Balanced lane with WMNT upside.",
     agni: {
       executionKind: "liquidity",
       actionType: "addLiquidity",
-      pair: "USDY/mETH",
-      tokenInSymbol: "USDY",
-      tokenOutSymbol: "mETH",
+      pair: "USDC/WMNT",
+      tokenInSymbol: "USDC",
+      tokenOutSymbol: "WMNT",
       quotedInputAmount: "1500",
       quotedOutputAmount: "1491",
       positionTokenId: "42",
@@ -60,7 +60,7 @@ describe("history helpers", () => {
 
     assert.equal(row.actionType, "addLiquidity");
     assert.equal(row.executionKind, "liquidity");
-    assert.equal(row.pair, "USDY/mETH");
+    assert.equal(row.pair, "USDC/WMNT");
     assert.equal(row.positionTokenId, "42");
     assert.equal(row.agentId, "17");
     assert.equal(row.proofStatus, "anchored");
@@ -71,20 +71,20 @@ describe("history helpers", () => {
       ...decision,
       plan: undefined,
       selectedOpportunity: {
-        strategyId: "agni-usdy-safe-swap",
+        strategyId: "agni-usdc-safe-swap",
         protocol: "Agni Swap Router",
-        asset: "USDY",
+        asset: "USDC",
         riskLevel: 1,
         explanation: "Safer swap route.",
-        shareLabel: "Stable moat lane powered by USDY",
+        shareLabel: "Stable moat lane powered by USDC",
       },
     } as unknown as AgentDecision;
 
     const row = toHistoryRow(rawDecision);
 
-    assert.equal(row.strategyId, "agni-usdy-safe-swap");
+    assert.equal(row.strategyId, "agni-usdc-safe-swap");
     assert.equal(row.protocol, "Agni Swap Router");
-    assert.equal(row.asset, "USDY");
+    assert.equal(row.asset, "USDC");
   });
 
   it("maps a history row into a beginner crop card with duration, PnL, and proof labels", () => {
@@ -106,6 +106,6 @@ describe("history helpers", () => {
     assert.equal(card.pnlLabel, "+24.5 (1.63%)");
     assert.equal(card.proofLabel, "Live proof");
     assert.equal(card.actionLabel, "Add liquidity");
-    assert.equal(card.pairLabel, "USDY/mETH");
+    assert.equal(card.pairLabel, "USDC/WMNT");
   });
 });

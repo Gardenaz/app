@@ -7,30 +7,30 @@ export const strategies = [
     name: "Rice / Safe Harvest",
     risk: "Low risk",
     apy: "4-6%",
-    price: "100 gUSD",
+    price: "100 USDT",
     returnLabel: "≈ 4-6%",
-    asset: "USDY",
-    route: "Mantle RWA USDY Route",
-    desc: "Conservative USDY lane for stable RWA yield and clean policy proof.",
+    asset: "USDC",
+    route: "Agni Stablecoin Route",
+    desc: "Conservative stablecoin lane for calmer yield and clean policy proof.",
   },
   {
     name: "Corn / Growth Field",
     risk: "Medium risk",
     apy: "7-11%",
-    price: "250 gUSD",
+    price: "250 USDT",
     returnLabel: "≈ 7-11%",
-    asset: "mETH",
-    route: "Mantle mETH Yield Route",
-    desc: "mETH route for measured compounding with volatility guardrails.",
+    asset: "WMNT",
+    route: "Agni WMNT Growth Route",
+    desc: "WMNT route for measured compounding with volatility guardrails.",
   },
   {
     name: "Chili / Boost Farm",
     risk: "High risk",
     apy: "12-20%",
-    price: "500 gUSD",
+    price: "500 USDT",
     returnLabel: "≈ 12-20%",
-    asset: "USDY/mETH",
-    route: "Mantle Dynamic RWA Route",
+    asset: "USDC/WMNT",
+    route: "Agni Dynamic LP Route",
     desc: "Dynamic allocation with stricter preflight checks before any rebalance.",
   },
 ];
@@ -56,19 +56,19 @@ export const features = [
 export const steps = [
   ["01", "Connect", "Login with Privy, use embedded wallet or external wallet, then choose a crop lane."],
   ["02", "Set policy", "Pick amount, risk preference, allowed routes, and rebalance interval."],
-  ["03", "Agent plans", "LangGraph agent scores USDY/mETH routes and blocks unsafe strategy changes."],
+  ["03", "Agent plans", "LangGraph agent scores Agni stablecoin and WMNT routes and blocks unsafe strategy changes."],
   ["04", "Proof lands", "Decision hash, Mantle tx, and benchmark outcome become garden proof."],
 ] as const;
 
 export const proofRows = [
   ["Agent identity", "ERC-8004-style identity NFT + reputation registry"],
   ["Decision hash", "0xa71e...f09c · policy-safe rebalance"],
-  ["Benchmark", "USDY harvest +5.2% APY · outcome pending log"],
+  ["Benchmark", "USDC lane +5.2% APY · outcome pending log"],
   ["Transparency", "Readable diary + on-chain DecisionLog"],
 ] as const;
 
 export const faq = [
-  ["Is Gardenaz a Bybit trading bot?", "No. Current MVP focuses AI x RWA on Mantle with USDY/mETH strategies. Bybit/CEX adapter can be future extension, not core."],
+  ["Is Gardenaz a Bybit trading bot?", "No. Current MVP focuses AI x RWA on Mantle with beginner-friendly Agni routes for stablecoin and WMNT lanes. Bybit/CEX adapter can be a future extension, not the core."],
   ["Can agent move funds freely?", "No. Policy fences define max amount, risk level, allowed routes, rebalance interval, and emergency pause."],
   ["Why crops?", "Crops make yield strategy understandable and shareable for consumer users without hiding benchmark proof."],
 ] as const;

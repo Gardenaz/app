@@ -23,6 +23,7 @@ import { useAutopilotPolicy } from "@/hooks/use-autopilot-policy";
 import { useFearGreedIndex } from "@/hooks/use-fear-greed";
 import { useManagedAgniExecution } from "@/hooks/use-managed-agni-execution";
 import { usePrivyWalletAddress } from "@/hooks/use-privy-wallet-address";
+import { useGardenRwaVault } from "@/hooks/use-garden-rwa-vault";
 import type { CropId, RiskLevel } from "@/lib/agent/types";
 import { buildAutopilotPolicy, type ExecutionAuthority } from "@/lib/agent/autopilot";
 import { buildAssistantSummary } from "@/lib/agent/assistant-summary";
@@ -121,6 +122,7 @@ export default function Page() {
   const [executionAuthority, setExecutionAuthority] = useState<ExecutionAuthority>("wallet");
 
   const { address, authenticated, login } = usePrivyWalletAddress();
+  const { snapshot } = useGardenRwaVault();
   const garden = useGardenAgent();
   const autopilot = useAgentPlan();
   const agniExecution = useAgniExecution();
@@ -156,6 +158,8 @@ export default function Page() {
     && Boolean(backendExecutorAddress)
     && userAddress.toLowerCase() !== (backendExecutorAddress ?? "").toLowerCase();
   const preview = autopilot.data;
+  const onchainPolicyReady = Boolean(snapshot?.policyEnabled && !snapshot?.policyPaused);
+  const hasPolicyReady = policyReady || onchainPolicyReady;
   const previewMode = preview?.execution?.mode;
   const previewOperation = preview?.execution?.operation ?? null;
   const previewReady = Boolean(preview);
@@ -166,11 +170,11 @@ export default function Page() {
     () =>
       buildFlowState({
         connected: Boolean(address),
-        policyReady,
+        policyReady: hasPolicyReady,
         planPreviewed: previewReady,
         hasExecutionTarget: executionReady,
       }),
-    [address, executionReady, policyReady, previewReady],
+    [address, executionReady, hasPolicyReady, previewReady],
   );
 
   const executionStatus = useMemo<"READY" | "PLANNED" | "PENDING" | "SENT" | "CONFIRMED" | "BLOCKED">(() => {
@@ -190,7 +194,7 @@ export default function Page() {
   const selectedCrop = getCropOption(activeCrop);
   const guide = assistantGuide({
     connected: flowState.hasConnectedWallet,
-    policyReady: flowState.hasPolicy,
+    policyReady: hasPolicyReady,
     previewReady: flowState.hasPreview,
     executionMode: previewMode,
   });
@@ -272,20 +276,20 @@ export default function Page() {
       void login();
       return;
     }
-    if (!policyReady) {
+    if (!hasPolicyReady) {
       setPolicyReady(true);
       setMode("autopilot");
     }
     setView("canvas");
     await buildPlanRequest(false);
-  }, [address, buildPlanRequest, login, policyReady]);
+  }, [address, buildPlanRequest, hasPolicyReady, login]);
 
   const handleExecuteMove = useCallback(async () => {
     if (!address) {
       void login();
       return;
     }
-    if (!policyReady) {
+    if (!hasPolicyReady) {
       setPolicyReady(true);
       setMode("autopilot");
     }
@@ -314,7 +318,7 @@ export default function Page() {
       await buildPlanRequest(false);
       await history.refetch();
     }
-  }, [activeCrop, address, agniExecution, amount, buildPlanRequest, data?.intent.parsedStrategy, executionAuthority, history, login, managedAgniExecution, modeReadiness?.note, modeReadiness?.ready, policyInput, policyReady, risk, userAddress]);
+  }, [activeCrop, address, agniExecution, amount, buildPlanRequest, data?.intent.parsedStrategy, executionAuthority, hasPolicyReady, history, login, managedAgniExecution, modeReadiness?.note, modeReadiness?.ready, policyInput, risk, userAddress]);
 
   async function handleFarmerAction(action: FarmerAction, promptText?: string) {
     if (promptText) setMessage(promptText);
@@ -330,7 +334,7 @@ export default function Page() {
       return buildAssistantSummary("guided", result.decision, result.decision.anchorTxHash ?? null);
     }
 
-    if (!policyReady) {
+    if (!hasPolicyReady) {
       return "Set policy first so I can keep the Agni move inside your beginner guardrails.";
     }
 
@@ -520,7 +524,7 @@ export default function Page() {
                 <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3">
                   <p className="text-xs text-[var(--text-muted)]">Selected lane</p>
                   <p className="mt-2 text-lg font-black text-[var(--text)]">
-                    {selectedCrop?.crop ?? "Rice"} · {selectedCrop?.asset ?? "USDY"}
+                    {selectedCrop?.crop ?? "Rice"} · {selectedCrop?.asset ?? "USDC"}
                   </p>
                 </div>
               </div>

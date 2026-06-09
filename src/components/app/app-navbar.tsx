@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/base/logo";
 import { PrivyConnectButton } from "@/components/base/privy-connect-button";
-import { Button } from "@/components/ui/button";
 
 export function AppNavbar() {
   return (
@@ -13,18 +12,18 @@ export function AppNavbar() {
           <Link href="/" className="shrink-0">
             <Logo compact />
           </Link>
+          <div className="hidden items-center gap-2 sm:flex">
+            <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-emerald-700">
+              Mantle Testnet
+            </span>
+            <span className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-[var(--text-subtle)] opacity-70">
+              Mantle Mainnet Soon
+            </span>
+          </div>
         </div>
 
         <div className="flex items-center gap-2.5">
-          <div className="hidden items-center gap-2 sm:flex">
-            <Button type="button" variant="secondary" className="px-3 py-2 text-xs">
-              Mantle Testnet
-            </Button>
-            <Button type="button" variant="secondary" disabled className="px-3 py-2 text-xs opacity-60">
-              Mantle Mainnet Soon
-            </Button>
-          </div>
-          <PrivyConnectButton compact />
+          <PrivyConnectButton />
         </div>
       </div>
     </header>

@@ -31,7 +31,7 @@ describe("app autopilot model", () => {
     assert.equal(policy.executionAuthority, "managed");
     assert.deepEqual(policy.allowedProtocols, ["0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16"]);
     assert.deepEqual(policy.allowedExecutors, ["0x9999999999999999999999999999999999999999"]);
-    assert.deepEqual(policy.allowedStrategies, ["agni-meth-growth-swap"]);
+    assert.deepEqual(policy.allowedStrategies, ["agni-wmnt-growth-swap"]);
     assert.equal(policy.maxDailyLoss, "50");
   });
 
@@ -53,7 +53,7 @@ describe("app autopilot model", () => {
     assert.equal(args.rebalanceInterval, 43200n);
     assert.equal(args.oracleHeartbeat, 900n);
     assert.deepEqual(args.executors, ["0x1111111111111111111111111111111111111111"]);
-    assert.equal(args.strategies[0], "0x61676e692d757364792d736166652d7377617000000000000000000000000000");
+    assert.equal(args.strategies[0], "0x61676e692d757364632d736166652d7377617000000000000000000000000000");
   });
 
   it("never exceeds user risk preference when deriving crop defaults", () => {
@@ -61,7 +61,7 @@ describe("app autopilot model", () => {
 
     assert.equal(defaults.recommendedRiskLevel, 1);
     assert.equal(defaults.defaultProtocol, "Agni Position Manager");
-    assert.equal(defaults.asset, "USDY/mETH");
+    assert.equal(defaults.asset, "USDC/WMNT");
   });
 
   it("builds consumer proof card from agent decision and anchor tx", () => {
@@ -69,12 +69,12 @@ describe("app autopilot model", () => {
       decision: {
         intent: { user: "0x1111111111111111111111111111111111111111", crop: "steady", amount: "1000", riskPreference: 1 },
         plan: {
-          strategyId: "steady-rwa-usdy",
+          strategyId: "agni-usdc-safe-swap",
           title: "Rice / Safe Harvest",
           riskLevel: 1,
-          protocol: "Mantle RWA USDY Route",
-          action: "Hold USDY route",
-          asset: "USDY",
+          protocol: "Agni Stablecoin Route",
+          action: "Hold USDC route",
+          asset: "USDC",
           expectedApy: "4-6%",
           steps: [],
           explanation: "Low risk RWA lane.",
@@ -82,9 +82,9 @@ describe("app autopilot model", () => {
           agni: {
             executionKind: "swap",
             actionType: "swap",
-            pair: "USDY/mETH",
-            tokenInSymbol: "USDY",
-            tokenOutSymbol: "mETH",
+            pair: "USDC/WMNT",
+            tokenInSymbol: "USDC",
+            tokenOutSymbol: "WMNT",
             quotedInputAmount: "1000",
             quotedOutputAmount: "998",
             slippageBps: 50,
@@ -119,14 +119,14 @@ describe("app autopilot model", () => {
     });
 
     assert.equal(proof.title, "Rice / Safe Harvest Proof");
-    assert.equal(proof.asset, "USDY");
+    assert.equal(proof.asset, "USDC");
     assert.equal(proof.track, "AI x RWA + Consumer & Viral DApps");
     assert.equal(proof.status, "APPROVED");
-    assert.equal(proof.shareText.includes("USDY"), true);
+    assert.equal(proof.shareText.includes("USDC"), true);
     assert.equal(proof.proofItems[0]?.label, "Decision Hash");
     assert.equal(proof.proofItems[1]?.label, "ERC-8004 Agent");
     assert.equal(proof.proofItems.some((item) => item.label === "Agni move" && /swap/i.test(item.value)), true);
-    assert.equal(proof.proofItems.some((item) => item.label === "Pair" && item.value === "USDY/mETH"), true);
+    assert.equal(proof.proofItems.some((item) => item.label === "Pair" && item.value === "USDC/WMNT"), true);
     assert.equal(proof.proofItems.some((item) => item.label === "Quote" && /1000/.test(item.value) && /998/.test(item.value)), true);
   });
 });

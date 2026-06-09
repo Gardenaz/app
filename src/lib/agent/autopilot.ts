@@ -49,21 +49,21 @@ export type ProofCard = {
 
 const cropDefaults: Record<CropId, Omit<CropAutopilotDefaults, "crop" | "recommendedRiskLevel"> & { recommendedRiskLevel: RiskLevel }> = {
   steady: {
-    asset: "USDY",
+    asset: "USDC",
     defaultProtocol: "Agni Swap Router",
     defaultProtocolAddress: "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
     recommendedRiskLevel: 1,
     maxDailyLossPercent: 2,
   },
   growth: {
-    asset: "mETH",
+    asset: "WMNT",
     defaultProtocol: "Agni Swap Router",
     defaultProtocolAddress: "0xe38cfa32cCd918d94E2e20230dFaD1A4Fd8aEF16",
     recommendedRiskLevel: 2,
     maxDailyLossPercent: 5,
   },
   boost: {
-    asset: "USDY/mETH",
+    asset: "USDC/WMNT",
     defaultProtocol: "Agni Position Manager",
     defaultProtocolAddress: "0x71959543c31EC4d68D9D6C492Bf69A1C174bb394",
     recommendedRiskLevel: 3,
@@ -72,9 +72,9 @@ const cropDefaults: Record<CropId, Omit<CropAutopilotDefaults, "crop" | "recomme
 };
 
 const cropStrategyIds: Record<CropId, string> = {
-  steady: "agni-usdy-safe-swap",
-  growth: "agni-meth-growth-swap",
-  boost: "agni-usdy-meth-liquidity",
+  steady: "agni-usdc-safe-swap",
+  growth: "agni-wmnt-growth-swap",
+  boost: "agni-usdc-wmnt-liquidity",
 };
 
 function strategyIdToBytes32(strategyId: string): `0x${string}` {

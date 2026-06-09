@@ -34,10 +34,10 @@ describe("Launch app Agni-first flow", () => {
     assert.doesNotMatch(pageSource, /Claim gUSD/i);
     assert.doesNotMatch(pageSource, /setVaultOperator/i);
     assert.doesNotMatch(pageSource, /gardenVault\./i);
-    assert.doesNotMatch(pageSource, /useGardenRwaVault/i);
     assert.match(pageSource, /FarmerCompanion/);
     assert.match(pageSource, /useGardenAgent/);
     assert.match(pageSource, /useAgentPlan/);
+    assert.match(pageSource, /snapshot\?\.policyEnabled/);
     assert.match(farmerSource, /Quick actions/);
     assert.match(historySource, /useAgentHistory/);
     assert.match(navbarSource, /Mantle Testnet/);

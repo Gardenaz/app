@@ -11,7 +11,7 @@ const baseDecision: AgentDecision = {
     riskLevel: 1,
     protocol: "Mantle RWA",
     action: "PLAN",
-    asset: "USDY",
+    asset: "USDC",
     expectedApy: "4.0%",
     steps: ["scan", "gate", "execute"],
     explanation: "Best low-volatility choice.",
