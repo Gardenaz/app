@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { Sprout, ScrollText, History, Settings, Leaf } from "lucide-react";
 
 const NAV_ITEMS = [
-  { href: "/app/garden", icon: "🌿", label: "Garden" },
-  { href: "/app/quests", icon: "📋", label: "Quests" },
-  { href: "/app/history", icon: "📜", label: "History" },
-  { href: "/settings", icon: "⚙️", label: "Settings" },
+  { href: "/app/garden",  Icon: Sprout,     label: "Garden"   },
+  { href: "/app/quests",  Icon: ScrollText, label: "Quests"   },
+  { href: "/app/history", Icon: History,    label: "History"  },
+  { href: "/settings",    Icon: Settings,   label: "Settings" },
 ] as const;
 
 export function GameNav() {
@@ -16,24 +17,16 @@ export function GameNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around"
+      className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-3"
       style={{
         height: "4rem",
-        background: "linear-gradient(180deg, #8B5E3C 0%, #6B4423 100%)",
-        borderTop: "3px solid #4A2E12",
-        boxShadow: "0 -4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08)",
-        fontFamily: "var(--font-island-heading)",
+        background: "rgba(255,255,255,0.98)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        borderTop: "1px solid rgba(0,0,0,0.06)",
+        boxShadow: "0 -2px 20px rgba(0,0,0,0.07)",
       }}
     >
-      {/* Wood grain overlay */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "repeating-linear-gradient(90deg, transparent 0px, transparent 48px, rgba(255,255,255,0.015) 48px, rgba(255,255,255,0.015) 50px)",
-        }}
-      />
-
       {NAV_ITEMS.map((item) => {
         const isActive =
           pathname === item.href ||
@@ -43,31 +36,26 @@ export function GameNav() {
           <Link
             key={item.href}
             href={item.href}
-            className="relative flex flex-col items-center gap-0.5 px-6 py-2 transition-all duration-150"
-            style={{ opacity: isActive ? 1 : 0.55 }}
+            className="flex flex-1 flex-col items-center justify-center gap-0.5 py-1.5"
           >
-            {isActive && (
-              <motion.div
-                layoutId="game-nav-pip"
-                className="absolute -top-[3px] inset-x-2 h-[3px] rounded-b-full"
-                style={{ background: "var(--island-gold, #F5C842)" }}
-                transition={{ type: "spring", stiffness: 500, damping: 35 }}
-              />
-            )}
-
-            <motion.span
-              className="text-xl leading-none"
-              animate={isActive ? { scale: [1, 1.18, 1] } : { scale: 1 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
+            <motion.div
+              className="flex items-center justify-center rounded-2xl px-4 py-1.5"
+              animate={isActive
+                ? { background: "rgba(30,30,30,0.88)", scale: 1 }
+                : { background: "transparent", scale: 1 }}
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
             >
-              {item.icon}
-            </motion.span>
-
+              <item.Icon
+                className="size-[20px]"
+                style={{
+                  color: isActive ? "#FFFFFF" : "#B8C2CC",
+                  strokeWidth: 2,
+                }}
+              />
+            </motion.div>
             <span
-              className="text-[9px] font-black uppercase tracking-widest"
-              style={{
-                color: isActive ? "#F5E8C0" : "rgba(255,240,200,0.5)",
-              }}
+              className="text-[9px] font-bold"
+              style={{ color: isActive ? "#1E1E1E" : "#B8C2CC" }}
             >
               {item.label}
             </span>

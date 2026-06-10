@@ -13,8 +13,8 @@ import {
 const PAGE_BG: Record<string, string> = {
   stormy: "linear-gradient(180deg,#1E2C37 0%,#0F1E28 45%,#2A4030 100%)",
   rainy:  "linear-gradient(180deg,#2A4A5E 0%,#1D4E6B 45%,#3A6040 100%)",
-  cloudy: "linear-gradient(180deg,#B0C4CC 0%,#D0DDE5 45%,#8AB878 100%)",
-  sunny:  "linear-gradient(180deg,#87CEEB 0%,#D4EFF9 45%,#7CC548 100%)",
+  cloudy: "linear-gradient(180deg,#B8CEDD 0%,#D8E8F0 45%,#96C87A 100%)",
+  sunny:  "linear-gradient(180deg,#5BC8F5 0%,#A8E4FF 35%,#C8F0A8 100%)",
 };
 
 export default function HistoryPage() {

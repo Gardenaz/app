@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, X } from "lucide-react";
 import type { PotSlot, WeatherMood } from "@/components/sections/farm-scene";
@@ -127,72 +128,111 @@ function ZoneCropPicker({
   onPick: (slotId: string, cropId: typeof CROP_OPTIONS[number]["id"]) => void;
   onClose: () => void;
 }) {
+  const [selected, setSelected] = React.useState<typeof CROP_OPTIONS[number]["id"] | null>(null);
+
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9, y: 12 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.9, y: 8 }}
-      transition={{ type: "spring", stiffness: 340, damping: 26 }}
-      className="absolute inset-x-2 bottom-2 z-50 overflow-hidden rounded-2xl border-2 shadow-2xl"
-      style={{
-        borderColor: "var(--island-parchment-dark)",
-        background: "linear-gradient(160deg, #FAF0D7 0%, var(--island-parchment) 100%)",
-        fontFamily: "var(--font-island-body)",
-      }}
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 14 }}
+      transition={{ type: "spring", stiffness: 380, damping: 28 }}
+      className="absolute inset-x-0 bottom-0 z-50 overflow-hidden rounded-2xl shadow-2xl"
+      style={{ background: "#FFFFFF" }}
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="flex items-center justify-between border-b border-[var(--island-parchment-dark)] px-4 py-2.5">
-        <div>
-          <p className="text-[9px] font-black uppercase tracking-widest" style={{ color: "var(--island-wood)" }}>
-            Choose Seed
-          </p>
-          <p className="text-sm font-black" style={{ color: "var(--island-sign-bg)", fontFamily: "var(--font-island-heading)" }}>
-            What grows here?
-          </p>
-        </div>
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 pb-2 pt-3">
+        <p className="text-[12px] font-black text-gray-800">Choose a crop to plant</p>
         <button
           type="button"
           onClick={onClose}
-          className="flex size-7 items-center justify-center rounded-full transition hover:bg-black/10"
-          style={{ color: "var(--island-wood)" }}
+          className="flex size-7 items-center justify-center rounded-full"
+          style={{ background: "#F0F0F0" }}
+          aria-label="Close crop picker"
         >
-          <X className="size-4" />
+          <X className="size-3.5 text-gray-500" />
         </button>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 p-3">
+      {/* 2×2 crop card grid */}
+      <div className="grid grid-cols-2 gap-2 px-3 pb-2">
         {CROP_OPTIONS.map((opt) => {
           const isRec = opt.recommended(weather);
+          const isSel = selected === opt.id;
+
+          /* Colour per crop */
+          const sceneBg = opt.id === "stable"
+            ? "linear-gradient(160deg,#DCEDC8 0%,#A5D6A7 100%)"
+            : opt.id === "growth"
+            ? "linear-gradient(160deg,#FFF9C4 0%,#FFE082 100%)"
+            : opt.id === "yield"
+            ? "linear-gradient(160deg,#FFCCBC 0%,#FF8A65 100%)"
+            : "linear-gradient(160deg,#B3E5FC 0%,#4FC3F7 100%)";
+
           return (
             <motion.button
               key={opt.id}
               type="button"
-              whileHover={{ y: -3, scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              onClick={() => onPick(zoneId, opt.id)}
-              className="relative flex flex-col items-center gap-1 rounded-xl p-3 text-center transition"
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setSelected(isSel ? null : opt.id)}
+              className="relative flex flex-col overflow-hidden rounded-xl text-left"
               style={{
-                border: `2px solid ${isRec ? "var(--island-grass)" : "var(--island-parchment-dark)"}`,
-                background: isRec ? "rgba(124,197,72,0.15)" : "rgba(255,255,255,0.6)",
-                boxShadow: isRec ? "0 0 0 3px rgba(124,197,72,0.2)" : "none",
+                border: `2.5px solid ${isSel ? "#FF7A2F" : isRec ? "#4CAF50" : "#E8E8E8"}`,
+                background: "#FAFAFA",
+                boxShadow: isSel ? "0 0 0 3px rgba(255,122,47,0.2)" : "none",
               }}
             >
-              {isRec && (
-                <span
-                  className="absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-1.5 py-px text-[8px] font-black text-white"
-                  style={{ background: "var(--island-grass-dark)" }}
-                >
-                  ✓ Best now
-                </span>
-              )}
-              <span className="text-2xl leading-none">{opt.emoji}</span>
-              <p className="text-xs font-black" style={{ color: "var(--island-sign-bg)", fontFamily: "var(--font-island-heading)" }}>
-                {opt.crop}
-              </p>
-              <p className="text-[10px] font-bold" style={{ color: "var(--island-grass-dark)" }}>{opt.apy}</p>
+              {/* Scene illustration strip */}
+              <div
+                className="flex items-center justify-center py-4 text-3xl"
+                style={{ background: sceneBg }}
+              >
+                {opt.emoji}
+                {isRec && (
+                  <span
+                    className="absolute right-1.5 top-1.5 rounded-full px-1.5 py-0.5 text-[8px] font-black text-white"
+                    style={{ background: "#2E7D32" }}
+                  >
+                    Best
+                  </span>
+                )}
+              </div>
+
+              {/* Info row */}
+              <div className="px-2.5 pb-2 pt-1.5">
+                <p className="text-[11px] font-black text-gray-800">{opt.crop}</p>
+                <div className="mt-0.5 flex items-center justify-between">
+                  <span className="text-[9px] font-bold text-gray-400">{opt.asset}</span>
+                  <span
+                    className="rounded-full px-1.5 py-0.5 text-[8px] font-black text-white"
+                    style={{ background: "rgba(30,30,30,0.80)" }}
+                  >
+                    {opt.apy}
+                  </span>
+                </div>
+              </div>
             </motion.button>
           );
         })}
+      </div>
+
+      {/* Plant Now CTA */}
+      <div className="px-3 pb-3">
+        <motion.button
+          type="button"
+          disabled={!selected}
+          whileTap={selected ? { scale: 0.97 } : {}}
+          onClick={() => selected && onPick(zoneId, selected)}
+          className="w-full rounded-xl py-3.5 text-[13px] font-black text-white shadow-md transition-opacity"
+          style={{
+            background: selected
+              ? "linear-gradient(135deg, #FF7A2F 0%, #FF9A4F 100%)"
+              : "#D1D5DB",
+            opacity: selected ? 1 : 0.7,
+          }}
+        >
+          🌱 Plant Now
+        </motion.button>
       </div>
     </motion.div>
   );
@@ -215,103 +255,82 @@ export function FarmZones({ slots, weather, selectedSlotId, onSlotClick, onCropP
         const isSelected = selectedSlotId === slot.id;
         const isEmpty = slot.state === "empty";
 
-        /* Zone layout positions — in the front yard below the farmhouse (~50% x, ~57% y).
-           Rice left-of-house, Corn directly in front, Chili right-of-house. */
+        /* Zone layout positions — front yard below farmhouse (~50% x, ~57% y).
+           Widths expressed as % of container so they don't overlap at any viewport. */
         const positions = [
-          { left: "18%", top: "60%", w: 128, h: 96 },   /* Rice  — left wing  */
-          { left: "40%", top: "60%", w: 132, h: 100 },  /* Corn  — front yard */
-          { left: "62%", top: "60%", w: 122, h: 96 },   /* Chili — right wing */
+          { left: "4%",  top: "60%", w: "28%", h: 96  },  /* Rice  — left  */
+          { left: "36%", top: "60%", w: "28%", h: 100 },  /* Corn  — front */
+          { left: "68%", top: "60%", w: "28%", h: 96  },  /* Chili — right */
         ];
         const pos = positions[zi];
 
         return (
           <motion.div
             key={zone.id}
-            className="pointer-events-auto absolute flex flex-col items-center justify-center gap-1 rounded-2xl"
+            className="pointer-events-auto absolute flex flex-col items-center justify-between overflow-hidden rounded-2xl"
             style={{
               left: pos.left,
               top: pos.top,
               width: pos.w,
               height: pos.h,
-              background: slot.state === "empty"
-                ? `linear-gradient(180deg, ${zone.soilColor}99 0%, ${zone.soilColor} 100%)`
-                : `linear-gradient(160deg, ${zone.color}33 0%, ${zone.color}55 100%)`,
-              border: `2px solid ${isSelected ? zone.color : zone.borderColor}`,
-              boxShadow: isSelected ? `0 0 0 4px ${zone.colorSoft}, 0 8px 24px rgba(0,0,0,0.18)` : "0 4px 16px rgba(0,0,0,0.14)",
+              background: "rgba(255,255,255,0.94)",
+              border: `2px solid ${isSelected ? zone.color : "rgba(255,255,255,0.7)"}`,
+              boxShadow: isSelected
+                ? `0 0 0 3px ${zone.colorSoft}, 0 8px 28px rgba(0,0,0,0.18)`
+                : "0 4px 20px rgba(0,0,0,0.13)",
               cursor: slot.state === "locked" ? "not-allowed" : "pointer",
+              backdropFilter: "blur(8px)",
             }}
-            animate={{
-              y: isSelected ? -8 : 0,
-              scale: isSelected ? 1.04 : 1,
-            }}
-            whileHover={slot.state !== "locked" ? { y: -4, scale: 1.02 } : {}}
+            animate={{ y: isSelected ? -6 : 0, scale: isSelected ? 1.04 : 1 }}
+            whileHover={slot.state !== "locked" ? { y: -3, scale: 1.02 } : {}}
             whileTap={slot.state !== "locked" ? { scale: 0.97 } : {}}
-            transition={{ type: "spring", stiffness: 280, damping: 22 }}
+            transition={{ type: "spring", stiffness: 300, damping: 24 }}
             onClick={() => slot.state !== "locked" && onSlotClick(slot)}
           >
-            {/* Zone label tag */}
-            <div
-              className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md px-2 py-0.5 text-[9px] font-black uppercase tracking-widest"
-              style={{
-                background: zone.colorDark,
-                color: "white",
-                fontFamily: "var(--font-island-heading)",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-              }}
-            >
-              {zone.label}
-            </div>
-
-            {/* Crop rows (soil rows visual) */}
-            <div className="absolute bottom-2 flex w-full flex-col gap-0.5 px-3 opacity-40">
-              {[0, 1, 2].map((r) => (
-                <div
-                  key={r}
-                  className="rounded-full"
-                  style={{
-                    height: 3,
-                    background: `linear-gradient(90deg, transparent, ${zone.soilColor}, transparent)`,
-                    opacity: 0.6 - r * 0.1,
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Growth visual */}
-            <GrowthVisual state={slot.state} emoji={zone.emoji} color={zone.color} />
-
-            {/* APY chip when planted */}
-            {slot.state !== "empty" && slot.state !== "locked" && (
-              <motion.div
-                className="rounded-full px-2 py-0.5 text-[10px] font-black"
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                style={{
-                  background: zone.color,
-                  color: "var(--island-sign-bg)",
-                  fontFamily: "var(--font-island-heading)",
-                }}
+            {/* Top: APY badge + label */}
+            <div className="flex w-full items-center justify-between px-2.5 pt-2">
+              <span
+                className="text-[9px] font-black uppercase tracking-widest"
+                style={{ color: zone.colorDark }}
               >
-                {zone.description}
-              </motion.div>
-            )}
+                {zone.label}
+              </span>
+              <span
+                className="rounded-full px-1.5 py-0.5 text-[8px] font-black text-white"
+                style={{ background: zone.colorDark }}
+              >
+                {zone.description.split("·")[0].trim()}
+              </span>
+            </div>
+
+            {/* Center: growth visual */}
+            <div className="flex flex-1 items-center justify-center">
+              <GrowthVisual state={slot.state} emoji={zone.emoji} color={zone.color} />
+            </div>
+
+            {/* Bottom: asset label */}
+            <div
+              className="w-full rounded-b-xl px-2.5 py-1.5 text-center text-[9px] font-black"
+              style={{ background: `${zone.color}22`, color: zone.colorDark }}
+            >
+              {slot.state === "locked"
+                ? "🔒 Locked"
+                : slot.state === "empty"
+                ? "Tap to plant"
+                : zone.description.split("·").slice(1).join("·").trim()}
+            </div>
 
             {/* Ready to harvest label */}
             <AnimatePresence>
               {slot.state === "ready" && (
                 <motion.div
-                  className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-3 py-1 text-[10px] font-black"
-                  style={{
-                    background: "var(--quest-complete)",
-                    color: "white",
-                    fontFamily: "var(--font-island-heading)",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-                  }}
+                  className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-3 py-1 text-[10px] font-black text-white"
+                  style={{ background: "#22C55E", boxShadow: "0 2px 10px rgba(34,197,94,0.4)" }}
                   initial={{ opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                 >
-                  ✨ Ready to harvest!
+                  ✨ Harvest!
                 </motion.div>
               )}
             </AnimatePresence>
