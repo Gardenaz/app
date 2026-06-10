@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Settings2, SlidersHorizontal } from "lucide-react";
 import { Logo } from "@/components/base/logo";
 import { PrivyConnectButton } from "@/components/base/privy-connect-button";
 
@@ -13,34 +12,12 @@ export function AppNavbar() {
           <Link href="/" className="shrink-0">
             <Logo compact />
           </Link>
-          <div className="hidden items-center gap-2 sm:flex">
-            <span className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-[var(--text-subtle)]">
-              Managed mode first
-            </span>
-            <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-emerald-700">
-              Mantle Testnet
-            </span>
-            <span className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-[var(--text-subtle)] opacity-70">
-              Mantle Mainnet Soon
-            </span>
-          </div>
+          <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-emerald-700">
+            Mantle Testnet
+          </span>
         </div>
 
         <div className="flex items-center gap-2.5">
-          <Link
-            href="/app#launch-settings"
-            className="btn-secondary inline-flex items-center gap-2"
-          >
-            <Settings2 className="size-4" />
-            Quick settings
-          </Link>
-          <Link
-            href="/settings"
-            className="btn-ghost inline-flex items-center gap-2"
-          >
-            <SlidersHorizontal className="size-4" />
-            Advanced settings
-          </Link>
           <PrivyConnectButton />
         </div>
       </div>
