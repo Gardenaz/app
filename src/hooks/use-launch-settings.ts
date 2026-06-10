@@ -8,6 +8,7 @@ import {
   serializeLaunchSettings,
   shouldShowWelcomeModal,
   type LaunchExecutionAuthority,
+  type LaunchExperienceLevel,
   type LaunchLane,
   type LaunchSettingsDraft,
   type LaunchSetupReadiness,
@@ -93,6 +94,16 @@ export function useLaunchSettings(readiness: LaunchSetupReadiness) {
     );
   }, []);
 
+  const markWelcomeComplete = useCallback(() => {
+    setDraft((current) =>
+      createDefaultLaunchSettings({
+        ...current,
+        welcomeComplete: true,
+        lastSavedAt: new Date().toISOString(),
+      }),
+    );
+  }, []);
+
   const markOnboardingComplete = useCallback(() => {
     if (!readiness.walletConnected || !readiness.depositReady || !readiness.policyReady) {
       return;
@@ -117,9 +128,11 @@ export function useLaunchSettings(readiness: LaunchSetupReadiness) {
     resetDraft,
     saveDraft,
     markOnboardingComplete,
+    markWelcomeComplete,
     setLane: (lane: LaunchLane) => updateDraft({ selectedLane: lane }),
     setAmount: (amount: string) => updateDraft({ defaultAmount: amount }),
     setRisk: (riskPreference: LaunchSettingsDraft["riskPreference"]) => updateDraft({ riskPreference }),
+    setExperienceLevel: (experienceLevel: LaunchExperienceLevel) => updateDraft({ experienceLevel }),
     setExecutionAuthority: (executionAuthority: LaunchExecutionAuthority) => updateDraft({ executionAuthority }),
     setPolicyConfirmed: (policyConfirmed: boolean) => updateDraft({ policyConfirmed }),
     setDepositConfirmed: (depositConfirmed: boolean) => updateDraft({ depositConfirmed }),

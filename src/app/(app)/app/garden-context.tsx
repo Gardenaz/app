@@ -113,6 +113,7 @@ export interface GardenContextValue {
 
   address: string | null | undefined;
   authenticated: boolean;
+  walletReady: boolean;
 
   launchSettings: ReturnType<typeof useLaunchSettings>;
   activeCrop: CropOptionId;
@@ -170,7 +171,7 @@ export function GardenProvider({ children }: { children: ReactNode }) {
   const [showXp, setShowXp] = useState(false);
   const [settingsDrawerOpen, setSettingsDrawerOpen] = useState(false);
 
-  const { address, authenticated, login } = usePrivyWalletAddress();
+  const { address, authenticated, login, ready: walletReady } = usePrivyWalletAddress();
   const managedAccount = useManagedGardenAccount();
   const garden = useGardenAgent();
   const autopilot = useAgentPlan();
@@ -626,7 +627,7 @@ export function GardenProvider({ children }: { children: ReactNode }) {
     depositReady, hasPolicyReady, onchainPolicyReady, flowState, previewAssistantSummary,
     data, historyData: history.data, historyLoading: history.isLoading,
     isPending, readiness,
-    address, authenticated,
+    address, authenticated, walletReady,
     launchSettings, activeCrop, amount, risk, executionAuthority, selectedCrop,
     settingsDrawerOpen, settingsDraft, setSettingsDraft, saveDisabled,
     openSettingsDrawer, closeSettingsDrawer, handleSettingsSave, handleSettingsReset,
