@@ -22,7 +22,7 @@ function GuideTyping() {
         <Sprout className="w-16 h-16 md:w-20 md:h-20 text-[var(--primary)]" />
         <motion.div
           className="absolute -inset-4 rounded-full bg-[var(--primary-glow)]"
-          animate={{ opacity: [0.2, 0.5, 0.2] }}
+          animate={{ opacity: [0.15, 0.45, 0.15] }}
           transition={{ duration: 2.2, repeat: Infinity }}
         />
       </motion.div>
@@ -55,10 +55,10 @@ function StepFlow() {
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col items-center gap-2"
         >
-          <div className="flex size-14 items-center justify-center rounded-2xl bg-[var(--primary-soft)]">
+          <div className="flex size-14 items-center justify-center rounded-2xl bg-[rgba(179,223,70,0.15)]">
             <Icon className="size-7 text-[var(--primary)]" />
           </div>
-          <span className="text-lg font-bold text-[var(--text)]">{labels[step]}</span>
+          <span className="text-lg font-bold text-white">{labels[step]}</span>
         </motion.div>
       </AnimatePresence>
       <div className="flex gap-2 mt-1">
@@ -80,7 +80,7 @@ function MantleProofPulse() {
 
   return (
     <div className="flex items-center justify-center h-full relative">
-      <div className="flex size-16 items-center justify-center rounded-2xl bg-[var(--primary-soft)] z-10">
+      <div className="flex size-16 items-center justify-center rounded-2xl bg-[rgba(179,223,70,0.15)] z-10">
         <DatabaseZap className="size-8 text-[var(--primary)]" />
       </div>
       {pulses.map((pulse) => (
@@ -116,9 +116,9 @@ function SpeedBadge() {
           {loading ? (
             <motion.div
               key="loader"
-              className="h-8 w-20 bg-[var(--primary-soft)] rounded-lg"
+              className="h-8 w-20 bg-white/[0.08] rounded-lg"
               initial={{ opacity: 0.5 }}
-              animate={{ opacity: [0.3, 0.6, 0.3] }}
+              animate={{ opacity: [0.2, 0.45, 0.2] }}
               exit={{ opacity: 0, y: -16, position: "absolute" }}
               transition={{ duration: 1, repeat: Infinity }}
             />
@@ -127,15 +127,15 @@ function SpeedBadge() {
               key="text"
               initial={{ y: 16, opacity: 0, filter: "blur(5px)" }}
               animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-              className="text-3xl md:text-4xl font-mono font-bold text-[var(--text)]"
+              className="text-3xl md:text-4xl font-mono font-bold text-white"
             >
               &lt;1s
             </motion.span>
           )}
         </AnimatePresence>
       </div>
-      <span className="text-sm text-[var(--text-muted)]">Decision time</span>
-      <div className="w-full max-w-[120px] h-1.5 bg-[var(--border)] rounded-full overflow-hidden">
+      <span className="text-sm text-white/50">Decision time</span>
+      <div className="w-full max-w-[120px] h-1.5 bg-white/[0.10] rounded-full overflow-hidden">
         <motion.div
           className="h-full bg-[var(--primary)] rounded-full"
           initial={{ width: 0 }}
@@ -175,8 +175,8 @@ function PolicyShields() {
           key={rule.label}
           className={`flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-[11px] font-bold ${
             active !== null && i <= active
-              ? "bg-[var(--primary-soft-strong)] text-[var(--primary)]"
-              : "bg-[var(--surface-soft)] text-[var(--text-subtle)]"
+              ? "bg-[rgba(179,223,70,0.18)] text-[var(--primary)]"
+              : "bg-white/[0.06] text-white/35"
           }`}
           animate={{ scale: active !== null && i === active ? 1.08 : 1 }}
           transition={{ duration: 0.3 }}
@@ -194,7 +194,7 @@ function GlowingGlobe() {
     <div className="flex items-center justify-center h-full relative">
       <motion.div
         className="absolute inset-0 rounded-full bg-[var(--primary-glow)]"
-        animate={{ opacity: [0.1, 0.35, 0.1], scale: [0.9, 1.15, 0.9] }}
+        animate={{ opacity: [0.08, 0.28, 0.08], scale: [0.9, 1.15, 0.9] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
       />
       <Globe className="w-16 h-16 text-[var(--primary)] z-10" />
@@ -202,11 +202,23 @@ function GlowingGlobe() {
   );
 }
 
+/* Dark card base classes — shared across all bento cards */
+const darkCard = [
+  "bg-white/[0.04]",
+  "border border-white/[0.08]",
+  "rounded-2xl",
+  "flex flex-col",
+  "cursor-pointer overflow-hidden",
+  "transition-colors duration-150",
+  "hover:border-[var(--primary-border)]",
+].join(" ");
+
 export function BentoFeaturesSection() {
   return (
-    <section id="solution" className="landing-section section-landing w-full bg-[var(--surface-soft)]">
+    <section id="solution" className="landing-section section-landing w-full bg-[#0d1a17]">
       <div className="landing-inner">
-        {/* Section header */}
+
+        {/* Section header — inverted text on dark bg */}
         <motion.div
           variants={staggerContainer}
           initial="initial"
@@ -217,10 +229,10 @@ export function BentoFeaturesSection() {
           <motion.p variants={staggerItem} className="landing-eyebrow">
             HOW IT WORKS
           </motion.p>
-          <motion.h2 variants={staggerItem} className="landing-title">
+          <motion.h2 variants={staggerItem} className="landing-title text-white">
             Explain, check, execute, prove — all in one place.
           </motion.h2>
-          <motion.p variants={staggerItem} className="landing-subtitle mx-auto max-w-[38rem]">
+          <motion.p variants={staggerItem} className="landing-subtitle mx-auto max-w-[38rem] !text-white/55">
             Gardenaz combines an AI agent with on-chain proof so every move is transparent, auditable, and under your control.
           </motion.p>
           <div className="mx-auto mt-3 h-[2px] w-10 rounded-full bg-gradient-to-r from-transparent via-[var(--primary-border)] to-transparent" />
@@ -228,9 +240,10 @@ export function BentoFeaturesSection() {
 
         {/* Bento Grid */}
         <div className="mt-10 grid grid-cols-1 md:grid-cols-6 gap-4 auto-rows-[260px]">
+
           {/* Card 1: Agent Guide — 2×2 tall */}
           <motion.div
-            className="md:col-span-2 md:row-span-2 bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 md:p-8 flex flex-col hover:border-[var(--primary-border)] transition-colors cursor-pointer overflow-hidden shadow-[var(--shadow-sm)]"
+            className={`${darkCard} md:col-span-2 md:row-span-2 p-6 md:p-8`}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -240,11 +253,11 @@ export function BentoFeaturesSection() {
               <GuideTyping />
             </div>
             <div className="mt-3">
-              <h3 className="font-display text-xl text-[var(--text)] font-medium flex items-center gap-2">
+              <h3 className="font-display text-xl text-white/90 font-medium flex items-center gap-2">
                 <Bot className="w-5 h-5 text-[var(--primary)]" />
                 Agent Guide
               </h3>
-              <p className="text-[var(--text-muted)] text-sm mt-1">
+              <p className="text-white/50 text-sm mt-1">
                 Start with a simple flow instead of a DeFi terminal — the agent explains every move in plain language.
               </p>
             </div>
@@ -252,7 +265,7 @@ export function BentoFeaturesSection() {
 
           {/* Card 2: Policy Gate — 2×1 */}
           <motion.div
-            className="md:col-span-2 bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 md:p-8 flex flex-col hover:border-[var(--primary-border)] transition-colors cursor-pointer overflow-hidden shadow-[var(--shadow-sm)]"
+            className={`${darkCard} md:col-span-2 p-6 md:p-8`}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -263,11 +276,11 @@ export function BentoFeaturesSection() {
               <PolicyShields />
             </div>
             <div className="mt-3">
-              <h3 className="font-display text-xl text-[var(--text)] flex items-center gap-2 font-medium">
+              <h3 className="font-display text-xl text-white/90 flex items-center gap-2 font-medium">
                 <ShieldCheck className="w-5 h-5 text-[var(--primary)]" />
                 Policy Gate
               </h3>
-              <p className="text-[var(--text-muted)] text-sm mt-1">
+              <p className="text-white/50 text-sm mt-1">
                 Your rules stay in control — policies can block any move outside approved boundaries.
               </p>
             </div>
@@ -275,22 +288,22 @@ export function BentoFeaturesSection() {
 
           {/* Card 3: Mantle Proof — 2×2 tall */}
           <motion.div
-            className="md:col-span-2 md:row-span-2 bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 flex flex-col hover:border-[var(--primary-border)] transition-colors cursor-pointer overflow-hidden shadow-[var(--shadow-sm)]"
+            className={`${darkCard} md:col-span-2 md:row-span-2 p-6`}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            whileHover={{ scale: 1.02, boxShadow: "var(--shadow-md)" }}
+            whileHover={{ scale: 1.02 }}
           >
             <div className="flex-1 flex items-center justify-center">
               <MantleProofPulse />
             </div>
-            <div className="mt-auto relative z-20 bg-[var(--surface)]/80 backdrop-blur-sm rounded-lg p-2">
-              <h3 className="font-display text-xl text-[var(--text)] flex items-center gap-2 font-medium">
+            <div className="mt-auto relative z-20 bg-black/30 backdrop-blur-sm rounded-lg p-2">
+              <h3 className="font-display text-xl text-white/90 flex items-center gap-2 font-medium">
                 <DatabaseZap className="w-5 h-5 text-[var(--primary)]" />
                 Mantle Proof Layer
               </h3>
-              <p className="text-[var(--text-muted)] text-sm mt-1">
+              <p className="text-white/50 text-sm mt-1">
                 Every decision and result is written to Mantle — checkable, verifiable, permanent.
               </p>
             </div>
@@ -298,7 +311,7 @@ export function BentoFeaturesSection() {
 
           {/* Card 4: Real-time — 2×1 */}
           <motion.div
-            className="md:col-span-2 bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 md:p-8 flex flex-col hover:border-[var(--primary-border)] transition-colors cursor-pointer overflow-hidden shadow-[var(--shadow-sm)]"
+            className={`${darkCard} md:col-span-2 p-6 md:p-8`}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -309,10 +322,10 @@ export function BentoFeaturesSection() {
               <SpeedBadge />
             </div>
             <div className="mt-3">
-              <h3 className="font-display text-xl text-[var(--text)] font-medium">
+              <h3 className="font-display text-xl text-white/90 font-medium">
                 Real-time Execution
               </h3>
-              <p className="text-[var(--text-muted)] text-sm mt-1">
+              <p className="text-white/50 text-sm mt-1">
                 Decisions happen in under a second — the agent plans, policy checks, and execution follows instantly.
               </p>
             </div>
@@ -320,7 +333,7 @@ export function BentoFeaturesSection() {
 
           {/* Card 5: 4-Step Loop — 3×1 wide */}
           <motion.div
-            className="md:col-span-3 bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 md:p-8 flex flex-col hover:border-[var(--primary-border)] transition-colors cursor-pointer overflow-hidden shadow-[var(--shadow-sm)]"
+            className={`${darkCard} md:col-span-3 p-6 md:p-8`}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -331,11 +344,11 @@ export function BentoFeaturesSection() {
               <StepFlow />
             </div>
             <div className="mt-3">
-              <h3 className="font-display text-xl text-[var(--text)] flex items-center gap-2 font-medium">
+              <h3 className="font-display text-xl text-white/90 flex items-center gap-2 font-medium">
                 <CheckCircle2 className="w-5 h-5 text-[var(--primary)]" />
                 Guide → Plan → Check → Prove
               </h3>
-              <p className="text-[var(--text-muted)] text-sm mt-1">
+              <p className="text-white/50 text-sm mt-1">
                 The 4-step loop that keeps you in control: the agent proposes, policy validates, execution follows, and Mantle stores the record.
               </p>
             </div>
@@ -343,7 +356,7 @@ export function BentoFeaturesSection() {
 
           {/* Card 6: Always Auditable — 3×1 wide */}
           <motion.div
-            className="md:col-span-3 bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 md:p-8 flex flex-col hover:border-[var(--primary-border)] transition-colors cursor-pointer overflow-hidden shadow-[var(--shadow-sm)]"
+            className={`${darkCard} md:col-span-3 p-6 md:p-8`}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -354,15 +367,16 @@ export function BentoFeaturesSection() {
               <GlowingGlobe />
             </div>
             <div className="mt-3">
-              <h3 className="font-display text-xl text-[var(--text)] flex items-center gap-2 font-medium">
+              <h3 className="font-display text-xl text-white/90 flex items-center gap-2 font-medium">
                 <Globe className="w-5 h-5 text-[var(--primary)]" />
                 Always Auditable
               </h3>
-              <p className="text-[var(--text-muted)] text-sm mt-1">
+              <p className="text-white/50 text-sm mt-1">
                 Agent identity, decision logs, and on-chain records stay visible — readable for people first, verifiable when details matter.
               </p>
             </div>
           </motion.div>
+
         </div>
 
         {/* CTA */}
@@ -377,6 +391,7 @@ export function BentoFeaturesSection() {
             Try the agent <ArrowRight className="size-4" />
           </Link>
         </motion.div>
+
       </div>
     </section>
   );

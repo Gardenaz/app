@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Card Design Alternatives — Gardenaz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,700;6..72,800&family=PT+Mono&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:             #f9fbfa;
+    --surface:        #ffffff;
+    --surface-soft:   #f3f7f5;
+    --surface-muted:  #eaf2ef;
+    --text:           #0d1a17;
+    --text-muted:     #5a6e68;
+    --text-subtle:    #8fa49e;
+    --border:         rgba(13, 26, 23, 0.09);
+    --border-strong:  rgba(13, 26, 23, 0.16);
+    --primary:        #B3DF46;
+    --primary-hover:  #c4ea5a;
+    --primary-soft:   rgba(179, 223, 70, 0.12);
+    --primary-soft-strong: rgba(179, 223, 70, 0.22);
+    --primary-border: rgba(179, 223, 70, 0.38);
+    --primary-glow:   rgba(179, 223, 70, 0.35);
+    --shadow-sm: 0 1px 3px rgba(13,26,23,.08), 0 1px 2px rgba(13,26,23,.04);
+    --shadow-md: 0 4px 16px rgba(13,26,23,.09), 0 1px 4px rgba(13,26,23,.05);
+    --shadow-lg: 0 12px 40px rgba(13,26,23,.10), 0 2px 8px rgba(13,26,23,.05);
+  }
+  body {
+    font-family: "Newsreader", Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    padding: 48px 32px 80px;
+  }
+  h1 {
+    font-size: 13px; font-weight: 800; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--primary);
+    margin-bottom: 6px;
+  }
+  .page-title {
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 700; letter-spacing: -.03em; line-height: 1.1;
+    color: var(--text); margin-bottom: 8px;
+  }
+  .page-sub {
+    font-size: 15px; color: var(--text-muted); line-height: 1.7;
+    max-width: 560px; margin-bottom: 60px;
+  }
+  .section-label {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 800; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--text-subtle);
+    margin-bottom: 20px; margin-top: 56px;
+  }
+  .section-label::after {
+    content: ""; flex: 1;
+    height: 1px; background: var(--border);
+  }
+  .option-name {
+    font-size: 20px; font-weight: 700; color: var(--text);
+    margin-bottom: 4px;
+  }
+  .option-desc {
+    font-size: 14px; color: var(--text-muted);
+    line-height: 1.65; margin-bottom: 24px; max-width: 520px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .icon-wrap {
+    display: flex; align-items: center; justify-content: center;
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--primary-soft); margin-bottom: 16px;
+  }
+  svg { display: block; }
+  .card-title {
+    font-size: 17px; font-weight: 700; color: inherit;
+    margin-bottom: 6px; display: flex; align-items: center; gap: 8px;
+  }
+  .card-body {
+    font-size: 13.5px; line-height: 1.7; color: var(--text-muted);
+  }
+
+  /* ═══════════════════════════════════════════════
+     OPTION A — Current (for reference)
+  ═══════════════════════════════════════════════ */
+  .card-current {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 150ms ease;
+    cursor: pointer;
+  }
+  .card-current:hover {
+    border-color: var(--primary-border);
+  }
+
+  /* ═══════════════════════════════════════════════
+     OPTION B — Gradient border ring
+  ═══════════════════════════════════════════════ */
+  .card-gradient-wrap {
+    border-radius: 17px;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--primary-border) 0%, rgba(179,223,70,0.08) 50%, var(--border) 100%);
+    cursor: pointer;
+    transition: background 200ms ease;
+  }
+  .card-gradient-wrap:hover {
+    background: linear-gradient(135deg, rgba(179,223,70,0.55) 0%, rgba(179,223,70,0.15) 50%, var(--border) 100%);
+  }
+  .card-gradient-inner {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 24px;
+    height: 100%;
+  }
+
+  /* ═══════════════════════════════════════════════
+     OPTION C — Top accent bar
+  ═══════════════════════════════════════════════ */
+  .card-accent {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 150ms ease, transform 150ms ease;
+  }
+  .card-accent::before {
+    content: "";
+    position: absolute; inset: 0; bottom: auto;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--primary-hover) 60%, transparent 100%);
+    border-radius: 16px 16px 0 0;
+  }
+  .card-accent:hover {
+    border-color: var(--primary-border);
+    transform: translateY(-2px);
+  }
+
+  /* ═══════════════════════════════════════════════
+     OPTION D — Dark inversion
+  ═══════════════════════════════════════════════ */
+  .section-dark {
+    background: #0d1a17;
+    border-radius: 24px;
+    padding: 32px;
+  }
+  .card-dark {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px;
+    cursor: pointer;
+    transition: border-color 150ms ease, background 150ms ease;
+  }
+  .card-dark:hover {
+    background: rgba(255,255,255,0.07);
+    border-color: var(--primary-border);
+  }
+  .card-dark .card-body { color: rgba(255,255,255,0.55); }
+  .card-dark .card-title { color: rgba(255,255,255,0.92); }
+  .card-dark .icon-wrap {
+    background: rgba(179,223,70,0.12);
+  }
+
+  /* ═══════════════════════════════════════════════
+     OPTION E — Ambient glow on hover (flat default)
+  ═══════════════════════════════════════════════ */
+  .card-glow {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    cursor: pointer;
+    transition: border-color 250ms ease, box-shadow 250ms ease, transform 200ms ease;
+  }
+  .card-glow:hover {
+    border-color: var(--primary-border);
+    box-shadow: 0 0 0 1px var(--primary-border),
+                0 8px 32px rgba(179,223,70,0.22),
+                0 2px 8px rgba(179,223,70,0.12);
+    transform: translateY(-2px);
+  }
+
+  /* ═══════════════════════════════════════════════
+     OPTION F — Noise texture surface
+  ═══════════════════════════════════════════════ */
+  .card-noise {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 150ms ease, transform 150ms ease;
+  }
+  .card-noise::after {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 128px 128px;
+  }
+  .card-noise:hover {
+    border-color: var(--primary-border);
+    transform: translateY(-1px);
+  }
+  .card-noise .icon-wrap {
+    background: linear-gradient(135deg, var(--primary-soft) 0%, rgba(179,223,70,0.06) 100%);
+  }
+
+  /* badge */
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    background: var(--primary-soft); color: #3a5a10;
+    margin-bottom: 56px;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
+</style>
+</head>
+<body>
+
+<h1>Gardenaz · Card Design</h1>
+<div class="page-title">6 Alternative Card Styles</div>
+<p class="page-sub">Semua opsi menggunakan design token yang sama. Hover setiap card untuk melihat interaksi.</p>
+
+<!-- SVG ICONS inline -->
+<svg style="display:none">
+  <symbol id="icon-bot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M9 18v2M15 18v2"/>
+  </symbol>
+  <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </symbol>
+  <symbol id="icon-db" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19a9 3 0 0018 0V5"/><path d="M3 12a9 3 0 0018 0"/>
+  </symbol>
+</svg>
+
+<!-- ═══════════════ A: CURRENT ═══════════════ -->
+<div class="section-label">A · Saat ini (referensi)</div>
+<div class="option-name">Drop shadow biasa</div>
+<p class="option-desc">Yang sekarang: white card + 1px border + shadow-sm. Fungsional tapi generik — semua card terasa sama beratnya.</p>
+<div class="grid">
+  <div class="card-current">
+    <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-bot"/></svg></div>
+    <div class="card-title">Agent Guide</div>
+    <p class="card-body">Start with a simple flow instead of a DeFi terminal — the agent explains every move in plain language.</p>
+  </div>
+  <div class="card-current">
+    <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-shield"/></svg></div>
+    <div class="card-title">Policy Gate</div>
+    <p class="card-body">Your rules stay in control — policies can block any move outside approved boundaries.</p>
+  </div>
+  <div class="card-current">
+    <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-db"/></svg></div>
+    <div class="card-title">Mantle Proof</div>
+    <p class="card-body">Every decision and result is written to Mantle — checkable, verifiable, permanent.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ B: GRADIENT BORDER ═══════════════ -->
+<div class="section-label">B · Gradient border ring</div>
+<div class="option-name">Gradient border ring</div>
+<p class="option-desc">Tidak ada shadow. Border card dibuat dari gradient tipis 1px yang memudar dari lime → transparent. Premium tanpa berisik. Hover mempertegas ring-nya.</p>
+<div class="grid">
+  <div class="card-gradient-wrap">
+    <div class="card-gradient-inner">
+      <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-bot"/></svg></div>
+      <div class="card-title">Agent Guide</div>
+      <p class="card-body">Start with a simple flow instead of a DeFi terminal — the agent explains every move in plain language.</p>
+    </div>
+  </div>
+  <div class="card-gradient-wrap">
+    <div class="card-gradient-inner">
+      <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-shield"/></svg></div>
+      <div class="card-title">Policy Gate</div>
+      <p class="card-body">Your rules stay in control — policies can block any move outside approved boundaries.</p>
+    </div>
+  </div>
+  <div class="card-gradient-wrap">
+    <div class="card-gradient-inner">
+      <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-db"/></svg></div>
+      <div class="card-title">Mantle Proof</div>
+      <p class="card-body">Every decision and result is written to Mantle — checkable, verifiable, permanent.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ C: TOP ACCENT BAR ═══════════════ -->
+<div class="section-label">C · Top accent bar</div>
+<div class="option-name">Garis lime di atas card</div>
+<p class="option-desc">Tidak ada shadow. Card tetap putih bersih, tapi ada garis lime tipis 2px di bagian atas yang memudar ke kanan. Editorial — cocok dengan tone "paper" brand-nya. Hover sedikit mengangkat card.</p>
+<div class="grid">
+  <div class="card-accent">
+    <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-bot"/></svg></div>
+    <div class="card-title">Agent Guide</div>
+    <p class="card-body">Start with a simple flow instead of a DeFi terminal — the agent explains every move in plain language.</p>
+  </div>
+  <div class="card-accent">
+    <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-shield"/></svg></div>
+    <div class="card-title">Policy Gate</div>
+    <p class="card-body">Your rules stay in control — policies can block any move outside approved boundaries.</p>
+  </div>
+  <div class="card-accent">
+    <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-db"/></svg></div>
+    <div class="card-title">Mantle Proof</div>
+    <p class="card-body">Every decision and result is written to Mantle — checkable, verifiable, permanent.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ D: DARK INVERSION ═══════════════ -->
+<div class="section-label">D · Dark inversion</div>
+<div class="option-name">Card gelap di section hitam</div>
+<p class="option-desc">Seluruh section background berubah jadi dark green-black. Card jadi glass transparan. Warna lime primary terlihat jauh lebih kuat dan eye-catching. Kontras tinggi = memorable.</p>
+<div class="section-dark">
+  <div class="grid">
+    <div class="card-dark">
+      <div class="icon-wrap"><svg width="20" height="20" color="#B3DF46"><use href="#icon-bot"/></svg></div>
+      <div class="card-title">Agent Guide</div>
+      <p class="card-body">Start with a simple flow instead of a DeFi terminal — the agent explains every move in plain language.</p>
+    </div>
+    <div class="card-dark">
+      <div class="icon-wrap"><svg width="20" height="20" color="#B3DF46"><use href="#icon-shield"/></svg></div>
+      <div class="card-title">Policy Gate</div>
+      <p class="card-body">Your rules stay in control — policies can block any move outside approved boundaries.</p>
+    </div>
+    <div class="card-dark">
+      <div class="icon-wrap"><svg width="20" height="20" color="#B3DF46"><use href="#icon-db"/></svg></div>
+      <div class="card-title">Mantle Proof</div>
+      <p class="card-body">Every decision and result is written to Mantle — checkable, verifiable, permanent.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ E: AMBIENT GLOW ═══════════════ -->
+<div class="section-label">E · Ambient glow on hover</div>
+<div class="option-name">Flat default, glow saat hover</div>
+<p class="option-desc">Default terlihat flat dan minimal — tidak ada shadow sama sekali. Tapi saat di-hover, card memancarkan ambient glow warna lime yang lembut. Terasa "hidup" dan interaktif.</p>
+<div class="grid">
+  <div class="card-glow">
+    <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-bot"/></svg></div>
+    <div class="card-title">Agent Guide</div>
+    <p class="card-body">Start with a simple flow instead of a DeFi terminal — the agent explains every move in plain language.</p>
+  </div>
+  <div class="card-glow">
+    <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-shield"/></svg></div>
+    <div class="card-title">Policy Gate</div>
+    <p class="card-body">Your rules stay in control — policies can block any move outside approved boundaries.</p>
+  </div>
+  <div class="card-glow">
+    <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-db"/></svg></div>
+    <div class="card-title">Mantle Proof</div>
+    <p class="card-body">Every decision and result is written to Mantle — checkable, verifiable, permanent.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ F: NOISE TEXTURE ═══════════════ -->
+<div class="section-label">F · Noise / grain texture</div>
+<div class="option-name">Paper grain overlay</div>
+<p class="option-desc">Card tetap putih dengan border tipis, tapi ada noise grain overlay yang sangat subtle (opacity 3.5%). Memberikan kesan "paper texture" yang sesuai dengan brand "Paper" Gardenaz. Tactile tanpa berlebihan.</p>
+<div class="grid">
+  <div class="card-noise">
+    <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-bot"/></svg></div>
+    <div class="card-title">Agent Guide</div>
+    <p class="card-body">Start with a simple flow instead of a DeFi terminal — the agent explains every move in plain language.</p>
+  </div>
+  <div class="card-noise">
+    <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-shield"/></svg></div>
+    <div class="card-title">Policy Gate</div>
+    <p class="card-body">Your rules stay in control — policies can block any move outside approved boundaries.</p>
+  </div>
+  <div class="card-noise">
+    <div class="icon-wrap"><svg width="20" height="20" color="#6aaa10"><use href="#icon-db"/></svg></div>
+    <div class="card-title">Mantle Proof</div>
+    <p class="card-body">Every decision and result is written to Mantle — checkable, verifiable, permanent.</p>
+  </div>
+</div>
+
+<div style="height:80px"></div>
+</body>
+</html>

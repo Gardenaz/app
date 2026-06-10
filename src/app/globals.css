@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700;6..72,800&family=PT+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700;6..72,800&family=PT+Mono&family=Nunito:wght@400;600;700;800;900&display=swap");
 @import "tailwindcss";
 
 @theme inline {
@@ -97,6 +97,42 @@
 
   /* Touch target minimum */
   --touch-min: 2.75rem; /* 44px */
+
+  /* ── Island / Ghibli palette ─────────────────── */
+  --island-sky-dawn:        #FFD580;
+  --island-sky-day:         #87CEEB;
+  --island-sky-dusk:        #F4A261;
+  --island-ocean-deep:      #1A6FAB;
+  --island-ocean-mid:       #4BB8E8;
+  --island-ocean-foam:      #B3E5FC;
+  --island-grass:           #7CC548;
+  --island-grass-dark:      #4A8F2A;
+  --island-earth:           #C8956C;
+  --island-earth-dark:      #9E6B45;
+  --island-wood:            #8B6242;
+  --island-wood-light:      #C49A6C;
+  --island-parchment:       #F5EDCC;
+  --island-parchment-dark:  #D4B896;
+  --island-gold:            #F5C842;
+  --island-gold-dark:       #C49B14;
+  --island-sign-bg:         #6B4423;
+  --island-sign-text:       #FFF3DC;
+  --island-cream:           #FEFAE0;
+
+  /* Crop zone accents */
+  --zone-corn:              #F5C542;
+  --zone-rice:              #A8D5A2;
+  --zone-chili:             #E85D3A;
+
+  /* Gamification */
+  --xp-bar:                 #F5C842;
+  --coin-gold:              #FFD700;
+  --quest-complete:         #4CAF50;
+  --harvest-burst:          #FF9F1C;
+
+  /* Island typography */
+  --font-island-heading:    'Nunito', 'Newsreader', Georgia, serif;
+  --font-island-body:       'Nunito', system-ui, sans-serif;
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -479,4 +515,184 @@ img, svg { display: block; max-width: 100%; }
 @keyframes pot-ready {
   0%, 100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); }
   50%       { box-shadow: 0 0 16px 6px rgba(22,163,74,0.45); }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Island / Ghibli UI components
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* Wooden button */
+.btn-wood {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-island-heading);
+  font-weight: 900;
+  font-size: 0.875rem;
+  min-height: var(--touch-min);
+  padding-block: 0.625rem;
+  padding-inline: 1.25rem;
+  border-radius: 0.75rem;
+  color: var(--island-sign-text);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.45);
+  background: linear-gradient(180deg,
+    var(--island-wood-light) 0%,
+    var(--island-wood) 55%,
+    var(--island-earth-dark) 100%);
+  border: 2px solid var(--island-earth-dark);
+  border-bottom: 4px solid color-mix(in srgb, var(--island-wood) 55%, black);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.28),
+              inset 0 1px 0 rgba(255,255,255,0.18);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-wood:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 20px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.18);
+}
+.btn-wood:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.22);
+}
+.btn-wood:disabled { opacity: 0.5; pointer-events: none; }
+
+/* Parchment panel */
+.panel-parchment {
+  background: linear-gradient(160deg, #FAF0D7 0%, var(--island-parchment) 55%, #E8D5A3 100%);
+  border: 2px solid var(--island-parchment-dark);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10),
+              inset 0 1px 0 rgba(255,255,255,0.65);
+}
+
+/* Speech bubble */
+.bubble-speech {
+  background: white;
+  border: 2px solid var(--island-wood);
+  border-radius: 1rem;
+  position: relative;
+  font-family: var(--font-island-body);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+.bubble-speech::after {
+  content: '';
+  position: absolute;
+  bottom: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--island-wood);
+}
+
+/* Crop growth meter */
+.crop-meter {
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--island-grass) 0%, var(--island-gold) 100%);
+  box-shadow: 0 0 8px rgba(124,197,72,0.45);
+  transition: width 0.6s ease;
+}
+
+/* Island page root */
+.island-page-root {
+  font-family: var(--font-island-body);
+  overflow-x: hidden;
+}
+
+/* Wooden sign / signpost style */
+.wood-sign {
+  font-family: var(--font-island-heading);
+  font-weight: 800;
+  background: var(--island-sign-bg);
+  color: var(--island-sign-text);
+  border-radius: 0.5rem;
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--island-sign-bg) 60%, black),
+              0 4px 12px rgba(0,0,0,0.3);
+  padding: 0.35rem 0.85rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+/* Quest card pinned to board */
+.quest-card {
+  background: linear-gradient(155deg, #FDF6E3 0%, var(--island-parchment) 100%);
+  border: 1.5px solid var(--island-parchment-dark);
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.7);
+  font-family: var(--font-island-body);
+}
+
+/* HUD bar */
+.island-hud {
+  font-family: var(--font-island-heading);
+  background: linear-gradient(180deg,
+    rgba(245,237,204,0.97) 0%,
+    rgba(240,228,186,0.95) 100%);
+  border-bottom: 2px solid var(--island-parchment-dark);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Island keyframes
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@keyframes ocean-swell {
+  0%, 100% { transform: scaleY(1) translateY(0); }
+  50%       { transform: scaleY(1.04) translateY(-3px); }
+}
+
+@keyframes ocean-shimmer {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.65; }
+}
+
+@keyframes windmill-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes crop-sway {
+  0%, 100% { transform: rotate(-2deg) skewX(0deg); }
+  50%       { transform: rotate(2deg) skewX(3deg); }
+}
+
+@keyframes particle-float {
+  0%   { transform: translateY(0) scale(1);   opacity: 0; }
+  20%  { opacity: 0.9; }
+  100% { transform: translateY(-60px) scale(0.5); opacity: 0; }
+}
+
+@keyframes harvest-pop {
+  0%   { transform: scale(0) translateY(0); opacity: 1; }
+  60%  { transform: scale(1.4) translateY(-20px); opacity: 1; }
+  100% { transform: scale(0.8) translateY(-40px); opacity: 0; }
+}
+
+@keyframes xp-rise {
+  0%   { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-50px); opacity: 0; }
+}
+
+@keyframes island-entrance {
+  0%   { transform: scale(0.88); opacity: 0; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+@keyframes quest-complete-bounce {
+  0%, 100% { transform: scale(1); }
+  40%       { transform: scale(1.12); }
+  70%       { transform: scale(0.95); }
+}
+
+@keyframes water-ripple {
+  0%   { transform: scale(1);    opacity: 0.6; }
+  100% { transform: scale(2.2);  opacity: 0; }
+}
+
+@keyframes bird-fly {
+  0%   { transform: translateX(-80px) translateY(0); }
+  50%  { transform: translateX(50vw) translateY(-20px); }
+  100% { transform: translateX(110vw) translateY(10px); }
 }
