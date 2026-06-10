@@ -1,4 +1,4 @@
-# Gardena App
+# Gardenaz App
 
 Consumer-facing Next.js app for Gardenaz on Mantle Sepolia.
 
