@@ -108,15 +108,15 @@ export function HeroCloudReveal() {
             variants={staggerItem}
             className="mb-5 text-[44px] font-semibold leading-[1.02] -tracking-[1.5px] text-white drop-shadow-[0_4px_28px_rgba(0,0,0,0.45)] sm:text-[56px] lg:text-[64px]"
           >
-            Where guided DeFi meets
+            Autonomous finance
             <br />
-            <span className="text-[var(--primary)] [filter:drop-shadow(0_0_24px_var(--primary-glow))]">an agent that proves its work</span>
+            <span className="text-[var(--primary)] [filter:drop-shadow(0_0_24px_var(--primary-glow))]">should stay transparent.</span>
           </motion.h1>
           <motion.p
             variants={staggerItem}
             className="mb-8 max-w-[480px] text-base leading-[1.75] text-white/85 drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)] sm:text-lg"
           >
-            Gardenaz gives ordinary users an AI guide that explains its decisions, stays inside policy, and leaves a visible proof trail before any automated move goes through.
+            Gardenaz gives you an AI agent that explains every move, stays within your policy, and proves it on Mantle.
           </motion.p>
           <motion.div variants={staggerItem}>
             <Link
