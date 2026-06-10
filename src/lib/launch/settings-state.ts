@@ -1,8 +1,11 @@
 export type LaunchLane = "steady" | "growth" | "boost";
 export type LaunchExecutionAuthority = "wallet" | "managed";
+export type LaunchExperienceLevel = "new" | "some" | "pro";
 
 export type LaunchSettingsDraft = {
   onboardingComplete: boolean;
+  welcomeComplete: boolean;
+  experienceLevel: LaunchExperienceLevel;
   selectedLane: LaunchLane;
   defaultAmount: string;
   riskPreference: 1 | 2 | 3;
@@ -38,6 +41,10 @@ function normalizeAuthority(value: unknown): LaunchExecutionAuthority {
   return value === "wallet" ? "wallet" : "managed";
 }
 
+function normalizeExperience(value: unknown): LaunchExperienceLevel {
+  return value === "some" || value === "pro" ? value : "new";
+}
+
 function normalizeAmount(value: unknown): string {
   if (typeof value !== "string") return "1000";
   const trimmed = value.trim();
@@ -55,6 +62,8 @@ function normalizeLastSavedAt(value: unknown): string | null {
 function buildDraft(overrides: Partial<LaunchSettingsDraft> = {}): LaunchSettingsDraft {
   return {
     onboardingComplete: false,
+    welcomeComplete: false,
+    experienceLevel: "new",
     selectedLane: "steady",
     defaultAmount: "1000",
     riskPreference: 1,
@@ -75,6 +84,8 @@ export function createDefaultLaunchSettings(overrides: Partial<LaunchSettingsDra
 export function normalizeLaunchSettings(input: Partial<LaunchSettingsDraft>): LaunchSettingsDraft {
   return {
     onboardingComplete: normalizeBoolean(input.onboardingComplete),
+    welcomeComplete: normalizeBoolean(input.welcomeComplete),
+    experienceLevel: normalizeExperience(input.experienceLevel),
     selectedLane: normalizeLane(input.selectedLane),
     defaultAmount: normalizeAmount(input.defaultAmount),
     riskPreference: normalizeRisk(input.riskPreference),
