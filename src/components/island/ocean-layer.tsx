@@ -75,7 +75,7 @@ const weatherOcean: Record<
     haze: number; glitter: boolean; distant: string;
   }
 > = {
-  sunny:  { skyTop: "#2E9FDC", skyMid: "#7DCBF0", horizon: "#EAF7FD", shallow: "#8FDCF2", mid: "#36A3D9", deep: "#0B5E97", haze: 0.85, glitter: true,  distant: "#8FB6CC" },
+  sunny:  { skyTop: "#1EB6F0", skyMid: "#5BC8F5", horizon: "#D4F2FF", shallow: "#72D8F8", mid: "#1A9ED4", deep: "#0A52A0", haze: 0.8,  glitter: true,  distant: "#78B8E0" },
   cloudy: { skyTop: "#8FA6B2", skyMid: "#B6C7CF", horizon: "#E3EBEF", shallow: "#A8CBD9", mid: "#5E96AD", deep: "#2C617C", haze: 0.9,  glitter: false, distant: "#93A9B6" },
   rainy:  { skyTop: "#56707F", skyMid: "#7A929F", horizon: "#B8C9D1", shallow: "#7FA8BC", mid: "#41788F", deep: "#173F58", haze: 0.7,  glitter: false, distant: "#6E8694" },
   stormy: { skyTop: "#16242F", skyMid: "#26404F", horizon: "#46606E", shallow: "#3A5B6C", mid: "#1F3D4E", deep: "#0A1C29", haze: 0.45, glitter: false, distant: "#334854" },

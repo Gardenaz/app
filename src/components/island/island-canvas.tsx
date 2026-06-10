@@ -116,20 +116,20 @@ function RainLayer() {
 /* ── Weather config ─────────────────────────────────── */
 const weatherConfig = {
   sunny: {
-    sky: "linear-gradient(180deg, #4FC3F7 0%, #81D4FA 30%, #B3E5FC 65%, #C8F5D0 100%)",
+    sky: "linear-gradient(180deg, #29B6F6 0%, #5BC8F5 25%, #A8E4FF 60%, #C8F5A8 100%)",
     cloudColor: "#FFFFFF",
-    cloudOpacity: 0.2,
+    cloudOpacity: 0.3,
     sunVisible: true,
     rainVisible: false,
-    ambientFilter: "saturate(1.08) contrast(1.03)",
+    ambientFilter: "saturate(1.15) contrast(1.04) brightness(1.02)",
   },
   cloudy: {
-    sky: "linear-gradient(180deg, #90A4AE 0%, #B0BEC5 35%, #CFD8DC 70%, #D4EDD5 100%)",
+    sky: "linear-gradient(180deg, #78A8C8 0%, #A8C8D8 35%, #C8DDE8 70%, #A8D098 100%)",
     cloudColor: "#ECEFF1",
-    cloudOpacity: 0.85,
+    cloudOpacity: 0.9,
     sunVisible: true,
     rainVisible: false,
-    ambientFilter: "brightness(0.93)",
+    ambientFilter: "brightness(0.94) saturate(0.92)",
   },
   rainy: {
     sky: "linear-gradient(180deg, #546E7A 0%, #78909C 45%, #90A4AE 80%, #AECFC0 100%)",
