@@ -63,15 +63,15 @@ export function LandingNavbar() {
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-[min(92%,56rem)] rounded-[1.75rem] border backdrop-blur-xl"
         >
-          <div className="relative flex h-14 items-center justify-between gap-4 px-5">
+          <div className="relative flex h-14 items-center justify-between gap-2 px-3 sm:gap-4 sm:px-5">
             <Link href="/" className="shrink-0">
               <Logo compact light={!scrolled} />
             </Link>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-1.5 sm:gap-2.5">
               <Link
                 href="#how-it-works"
-                className={`text-[13px] font-semibold transition-all duration-300 ${
+                className={`text-[12px] font-semibold transition-all duration-300 sm:text-[13px] ${
                   scrolled
                     ? "text-[var(--text-muted)] hover:text-[var(--text)]"
                     : "text-white/70 hover:text-white"
@@ -81,14 +81,14 @@ export function LandingNavbar() {
               </Link>
               <Link
                 href="/app"
-                className={`group inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-[13px] font-bold transition-all duration-300 ${
+                className={`group inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-[12px] font-bold transition-all duration-300 sm:gap-2 sm:px-5 sm:py-2.5 sm:text-[13px] ${
                   scrolled
                     ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--primary-shadow-sm)] hover:bg-[var(--primary-hover)] hover:shadow-[var(--primary-shadow-md)]"
                     : "bg-white/[0.14] text-white backdrop-blur-sm hover:bg-white/[0.22]"
                 }`}
               >
                 Launch app
-                <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+                <ArrowRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 sm:size-3.5" />
               </Link>
             </div>
 
