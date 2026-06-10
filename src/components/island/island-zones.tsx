@@ -161,11 +161,11 @@ function ZoneCropPicker({
           const isSel = selected === opt.id;
 
           /* Colour per crop */
-          const sceneBg = opt.id === "stable"
+          const sceneBg = opt.id === "steady"
             ? "linear-gradient(160deg,#DCEDC8 0%,#A5D6A7 100%)"
             : opt.id === "growth"
             ? "linear-gradient(160deg,#FFF9C4 0%,#FFE082 100%)"
-            : opt.id === "yield"
+            : opt.id === "boost"
             ? "linear-gradient(160deg,#FFCCBC 0%,#FF8A65 100%)"
             : "linear-gradient(160deg,#B3E5FC 0%,#4FC3F7 100%)";
 
