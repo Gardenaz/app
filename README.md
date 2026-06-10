@@ -1,6 +1,6 @@
 # Gardenaz
 
-**AI-Powered DeFi Dashboard on Mantle** — A gamified farming-island experience where users plant "crops" (DeFi strategies), watch them grow, and harvest yield. Built with a Hay Day x Animal Crossing x Studio Ghibli aesthetic.
+**AI-Powered DeFi Dashboard on Mantle** — A gamified farming-island experience where users plant "crops" (DeFi strategies), watch them grow, and harvest yield. Designed to be intuitive and easy to use for most of user.
 
 > Mint farm positions. Grow yield. Harvest proof.
 
@@ -447,7 +447,7 @@ The agent service is **required** at runtime. If `AGENT_SERVICE_URL` is not set,
 
 ### Philosophy
 
-The UI follows a **Paper + Ghibli** aesthetic — tactile, warm, and game-like. Avoid generic SaaS dashboard patterns.
+The UI follows a **warm, tactile, game-like** aesthetic — cozy, approachable, and fun. Avoid generic SaaS dashboard patterns.
 
 ### Typography
 
@@ -494,7 +494,7 @@ graph LR
 | `.crop-meter` | Crop growth progress bar |
 | `.island-hud` | HUD bar styling |
 
-All tokens are defined in `src/app/globals.css` under the `/* Island / Ghibli palette */` section.
+All tokens are defined in `src/app/globals.css` under the `/* Island palette */` section.
 
 ---
 
