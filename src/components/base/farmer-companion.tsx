@@ -10,53 +10,24 @@ import type { GardenAgentResult } from "@/hooks/use-garden-agent";
 import type { WeatherMood } from "@/components/sections/farm-scene";
 
 /* ─────────────────────────────────────────────────────────────────
-   Farmer pixel-art sprite — SVG, mood-reactive
+   Farmer image — pak-tani.png
 ───────────────────────────────────────────────────────────────── */
 function FarmerSprite({
-  mood,
   size = 56,
 }: {
-  mood: "happy" | "thinking" | "worried" | "excited";
+  mood?: "happy" | "thinking" | "worried" | "excited";
   size?: number;
 }) {
-  const hatColor = mood === "worried" ? "var(--danger)" : "var(--warning)";
-  const skin = mood === "excited" ? "var(--primary)" : "color-mix(in srgb, var(--warning) 35%, white)";
-  const eyeChar = mood === "thinking" ? "–" : mood === "worried" ? ">" : "•";
-
   return (
-    <svg
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/pak-tani.png"
+      alt="Pak Tani"
       width={size}
-      height={size * 1.125}
-      viewBox="0 0 32 36"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <rect x="4" y="7" width="24" height="3" rx="1.5" fill={hatColor} />
-      <rect x="8" y="1" width="16" height="8" rx="3" fill={hatColor} />
-      <rect x="8" y="7" width="16" height="2" rx="1" fill="var(--warning)" />
-      <ellipse cx="16" cy="16" rx="9" ry="10" fill={skin} />
-      <text x="11.5" y="16.5" fontSize="3.8" fill="var(--neutral-700)" fontWeight="bold">
-        {eyeChar}
-      </text>
-      <text x="18" y="16.5" fontSize="3.8" fill="var(--neutral-700)" fontWeight="bold">
-        {eyeChar}
-      </text>
-      {mood === "happy" || mood === "excited" ? (
-        <path d="M12 20 Q16 24 20 20" stroke="var(--neutral-700)" strokeWidth="1.2" fill="none" strokeLinecap="round" />
-      ) : mood === "worried" ? (
-        <path d="M12 22 Q16 19 20 22" stroke="var(--neutral-700)" strokeWidth="1.2" fill="none" strokeLinecap="round" />
-      ) : (
-        <rect x="12" y="20" width="8" height="1.5" rx="0.75" fill="var(--neutral-700)" />
-      )}
-      <ellipse cx="9" cy="18" rx="2.5" ry="1.5" fill="var(--danger)" opacity="0.18" />
-      <ellipse cx="23" cy="18" rx="2.5" ry="1.5" fill="var(--danger)" opacity="0.18" />
-      <rect x="9" y="25" width="14" height="10" rx="3" fill="var(--success)" />
-      <rect x="10" y="24" width="4" height="10" rx="2" fill="var(--success-strong)" />
-      <rect x="18" y="24" width="4" height="10" rx="2" fill="var(--success-strong)" />
-      <rect x="10" y="29" width="4" height="4" rx="1" fill="var(--success-strong)" />
-      <rect x="18" y="29" width="4" height="4" rx="1" fill="var(--success-strong)" />
-    </svg>
+      height={size}
+      style={{ width: size, height: size, objectFit: "contain" }}
+      draggable={false}
+    />
   );
 }
 
@@ -200,7 +171,7 @@ function MarketBadge({ agentData }: { agentData: GardenAgentResult | null }) {
 
 function TypingDots() {
   return (
-    <div className="flex items-center gap-1 rounded-2xl rounded-tl-sm bg-[var(--surface-soft)] px-3 py-2.5">
+    <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-white px-3 py-2.5 ring-1 ring-[var(--border)] shadow-sm">
       {[0, 0.15, 0.3].map((delay) => (
         <motion.span
           key={delay}
@@ -346,7 +317,7 @@ export function FarmerCompanion({
         type="button"
         aria-label="Open Pak Tani"
         onClick={open}
-        className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-1"
+        className="fixed bottom-5 right-5 z-[9999] flex flex-col items-center gap-1"
         initial={false}
         animate={
           isOpen
@@ -382,7 +353,7 @@ export function FarmerCompanion({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.88, y: 20 }}
             transition={{ type: "spring", stiffness: 320, damping: 28 }}
-            className="fixed bottom-5 right-5 z-50 flex w-[min(96vw,380px)] flex-col overflow-hidden rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] shadow-[0_20px_72px_rgba(13,118,110,0.16)] backdrop-blur-xl"
+            className="fixed bottom-5 right-5 z-[9999] flex w-[min(96vw,380px)] flex-col overflow-hidden rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] shadow-[0_20px_72px_rgba(13,118,110,0.16)] backdrop-blur-xl"
             style={{ maxHeight: "min(86svh, 620px)" }}
           >
             <div className="flex shrink-0 items-center gap-2.5 border-b border-[var(--border)] bg-gradient-to-r from-[var(--surface-soft)] to-[var(--surface)] px-4 py-3">
@@ -449,36 +420,46 @@ export function FarmerCompanion({
                     {messages.map((msg, i) => (
                       <motion.div
                         key={i}
-                        initial={{ opacity: 0, x: msg.role === "user" ? 10 : -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.18 }}
-                        className={`flex gap-2 ${msg.role === "user" ? "flex-row-reverse" : ""}`}
+                        initial={{ opacity: 0, y: 6, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className={`flex items-end gap-2 ${msg.role === "user" ? "flex-row-reverse" : ""}`}
                       >
                         {msg.role === "farmer" && (
-                          <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-[var(--surface-soft)] text-sm">
-                            🌿
-                          </span>
+                          <div className="shrink-0 overflow-hidden rounded-full border border-[var(--border)] bg-[var(--surface-soft)] shadow-sm" style={{ width: 28, height: 28 }}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src="/pak-tani.png" alt="Pak Tani" width={28} height={28} style={{ width: 28, height: 28, objectFit: "cover" }} draggable={false} />
+                          </div>
                         )}
-                        <div
-                          className={`max-w-[82%] rounded-2xl px-3 py-2 text-xs leading-5 ${
-                            msg.role === "user"
-                              ? "rounded-tr-sm bg-[var(--primary)] font-medium text-white"
-                              : "rounded-tl-sm bg-[var(--surface-soft)] font-medium text-[var(--text)]"
-                          }`}
-                        >
+                        <div className={`relative max-w-[78%] px-3 py-2 text-xs leading-relaxed shadow-sm ${
+                          msg.role === "user"
+                            ? "rounded-2xl rounded-br-sm bg-[var(--primary)] font-medium text-white"
+                            : "rounded-2xl rounded-bl-sm bg-white font-medium text-[var(--text)] ring-1 ring-[var(--border)]"
+                        }`}>
                           {msg.text}
+                          {/* bubble tail */}
+                          {msg.role === "user" ? (
+                            <span className="absolute -bottom-px -right-1.5 text-[var(--primary)]" style={{ fontSize: 0, lineHeight: 0 }}>
+                              <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M0 0 Q6 0 10 8 Q4 4 0 8Z" fill="var(--primary)"/></svg>
+                            </span>
+                          ) : (
+                            <span className="absolute -bottom-px -left-1.5" style={{ fontSize: 0, lineHeight: 0 }}>
+                              <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M10 0 Q4 0 0 8 Q6 4 10 8Z" fill="white"/></svg>
+                            </span>
+                          )}
                         </div>
                       </motion.div>
                     ))}
 
                   {(isPending || isAsking) && messages.at(-1)?.role === "user" && (
-                    <div className="flex gap-2">
-                      <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-[var(--surface-soft)] text-sm">
-                        🌿
-                      </span>
-                      <TypingDots />
+                    <div className="flex items-end gap-2">
+                      <div className="shrink-0 overflow-hidden rounded-full border border-[var(--border)] bg-[var(--surface-soft)] shadow-sm" style={{ width: 28, height: 28 }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src="/pak-tani.png" alt="Pak Tani" width={28} height={28} style={{ width: 28, height: 28, objectFit: "cover" }} draggable={false} />
                       </div>
-                    )}
+                      <TypingDots />
+                    </div>
+                  )}
                     <div ref={chatEndRef} />
                   </div>
 
