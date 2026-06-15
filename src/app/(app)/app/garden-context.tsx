@@ -34,9 +34,13 @@ import { fearGreedToLabel, fearGreedToReason, fearGreedToWeather } from "@/lib/f
 import {
   buildFlowState,
   buildPlantedSlot,
+  buildSimDecision,
+  buildSimExecution,
+  buildSimHistoryRow,
   getActionRiskPreference,
   getCropOption,
   getCropRisk,
+  getCropYield,
   getExecutionGardenLabel,
   getNextEmptySlotId,
   getOperationLabel,
@@ -53,6 +57,11 @@ function money(v?: string | null) {
   const n = Number(v ?? "0");
   return Number.isFinite(n) ? n.toFixed(2) : "0.00";
 }
+
+/** Client-side demo simulation. Set NEXT_PUBLIC_SIMULATE="false" to require the live on-chain + agent path. */
+const SIMULATE = process.env.NEXT_PUBLIC_SIMULATE !== "false";
+/** How long a crop takes to ripen in the simulated loop (ms, compressed for demo). */
+const GROW_MS = 7000;
 
 type AgentPlanData = {
   ok: boolean;
@@ -88,6 +97,8 @@ export interface GardenContextValue {
   slots: PotSlot[];
   weather: WeatherMood;
   showXp: boolean;
+  harvestActive: boolean;
+  coinBalance: string;
   selectedSlotId: string | null;
 
   executionStatus: ExStatus;
@@ -140,6 +151,7 @@ export interface GardenContextValue {
 
   handleCropPick: (slotId: string, cropId: CropOptionId) => void;
   handleClearSlot: (slotId: string) => void;
+  handleHarvest: (slotId: string) => void;
   handleSlotClick: (slot: PotSlot) => void;
   handleConnectWallet: () => void;
   handleDepositToGarden: () => void;
@@ -170,6 +182,21 @@ export function GardenProvider({ children }: { children: ReactNode }) {
   const [welcomeDismissed, setWelcomeDismissed] = useState(false);
   const [showXp, setShowXp] = useState(false);
   const [settingsDrawerOpen, setSettingsDrawerOpen] = useState(false);
+
+  // ── Demo simulation state (gated by SIMULATE) ──
+  const [simDeposited, setSimDeposited] = useState(false);
+  const [simPolicyReady, setSimPolicyReady] = useState(false);
+  const [simExecuted, setSimExecuted] = useState(false);
+  const [simBalance, setSimBalance] = useState(0);
+  const [simPreview, setSimPreview] = useState<AgentPlanData | null>(null);
+  const [simHistory, setSimHistory] = useState<AgentHistoryRow[]>([]);
+  const [harvestActiveSlot, setHarvestActiveSlot] = useState<string | null>(null);
+  const growthTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+
+  // Clear any pending crop-growth timers on unmount.
+  useEffect(() => () => {
+    Object.values(growthTimers.current).forEach((t) => clearTimeout(t));
+  }, []);
 
   const { address, authenticated, login, ready: walletReady } = usePrivyWalletAddress();
   const managedAccount = useManagedGardenAccount();
@@ -287,11 +314,19 @@ export function GardenProvider({ children }: { children: ReactNode }) {
     Boolean(backendExecutorAddress) &&
     userAddress.toLowerCase() !== (backendExecutorAddress ?? "").toLowerCase();
 
-  const preview = autopilot.data as AgentPlanData | null | undefined;
+  const livePreview = autopilot.data as AgentPlanData | null | undefined;
+  const preview = livePreview ?? (SIMULATE ? simPreview : null);
   const hasPolicyReady = launchSettings.draft.policyConfirmed || onchainPolicyReady;
+
+  // Demo-loop completion flags. Under SIMULATE these advance client-side so the
+  // full journey can complete without a live chain or agent service.
+  const depositComplete = SIMULATE ? simDeposited : depositReady;
+  const policyComplete = SIMULATE ? simPolicyReady || hasPolicyReady : hasPolicyReady;
+
   const previewMode = preview?.execution?.mode;
   const previewOperation = preview?.execution?.operation ?? null;
   const previewReady = Boolean(preview);
+  const executeComplete = SIMULATE ? simExecuted : previewMode === "sent";
   const previewAssistantSummary = preview
     ? buildAssistantSummary(
         "autopilot",
@@ -310,11 +345,11 @@ export function GardenProvider({ children }: { children: ReactNode }) {
     () =>
       buildFlowState({
         connected: Boolean(address),
-        policyReady: hasPolicyReady,
+        policyReady: policyComplete,
         planPreviewed: previewReady,
-        hasExecutionTarget: executionReady,
+        hasExecutionTarget: SIMULATE ? previewReady && policyComplete : executionReady,
       }),
-    [address, executionReady, hasPolicyReady, previewReady],
+    [address, executionReady, policyComplete, previewReady],
   );
 
   const executionStatus = useMemo<ExStatus>(() => {
@@ -327,6 +362,11 @@ export function GardenProvider({ children }: { children: ReactNode }) {
       readiness.isLoading
     )
       return "PENDING";
+    if (SIMULATE) {
+      if (simExecuted) return "CONFIRMED";
+      if (preview) return "PLANNED";
+      return "READY";
+    }
     if (!preview) return "READY";
     if (
       preview.execution?.mode === "blocked" ||
@@ -346,6 +386,7 @@ export function GardenProvider({ children }: { children: ReactNode }) {
     modeReadiness?.ready,
     preview,
     readiness.isLoading,
+    simExecuted,
   ]);
 
   const fearGreedReading = fearGreed.data ?? null;
@@ -401,11 +442,23 @@ export function GardenProvider({ children }: { children: ReactNode }) {
       setSelectedId(null);
       setShowXp(true);
       setTimeout(() => setShowXp(false), 1500);
+      if (growthTimers.current[slotId]) clearTimeout(growthTimers.current[slotId]);
       setTimeout(() => {
         setSlots((prev) =>
           prev.map((slot) => (slot.id === slotId ? { ...slot, state: "growing" } : slot)),
         );
       }, 900);
+      // Ripen the crop so the harvest step becomes available.
+      growthTimers.current[slotId] = setTimeout(() => {
+        setSlots((prev) =>
+          prev.map((slot) =>
+            slot.id === slotId && (slot.state === "growing" || slot.state === "planted")
+              ? { ...slot, state: "ready" }
+              : slot,
+          ),
+        );
+        delete growthTimers.current[slotId];
+      }, GROW_MS);
       const intent = `plant ${option.crop} with ${option.asset} using ${amount}`;
       setMessage(intent);
       garden.mutate({ user: userAddress, message: intent, amount, riskPreference: nextRisk, execute: false });
@@ -414,14 +467,54 @@ export function GardenProvider({ children }: { children: ReactNode }) {
   );
 
   const handleClearSlot = useCallback((slotId: string) => {
+    if (growthTimers.current[slotId]) {
+      clearTimeout(growthTimers.current[slotId]);
+      delete growthTimers.current[slotId];
+    }
     setSlots((prev) =>
       prev.map((slot) => (slot.id === slotId ? { ...INITIAL_SLOTS.find((s) => s.id === slotId)! } : slot)),
     );
   }, []);
 
-  const handleSlotClick = useCallback((slot: PotSlot) => {
-    setSelectedId((prev) => (prev === slot.id ? null : slot.id));
-  }, []);
+  const handleHarvest = useCallback(
+    (slotId: string) => {
+      const slot = slots.find((s) => s.id === slotId);
+      if (!slot || slot.state !== "ready") return;
+
+      if (growthTimers.current[slotId]) {
+        clearTimeout(growthTimers.current[slotId]);
+        delete growthTimers.current[slotId];
+      }
+
+      // Reward: return the crop's yield to the coin balance.
+      const cropId = (slot.strategyId || "steady") as CropOptionId;
+      const gain = getCropYield(cropId, Number(amount) || 0);
+      setSimBalance((b) => b + gain);
+
+      setHarvestActiveSlot(slotId);
+      setShowXp(true);
+      setTimeout(() => setShowXp(false), 1500);
+      setTimeout(() => {
+        setSlots((prev) =>
+          prev.map((s) => (s.id === slotId ? { ...INITIAL_SLOTS.find((i) => i.id === slotId)! } : s)),
+        );
+        setHarvestActiveSlot(null);
+      }, 900);
+    },
+    [amount, slots],
+  );
+
+  const handleSlotClick = useCallback(
+    (slot: PotSlot) => {
+      // A ripe crop harvests on tap; otherwise toggle selection (opens the crop picker when empty).
+      if (slot.state === "ready") {
+        handleHarvest(slot.id);
+        return;
+      }
+      setSelectedId((prev) => (prev === slot.id ? null : slot.id));
+    },
+    [handleHarvest],
+  );
 
   const handleConnectWallet = useCallback(() => {
     if (!authenticated) void login();
@@ -429,6 +522,12 @@ export function GardenProvider({ children }: { children: ReactNode }) {
 
   const handleDepositToGarden = useCallback(() => {
     if (!address) { void login(); return; }
+    if (SIMULATE) {
+      setSimDeposited(true);
+      setSimBalance((b) => b + (Number(amount) || 0));
+      setShowXp(true);
+      setTimeout(() => setShowXp(false), 1500);
+    }
     setView("canvas");
     const intent = `Explain the deposit to garden step for ${amount} in beginner language.`;
     setMessage(intent);
@@ -437,6 +536,13 @@ export function GardenProvider({ children }: { children: ReactNode }) {
 
   const handlePolicyReady = useCallback(async () => {
     if (!address) { void login(); return; }
+    if (SIMULATE) {
+      setSimPolicyReady(true);
+      setMode("autopilot");
+      setShowXp(true);
+      setTimeout(() => setShowXp(false), 1500);
+      return;
+    }
     await autopilotPolicy.mutateAsync({ policy: policyInput });
     launchSettings.setPolicyConfirmed(true);
     setMode("autopilot");
@@ -444,13 +550,46 @@ export function GardenProvider({ children }: { children: ReactNode }) {
 
   const handlePreviewPlan = useCallback(async () => {
     if (!address) { void login(); return; }
+    if (SIMULATE) {
+      setView("canvas");
+      try {
+        await buildPlanRequest(false);
+      } catch {
+        /* live agent service unavailable — fall back to a simulated preview */
+      }
+      if (!autopilot.data) {
+        const decision = buildSimDecision({ user: userAddress, crop: activeCrop, amount, risk });
+        setSimPreview({
+          ok: true,
+          decision,
+          anchor: {
+            enabled: true,
+            txHash: decision.anchorTxHash ?? null,
+            note: "Simulated decision anchor",
+            mode: "sent",
+          },
+          execution: buildSimExecution(activeCrop),
+          source: "simulation",
+        });
+      }
+      setShowXp(true);
+      setTimeout(() => setShowXp(false), 1500);
+      return;
+    }
     if (!hasPolicyReady) { setMode("autopilot"); return; }
     setView("canvas");
     await buildPlanRequest(false);
-  }, [address, buildPlanRequest, hasPolicyReady, login]);
+  }, [activeCrop, address, amount, autopilot.data, buildPlanRequest, hasPolicyReady, login, risk, userAddress]);
 
   const handleExecuteMove = useCallback(async () => {
     if (!address) { void login(); return; }
+    if (SIMULATE) {
+      setSimExecuted(true);
+      setSimHistory((rows) => [buildSimHistoryRow({ crop: activeCrop, amount, risk }), ...rows]);
+      setShowXp(true);
+      setTimeout(() => setShowXp(false), 1500);
+      return;
+    }
     if (!hasPolicyReady) { setMode("autopilot"); return; }
     if (modeReadiness?.ready === false) throw new Error(modeReadiness.note);
     const response = await buildPlanRequest(true);
@@ -553,19 +692,19 @@ export function GardenProvider({ children }: { children: ReactNode }) {
         if (step.id === "deposit-to-garden") {
           return {
             ...step,
-            complete: depositReady,
-            disabled: !flowState.hasConnectedWallet || depositReady || garden.isPending,
+            complete: depositComplete,
+            disabled: !flowState.hasConnectedWallet || depositComplete || garden.isPending,
             action: handleDepositToGarden,
-            cta: depositReady ? "Deposit ready" : step.cta,
+            cta: depositComplete ? "Deposit ready" : step.cta,
           };
         }
         if (step.id === "set-policy") {
           return {
             ...step,
-            complete: hasPolicyReady,
-            disabled: !flowState.hasConnectedWallet || hasPolicyReady || autopilotPolicy.isPending,
+            complete: policyComplete,
+            disabled: !flowState.hasConnectedWallet || policyComplete || autopilotPolicy.isPending,
             action: () => void handlePolicyReady(),
-            cta: hasPolicyReady ? "Policy ready" : step.cta,
+            cta: policyComplete ? "Policy ready" : step.cta,
           };
         }
         if (step.id === "preview-plan") {
@@ -584,8 +723,9 @@ export function GardenProvider({ children }: { children: ReactNode }) {
         }
         return {
           ...step,
-          complete: previewMode === "sent",
+          complete: executeComplete,
           disabled:
+            executeComplete ||
             !flowState.canExecute ||
             autopilot.isPending ||
             agniExecution.isPending ||
@@ -594,19 +734,21 @@ export function GardenProvider({ children }: { children: ReactNode }) {
             readiness.isLoading,
           action: () => void handleExecuteMove(),
           cta:
-            executionAuthority === "managed"
-              ? "Run managed move"
-              : preview?.execution?.mode === "blocked"
-                ? "Approve token"
-                : step.cta,
+            executeComplete
+              ? "Move sent"
+              : executionAuthority === "managed"
+                ? "Run managed move"
+                : preview?.execution?.mode === "blocked"
+                  ? "Approve token"
+                  : step.cta,
         };
       }) as readonly QuestStep[],
     [
       agniExecution.isPending, autopilot.isPending, autopilotPolicy.isPending,
-      depositReady, executionAuthority, flowState, garden.isPending, hasPolicyReady,
+      depositComplete, executeComplete, executionAuthority, flowState, garden.isPending, policyComplete,
       handleConnectWallet, handleDepositToGarden, handleExecuteMove, handlePolicyReady,
       handlePreviewPlan, launchSettings, managedAgniExecution.isPending,
-      preview?.execution?.mode, previewMode, readiness.isLoading,
+      preview?.execution?.mode, readiness.isLoading,
     ],
   );
 
@@ -619,13 +761,17 @@ export function GardenProvider({ children }: { children: ReactNode }) {
 
   const saveDisabled = autopilotPolicy.isPending || readiness.isLoading || !settingsDraft.defaultAmount.trim();
 
+  const coinBalance = SIMULATE ? simBalance.toFixed(2) : amount;
+  const harvestActive = harvestActiveSlot !== null;
+  const historyData = SIMULATE ? [...simHistory, ...(history.data ?? [])] : history.data;
+
   const value: GardenContextValue = {
     view, setView,
-    slots, weather, showXp, selectedSlotId: selectedId,
+    slots, weather, showXp, harvestActive, coinBalance, selectedSlotId: selectedId,
     executionStatus, steps, preview, marketLabelText, marketEmojiText,
     previewMode, previewOperation, modeReadiness, managedModeMismatch,
     depositReady, hasPolicyReady, onchainPolicyReady, flowState, previewAssistantSummary,
-    data, historyData: history.data, historyLoading: history.isLoading,
+    data, historyData, historyLoading: history.isLoading,
     isPending, readiness,
     address, authenticated, walletReady,
     launchSettings, activeCrop, amount, risk, executionAuthority, selectedCrop,
@@ -633,7 +779,7 @@ export function GardenProvider({ children }: { children: ReactNode }) {
     openSettingsDrawer, closeSettingsDrawer, handleSettingsSave, handleSettingsReset,
     shouldOpenWelcome, setWelcomeDismissed,
     assistantContext, readinessLabel, readinessNotes,
-    handleCropPick, handleClearSlot, handleSlotClick,
+    handleCropPick, handleClearSlot, handleHarvest, handleSlotClick,
     handleConnectWallet, handleDepositToGarden,
     handlePolicyReady, handlePreviewPlan, handleExecuteMove,
     handleFarmerAction, handleFarmerMessage,

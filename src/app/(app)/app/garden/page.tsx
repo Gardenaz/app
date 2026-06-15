@@ -2,8 +2,10 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useGarden } from "../garden-context";
 import { IslandCanvas } from "@/components/island/island-canvas";
+import { HarvestBurst } from "@/components/island/harvest-burst";
 import { IslandHud } from "@/components/gamification/island-hud";
 import { WoodenButton } from "@/components/gamification/wooden-button";
 
@@ -23,7 +25,9 @@ const BANNER: Record<string, { text: string; highlight: string }> = {
 
 export default function GardenPage() {
   const g = useGarden();
+  const router = useRouter();
   const banner = BANNER[g.weather] ?? BANNER.sunny;
+  const ctaHref = g.weather === "stormy" ? "/app/history" : "/app/quests";
 
   return (
     <div
@@ -37,7 +41,7 @@ export default function GardenPage() {
         weather={g.weather}
         stepsComplete={g.steps.filter((s) => s.complete).length}
         totalSteps={g.steps.length}
-        amount={g.amount}
+        amount={g.coinBalance}
         executionStatus={g.executionStatus}
         isConnected={Boolean(g.address)}
       />
@@ -74,9 +78,10 @@ export default function GardenPage() {
 
           {/* Arrow button */}
           <motion.div
-            className="flex size-8 shrink-0 items-center justify-center rounded-full"
+            className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full"
             style={{ background: "linear-gradient(135deg,#F5C842,#E8A012)" }}
             whileTap={{ scale: 0.9 }}
+            onClick={() => router.push(ctaHref)}
           >
             <ArrowRight className="size-4" style={{ color: "var(--island-sign-bg)" }} strokeWidth={2.5} />
           </motion.div>
@@ -84,7 +89,7 @@ export default function GardenPage() {
       </div>
 
       {/* Canvas */}
-      <div className="min-h-0 flex-1 px-4 pt-3">
+      <div className="relative min-h-0 flex-1 px-4 pt-3">
         <IslandCanvas
           weather={g.weather}
           slots={g.slots}
@@ -96,11 +101,13 @@ export default function GardenPage() {
           fullscreen
           className="h-full"
         />
+        {/* Harvest celebration overlay */}
+        <HarvestBurst active={g.harvestActive} />
       </div>
 
       {/* Big CTA button — wooden, matches island palette */}
       <div className="px-4 pb-3 pt-2">
-        <WoodenButton variant="primary" size="lg" className="w-full text-[14px]">
+        <WoodenButton variant="primary" size="lg" className="w-full text-[14px]" onClick={() => router.push(ctaHref)}>
           {g.weather === "sunny"
             ? "🌾 See Market Insights"
             : g.weather === "stormy"
