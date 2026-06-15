@@ -331,9 +331,61 @@ async function requestAssistantResponse(payload: AssistantRequestOptions): Promi
 }
 
 function buildCannedReply(payload: AssistantPayload): string {
-  return payload.view === "audit"
-    ? "Audit log is in demo mode — real proof anchoring activates once the AI agent service is connected."
-    : "Halo! Pak Tani sedang dalam mode demo. Aksi tanam-tumbuh-panen berjalan simulasi. Hubungkan AGENT_SERVICE_URL untuk analisis pasar live.";
+  const msg = (payload.message ?? "").toLowerCase();
+
+  if (payload.view === "audit") {
+    return "Audit log dalam mode demo. Proof anchoring on-chain aktif saat AGENT_SERVICE_URL terhubung ke service agent.";
+  }
+
+  if (/(halo|hi\b|hello|hai|hey|apa kabar|how are|assalam)/.test(msg)) {
+    return "Halo! Saya Pak Tani, asisten farm kamu 🌾 Mode demo aktif sekarang — semua aksi tanam, tumbuh, dan panen berjalan simulasi. Coba tanya soal tanaman, cuaca market, atau cara panen!";
+  }
+
+  if (/(tanam|plant\b|crop|tanaman|benih|seed)/.test(msg)) {
+    return "Ada 3 jenis tanaman:\n🌾 Rice (steady) — APY 5.2%, risiko rendah, aset USDC\n🌽 Corn (growth) — APY 9.6%, risiko sedang, aset WMNT\n🌶️ Chili (boost) — APY 17.6%, risiko tinggi, USDC/WMNT LP\n\nKlik zona farm di canvas lalu pilih crop untuk mulai tanam!";
+  }
+
+  if (/(panen|harvest)/.test(msg)) {
+    return "Setelah tanaman matang (~7 detik di mode demo), zona farm akan glowing ✨ dengan badge 'Harvest!'. Tap zona itu untuk panen — koin langsung bertambah sesuai APY × stake kamu!";
+  }
+
+  if (/(agni|dex|swap|liquidity|protocol|defi)/.test(msg)) {
+    return "Agni Finance adalah DEX utama di Mantle Network — mirip Uniswap V3. Di mode demo, semua move disimulasikan tanpa dana nyata. Saat live nanti, strategi kamu dieksekusi via Agni swap atau liquidity pool sesuai pilihan crop.";
+  }
+
+  if (/(mantle|testnet|sepolia|chain|network|blockchain)/.test(msg)) {
+    return "Gardenaz berjalan di Mantle Sepolia (testnet, chainId 5003). Contract DecisionLog dan AutopilotPolicy sudah di-deploy di sana. Mode demo tidak butuh koneksi chain — semua simulasi client-side.";
+  }
+
+  if (/(market|cuaca|weather|bull|bear|mood|kondisi)/.test(msg)) {
+    return "Cuaca farm mencerminkan kondisi market:\n☀️ Sunny = bullish — cocok tanam high-yield\n☁️ Cloudy = neutral — pilih Corn atau Rice\n🌧️ Rainy = bearish — aman di Rice USDC\n⛈️ Stormy = volatile — lindungi posisi dulu\n\nCek tab History untuk lihat risk report.";
+  }
+
+  if (/(apy|yield|return|bunga|hasil|untung|persen|%)/.test(msg)) {
+    return "APY per crop (simulasi Agni Finance):\n• Rice → 5.2% (USDC, paling aman)\n• Corn → 9.6% (WMNT, balanced)\n• Chili → 17.6% (USDC/WMNT LP, agresif)\n\nContoh: stake 1000 USDC di Rice = +52 koin per siklus.";
+  }
+
+  if (/(quest|step|misi|onboard|progress)/.test(msg)) {
+    return "Ada 6 quest step:\n1️⃣ Welcome\n2️⃣ Connect Wallet\n3️⃣ Deposit ke Farm\n4️⃣ Set Policy\n5️⃣ Preview Plan\n6️⃣ Execute Move\n\nDi mode demo, semua bisa selesai. Buka tab Quests untuk lihat progress XP kamu!";
+  }
+
+  if (/(saldo|balance|koin|coin|amount|usd)/.test(msg)) {
+    return "Saldo koin di HUD atas adalah akumulasi hasil panen simulasi kamu (APY × stake). Saldo ini reset kalau kamu refresh halaman — di mode live nanti, saldo mengikuti posisi on-chain Agni kamu.";
+  }
+
+  if (/(demo|simulasi|simulate|fake|nyata|real|live)/.test(msg)) {
+    return "Sekarang mode simulasi (NEXT_PUBLIC_SIMULATE=true). Semua aksi berjalan client-side — aman, tidak ada dana yang bergerak. Untuk mode live: set AGENT_SERVICE_URL ke URL agent service + NEXT_PUBLIC_SIMULATE=false di .env.";
+  }
+
+  if (/(risk|risiko|aman|safe|guard|policy)/.test(msg)) {
+    return "Policy guard melindungi kamu dari move yang melebihi risk tolerance. Di mode demo, policy otomatis disetujui. Di mode live, policy disimpan on-chain via kontrak AutopilotPolicy sebelum agent boleh eksekusi.";
+  }
+
+  if (/(help|bantuan|bisa apa|what can|fitur|feature)/.test(msg)) {
+    return "Pak Tani bisa bantu:\n🌱 Pilih crop & lihat APY\n☀️ Jelaskan kondisi market\n🌾 Cara tanam & panen\n⚡ Info Agni Finance & Mantle\n📋 Status quest kamu\n🛡️ Tentang risk policy\n\nCoba tanya: 'crop apa yang paling aman?' atau 'bagaimana cara panen?'";
+  }
+
+  return "Mode demo aktif 🌾 Pak Tani bisa jawab soal: tanaman & APY, cuaca market, cara panen, Agni Finance, atau quest steps. Coba tanya salah satunya!";
 }
 
 export async function requestAgentAssistantReply(payload: AssistantPayload): Promise<{ answer: string; source: "agent-service" }> {
