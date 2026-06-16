@@ -1,7 +1,5 @@
 import { Bot, DatabaseZap, Sparkles } from "lucide-react";
 
-export const navItems = ["Product", "What is Gardenaz?", "Solution", "How it works", "Proof"];
-
 export const strategies = [
   {
     name: "Rice / Safe Harvest",
@@ -65,11 +63,5 @@ export const proofRows = [
   ["Decision hash", "0xa71e...f09c · policy-safe rebalance"],
   ["Benchmark", "USDC lane +5.2% APY · outcome pending log"],
   ["Transparency", "Readable diary + on-chain DecisionLog"],
-] as const;
-
-export const faq = [
-  ["Is Gardenaz a Bybit trading bot?", "No. Current MVP focuses AI x RWA on Mantle with beginner-friendly Agni routes for stablecoin and WMNT lanes. Bybit/CEX adapter can be a future extension, not the core."],
-  ["Can agent move funds freely?", "No. Policy fences define max amount, risk level, allowed routes, rebalance interval, and emergency pause."],
-  ["Why crops?", "Crops make yield strategy understandable and shareable for consumer users without hiding benchmark proof."],
 ] as const;
 

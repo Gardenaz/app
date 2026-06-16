@@ -2,9 +2,12 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useGarden } from "../garden-context";
 import { IslandCanvas } from "@/components/island/island-canvas";
+import { HarvestBurst } from "@/components/island/harvest-burst";
 import { IslandHud } from "@/components/gamification/island-hud";
+import { WoodenButton } from "@/components/gamification/wooden-button";
 
 const BG: Record<string, string> = {
   stormy: "linear-gradient(180deg,#1E2C37 0%,#0F1E28 45%,#2A4030 100%)",
@@ -20,17 +23,11 @@ const BANNER: Record<string, { text: string; highlight: string }> = {
   stormy: { text: "High volatility — hedge risk on",   highlight: "your farm!" },
 };
 
-const CTA: Record<string, string> = {
-  sunny:  "#FF7A2F",
-  cloudy: "#4A90D9",
-  rainy:  "#4A90D9",
-  stormy: "#6B7280",
-};
-
 export default function GardenPage() {
   const g = useGarden();
+  const router = useRouter();
   const banner = BANNER[g.weather] ?? BANNER.sunny;
-  const ctaColor = CTA[g.weather] ?? CTA.sunny;
+  const ctaHref = g.weather === "stormy" ? "/app/history" : "/app/quests";
 
   return (
     <div
@@ -44,16 +41,20 @@ export default function GardenPage() {
         weather={g.weather}
         stepsComplete={g.steps.filter((s) => s.complete).length}
         totalSteps={g.steps.length}
-        amount={g.amount}
+        amount={g.coinBalance}
         executionStatus={g.executionStatus}
         isConnected={Boolean(g.address)}
       />
 
-      {/* Promo banner — matches reference green banner style */}
+      {/* Promo banner — parchment + island-gold, matches island palette */}
       <div className="px-4 pt-3">
         <motion.div
           className="flex items-center gap-3 rounded-2xl px-4 py-3"
-          style={{ background: "linear-gradient(135deg,#4CAF50 0%,#2E7D32 100%)" }}
+          style={{
+            background: "rgba(245,237,204,0.95)",
+            border: "1.5px solid rgba(196,154,20,0.35)",
+            boxShadow: "var(--shadow-sm)",
+          }}
           key={g.weather}
           initial={{ opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
@@ -61,30 +62,34 @@ export default function GardenPage() {
         >
           {/* Coin icon circle */}
           <div
-            className="flex size-9 shrink-0 items-center justify-center rounded-full text-lg shadow"
-            style={{ background: "rgba(255,255,255,0.2)" }}
+            className="flex size-9 shrink-0 items-center justify-center rounded-full text-lg"
+            style={{
+              background: "rgba(196,154,20,0.18)",
+              border: "1px solid rgba(196,154,20,0.3)",
+            }}
           >
             🌾
           </div>
 
-          <p className="flex-1 text-[11px] font-bold leading-snug text-white">
+          <p className="flex-1 text-[11px] font-bold leading-snug" style={{ color: "var(--island-sign-bg)" }}>
             {banner.text}{" "}
-            <span style={{ color: "#FFE082" }}>{banner.highlight}</span>
+            <span style={{ color: "var(--island-gold-dark)" }}>{banner.highlight}</span>
           </p>
 
           {/* Arrow button */}
           <motion.div
-            className="flex size-8 shrink-0 items-center justify-center rounded-full"
-            style={{ background: "#FF7A2F" }}
+            className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full"
+            style={{ background: "linear-gradient(135deg,#F5C842,#E8A012)" }}
             whileTap={{ scale: 0.9 }}
+            onClick={() => router.push(ctaHref)}
           >
-            <ArrowRight className="size-4 text-white" strokeWidth={2.5} />
+            <ArrowRight className="size-4" style={{ color: "var(--island-sign-bg)" }} strokeWidth={2.5} />
           </motion.div>
         </motion.div>
       </div>
 
       {/* Canvas */}
-      <div className="min-h-0 flex-1 px-4 pt-3">
+      <div className="relative min-h-0 flex-1 px-4 pt-3">
         <IslandCanvas
           weather={g.weather}
           slots={g.slots}
@@ -96,23 +101,19 @@ export default function GardenPage() {
           fullscreen
           className="h-full"
         />
+        {/* Harvest celebration overlay */}
+        <HarvestBurst active={g.harvestActive} />
       </div>
 
-      {/* Big CTA button — "See Forest Insights" equivalent */}
+      {/* Big CTA button — wooden, matches island palette */}
       <div className="px-4 pb-3 pt-2">
-        <motion.button
-          type="button"
-          className="w-full rounded-2xl py-4 text-[14px] font-black text-white shadow-lg"
-          style={{ background: `linear-gradient(135deg, ${ctaColor} 0%, #FF9A4F 100%)` }}
-          whileTap={{ scale: 0.97 }}
-          whileHover={{ scale: 1.01 }}
-        >
+        <WoodenButton variant="primary" size="lg" className="w-full text-[14px]" onClick={() => router.push(ctaHref)}>
           {g.weather === "sunny"
             ? "🌾 See Market Insights"
             : g.weather === "stormy"
             ? "⛈️ View Risk Report"
             : "📊 See Market Insights"}
-        </motion.button>
+        </WoodenButton>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { href: "/app/garden",  Icon: Sprout,     label: "Garden"   },
   { href: "/app/quests",  Icon: ScrollText, label: "Quests"   },
   { href: "/app/history", Icon: History,    label: "History"  },
-  { href: "/settings",    Icon: Settings,   label: "Settings" },
+  { href: "/app/settings", Icon: Settings,  label: "Settings" },
 ] as const;
 
 export function GameNav() {
@@ -30,7 +30,7 @@ export function GameNav() {
       {NAV_ITEMS.map((item) => {
         const isActive =
           pathname === item.href ||
-          (item.href !== "/settings" && pathname?.startsWith(item.href));
+          (item.href !== "/app/settings" && pathname?.startsWith(item.href));
 
         return (
           <Link
